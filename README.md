@@ -1,2 +1,2 @@
 # IPR-Projekt-SS24
-Projekt des Moduls Internetprogrammierung bei Dozent Mathias Maciossek Sommer Semester 2024 HFT Stuttagrt
+Projekt im Modul Internetprogrammierung bei Dozent Mathias Maciossek im Sommersemester 2024 an der HFT Stuttagrt
