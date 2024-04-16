@@ -4,5 +4,5 @@ Modul: Internetprogrammierung;
 Dozent: Mathias Maciossek;
 Semester: Sommersemester 2024;
 
-Blumenladen 
+Website zur Musikverwaltung
 
