@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import './Header.css'
 
 function Header() {
   return (
-    <header>
+    <div className='headerBody'>
       <nav>
         <div>
          <div>Default Navbar (nur für die Entwicklung!)</div> 
@@ -15,7 +16,7 @@ function Header() {
           <NavLink to='about'>About</NavLink>
         </div>
       </nav>
-    </header>
+    </div>
   )
 }
 
