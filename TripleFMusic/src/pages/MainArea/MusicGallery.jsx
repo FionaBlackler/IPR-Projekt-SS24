@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import PlaylistContent from './MainArea/PlaylistContent';  // Adjust path as necessary
+import React, { useState } from 'react'; 
+import PlaylistContent from './PlaylistContent'; 
+import './MusicGallery.css';
 
 function MusicGallery() {
   const [playlists, setPlaylists] = useState([
@@ -15,17 +16,22 @@ function MusicGallery() {
   };
 
   return (
-    <div>
-      <h1>Music Gallery</h1>
-      <div>
-        <h2>Playlists</h2>
-        {playlists.map(playlist => (
-          <button key={playlist.id} onClick={() => selectPlaylist(playlist)}>
-            {playlist.name}
-          </button>
-        ))}
+    <div className="music-gallery">
+      <div className="playlist-menu">
+        <h1 className="music-gallery-header1">MIXTAPES</h1>
+        <div>
+          {playlists.map(playlist => (
+            <div key={playlist.id}>
+              <a className="playlist-link" href="#" onClick={(e) => { e.preventDefault(); selectPlaylist(playlist); }}>
+                {playlist.name}
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
-      <PlaylistContent playlist={selectedPlaylist} />
+      <div className="playlist-content">
+        {selectedPlaylist ? <PlaylistContent playlist={selectedPlaylist} /> : <p>Please select a playlist.</p>}
+      </div>
     </div>
   );
 }
