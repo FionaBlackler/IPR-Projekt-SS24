@@ -1,0 +1,70 @@
+.music-gallery {
+    display: flex;
+    margin: 20px;
+    font-family: Arial, sans-serif; 
+}
+
+.music-gallery-header1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000000; 
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.music-gallery-header3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000; 
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.playlist-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.playlist-links div {
+    margin-bottom: 10px;
+}
+
+.playlist-link {
+    text-decoration: none; /* Removes underline from links */
+    color: #000; 
+    font-size: 18px; 
+    cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+    transition: color 0.3s ease; /* Smooth color transition for hover effect */
+}
+
+.playlist-link:hover {
+    color: #ff0000;
+}
+
+.playlist-menu {
+    width: 200px; 
+    border-right: 1px solid #ccc; /* Separator line */
+    padding-right: 20px;
+}
+
+.playlist-content {
+    flex-grow: 1;
+    padding-left: 20px; 
+}
+
+.selected-playlist li {
+    position: relative; /* Needed for absolute positioning of pseudo-element */
+    padding-left: 20px;
+    list-style: none; /* Remove default bullets */
+}
+
+.selected-playlist li::before {
+    content: ''; /* Necessary for the pseudo-element to show */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg); /* Center and rotate the triangle */
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid black;
+}
