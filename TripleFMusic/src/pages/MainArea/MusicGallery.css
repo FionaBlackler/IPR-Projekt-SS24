@@ -1,28 +1,30 @@
 .music-gallery {
     display: flex;
     margin: 20px;
-    font-family: Arial, sans-serif; 
+    font-family: Arial, sans-serif;
+    align-items: flex-start; /* Keeps the main container items starting from the top */
 }
 
-.music-gallery-header1 {
+.music-gallery-header, .playlist-content-header {
+    font-weight: bold;
+    color: #000000;
+}
+.music-gallery-header {
     font-size: 24px;
-    font-weight: bold;
-    color: #000000; 
     margin-top: 0;
-    padding-top: 0;
+    margin-bottom: 10px; 
 }
 
-.music-gallery-header3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #000000; 
-    margin-top: 0;
-    padding-top: 0;
+.playlist-content-header {
+    font-size: 18px; 
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .playlist-links {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .playlist-links div {
@@ -31,8 +33,8 @@
 
 .playlist-link {
     text-decoration: none; /* Removes underline from links */
-    color: #000; 
-    font-size: 18px; 
+    color: #000;
+    font-size: 18px;
     cursor: pointer; /* Cursor changes to pointer to indicate clickable */
     transition: color 0.3s ease; /* Smooth color transition for hover effect */
 }
@@ -41,21 +43,21 @@
     color: #ff0000;
 }
 
-.playlist-menu {
-    width: 200px; 
-    border-right: 1px solid #ccc; /* Separator line */
+.playlist-menu, .playlist-content {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline; 
+    justify-content: space-between; 
+    height: 100%; 
     padding-right: 20px;
-}
-
-.playlist-content {
-    flex-grow: 1;
     padding-left: 20px; 
 }
 
 .selected-playlist li {
-    position: relative; /* Needed for absolute positioning of pseudo-element */
+    position: relative;
     padding-left: 20px;
-    list-style: none; /* Remove default bullets */
+    padding-bottom: 5px;
+    list-style: none;
 }
 
 .selected-playlist li::before {
@@ -63,7 +65,7 @@
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translateY(-50%) rotate(90deg); /* Center and rotate the triangle */
+    transform: translateY(-50%) rotate(90deg); /* Rotates the arrow */
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 7px solid black;
