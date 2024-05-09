@@ -1,7 +1,13 @@
-.headerBody{
-    width: 100%;
-    background-color: aqua;
-    padding: 1rem 2rem;
-    display: flex;
-    flex-direction: column;
+nav{
+   background-color: #ffcadc;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 1% 5%;
+   width: 100%;
+}
+
+.logo{
+    width: 55%;
+    height: 55%;
 }
