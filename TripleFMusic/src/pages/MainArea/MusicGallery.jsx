@@ -17,20 +17,23 @@ function MusicGallery() {
 
   return (
     <div className="music-gallery">
-      <div className="playlist-menu">
-        <h1 className="music-gallery-header1">MIXTAPES</h1>
-        <div>
+      <div className="playlist-menu">        
+        <div sytle={{ flexGrow:1 }}>
+          <h1 className="music-gallery-header">MIXTAPES</h1> 
           {playlists.map(playlist => (
-            <div key={playlist.id}>
-              <a className="playlist-link" href="#" onClick={(e) => { e.preventDefault(); selectPlaylist(playlist); }}>
-                {playlist.name}
-              </a>
-            </div>
+          <div key={playlist.id}>
+            <a className="playlist-link" href="#" onClick={(e) => { e.preventDefault(); selectPlaylist(playlist); }}>
+              {playlist.name}
+            </a>
+          </div>
           ))}
         </div>
+        
       </div>
       <div className="playlist-content">
-        {selectedPlaylist ? <PlaylistContent playlist={selectedPlaylist} /> : <p>Please select a playlist.</p>}
+        <div style={{ flexGrow: 1 }}>
+          {selectedPlaylist ? <PlaylistContent playlist={selectedPlaylist} /> : <p>Please select a playlist.</p>}
+        </div>
       </div>
     </div>
   );
