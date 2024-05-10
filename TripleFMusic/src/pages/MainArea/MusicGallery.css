@@ -1,23 +1,30 @@
+@font-face {
+    font-family: neunziger;
+    src: url(ChomiqyFreeVersionRegular-vmYMD.ttf);
+}
+
 .music-gallery {
     background-color: #ffcadc;
     display: flex;
-    margin: 20px;
+    margin-top: 20px;
+    margin-left: 5%;
     font-family: Arial, sans-serif;
     align-items: flex-start; /* Keeps the main container items starting from the top */
 }
 
-.music-gallery-header, .playlist-content-header {
-    font-weight: bold;
-    color: #000000;
-}
 .music-gallery-header {
+    font-family: neunziger;
     font-size: 24px;
+    font-weight: lighter;
+    color:#000000;
     margin-top: 0;
     margin-bottom: 10px; 
 }
 
 .playlist-content-header {
     font-size: 18px; 
+    font-weight: bold;
+    color: #000000;
     margin-top: 5px;
     margin-bottom: 10px;
 }
@@ -51,7 +58,10 @@
     justify-content: space-between; 
     height: 100%; 
     padding-right: 20px;
-    padding-left: 20px; 
+}
+
+.playlist-content {
+    padding-left: 50px;
 }
 
 .selected-playlist li {
