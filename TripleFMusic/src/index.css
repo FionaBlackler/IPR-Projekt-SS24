@@ -1,7 +1,98 @@
-.mainBody{
-  background-color:#ffcadc;
-  width:100%;
-  background-color: #ffcadc;
+/* index.css */
 
+body {
+  background-color: #ffcadc; /* Hintergrundfarbe der Webseite (Rosa) */
+  color: #333333; /* Schriftfarbe */
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Ändere von 'center' zu 'flex-start' */
+  height: 80vh; /* Ändere von '100vh' zu '80vh' */
+  margin-top: 50px; /* Füge einen oberen Abstand hinzu */
+}
+
+.window {
+  width: 400px; /* Ändere die Breite auf 400px */
+  background-color: #00AEBD;
+  border: 4px solid #7353BA;
+  border-radius: 20px; /* Erhöhe die Rundung der Ecken */
+}
+
+.title-bar {
+  background-color: #FF736C; /* Schaltflächenfarbe (Blau) */
+  color: #7353BA; /* Schriftfarbe (Weiß) */
+  padding: 8px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.content {
+  padding: 20px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #668cff; /* Schaltflächenfarbe (Blau) */
+  color: #ffcadc; /* Schriftfarbe (Weiß) */
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 50px;
+}
+
+button:hover {
+  background-color: #668cff; /* Dunklere Schaltflächenfarbe (Dunkelblau) */
+}
+
+p {
+  margin-top: 20px;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button-container button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button-container button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.input-container {
+  text-align: left; /* Eingabefelder linksbündig ausrichten */
+}
