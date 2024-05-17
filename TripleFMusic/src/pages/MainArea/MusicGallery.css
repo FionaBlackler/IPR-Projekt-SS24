@@ -6,45 +6,49 @@
 .music-gallery {
     background-color: #ffcadc;
     display: flex;
-    margin-top: 1.25em; 
+    margin-top: 20px;
     margin-left: 5%;
     font-family: Arial, sans-serif;
-    align-items: flex-start; 
+    align-items: flex-start; /* Keeps the main container items starting from the top */
 }
 
 .music-gallery-header {
     font-family: neunziger;
-    font-size: 36px; 
+    font-size: 24px;
     font-weight: lighter;
-    color: #000000;
+    color:#000000;
     margin-top: 0;
-    margin-bottom: 0.625em;
+    margin-bottom: 10px; 
 }
 
 .playlist-content-header {
-    font-size: 32px; 
+    font-size: 18px; 
     font-weight: bold;
     color: #000000;
-    margin-top: 0.3125em;
-    margin-bottom: 0.625em; 
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .playlist-links {
     list-style-type: none;
     padding: 0;
-    margin: 1.25em;
+    margin: 0;
+}
+
+.playlist-links div {
+    margin-bottom: 10px;
 }
 
 .playlist-link {
-    text-decoration: none;
+    text-decoration: none; /* Removes underline from links */
     color: #000;
-    font-size: 24px;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    font-size: 18px;
+    cursor: pointer; /* Cursor changes to pointer to indicate clickable */
+    transition: color 0.3s ease; /* Smooth color transition for hover effect */
 }
 
 .playlist-link:hover {
-    color: #00aebd;
+    color: #ff0000;
 }
 
 .playlist-menu, .playlist-content {
@@ -53,41 +57,27 @@
     align-items: baseline; 
     justify-content: space-between; 
     height: 100%; 
-    padding-right: 1.25em;
+    padding-right: 20px;
 }
 
 .playlist-content {
-    padding-left: 3.125em;
+    padding-left: 50px;
 }
 
 .selected-playlist li {
     position: relative;
-    padding-left: 1.25em;
-    padding-bottom: 0.3125em; 
+    padding-left: 20px;
+    padding-bottom: 5px;
     list-style: none;
 }
 
 .selected-playlist li::before {
-    content: '';
+    content: ''; /* Necessary for the pseudo-element to show */
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translateY(-50%) rotate(90deg);
+    transform: translateY(-50%) rotate(90deg); /* Rotates the arrow */
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 7px solid black;
-}
-
-.playlist-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 0.625em; 
-}
-
-.playlist-table td {
-    border: none;
-    padding-right: 6.25em; 
-    padding-left: 0;
-    padding-bottom: 0.625em; 
-    text-align: left;
 }

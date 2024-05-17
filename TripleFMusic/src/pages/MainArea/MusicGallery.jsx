@@ -4,16 +4,9 @@ import './MusicGallery.css';
 
 function MusicGallery() {
   const [playlists, setPlaylists] = useState([
-    {
-      id: 1,
-      name: 'Girl Punk Favorites',
-      songs: [
-        { title: 'Obsessed', artist: 'Olivia Rodrigo', genre: 'Girl Punk Pop' },
-        { title: 'I Want You To Want Me', artist: 'Letters To Cleo', genre: 'Girl Punk Pop' },
-        { title: 'Real Wild Child', artist: 'Iggy Pop', genre: 'Girl Punk Pop' }
-      ]
-    },
-    // Add additional playlists as needed...
+    { id: 1, name: 'Rock Favorites', songs: ['Song 1', 'Song 2', 'Song 3'] },
+    { id: 2, name: 'Chill Vibes', songs: ['Song 4', 'Song 5'] },
+    { id: 3, name: 'Classical Moods', songs: ['Song 6', 'Song 7', 'Song 8', 'Song 9'] }
   ]);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);

@@ -6,17 +6,11 @@ function PlaylistContent({ playlist }) {
       {playlist ? (
         <div>
           <h3 className="playlist-content-header">{playlist.name}</h3>
-          <table className="playlist-table">
-            <tbody>
-              {playlist.songs.map((song, index) => (
-                <tr key={index}>
-                  <td>{song.title}</td>
-                  <td>{song.artist}</td>
-                  <td>{song.genre}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <ul className="selected-playlist" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+            {playlist.songs.map((song, index) => (
+              <li key={index}>{song}</li>
+            ))}
+          </ul>
         </div>
       ) : (
         <p>Please select a mixtape to view songs.</p>
