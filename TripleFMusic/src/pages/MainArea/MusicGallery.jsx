@@ -17,11 +17,9 @@ function MusicGallery() {
   ]);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
   };
-
   return (
     <div className="music-gallery">
       <div className="playlist-menu">        
