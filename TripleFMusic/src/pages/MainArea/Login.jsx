@@ -5,9 +5,12 @@ import '../../../src/index.css';
 
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import {Window, WindowHeader, Button} from 'react95';
-import vaporTeal from 'react95/dist/themes/vaporTeal'; //Thema der UI-Elemente
-import rose from 'react95/dist/themes/rose'; //Thema der UI-Elemente
+import {Window, WindowHeader, WindowContent, Button, TextInput} from 'react95';
+import vaporTeal from 'react95/dist/themes/vaporTeal'; 
+import rose from 'react95/dist/themes/rose';
+
+
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -41,27 +44,15 @@ function Login() {
       <div className="window">
         <div className="title-bar">
           <div>
-            <WindowHeader className='window-title'>TripleF Music Sign in</WindowHeader> 
+            <WindowHeader className='window-title'>TripleF Music-Sign in</WindowHeader> 
           </div>
         </div>
         <div className="content">
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <br />
-          <div className="checkbox-container">
+        <WindowContent>
+
+
+
+        <div className="checkbox-container">
             <label>
               <input
                 type="checkbox"
@@ -71,6 +62,14 @@ function Login() {
               Remember me
             </label>
           </div>
+
+  
+
+        </WindowContent>
+
+
+
+          
           <div className="button-container">
             <ThemeProvider theme={rose}>
             <Button primary>Login</Button>

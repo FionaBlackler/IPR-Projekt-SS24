@@ -18,14 +18,11 @@ body {
 }
 
 .window {
-  width: 400px; /* Ändere die Breite auf 400px */
-  border-radius: 20px; /* Erhöhe die Rundung der Ecken */
+  width: 500px; /* Ändere die Breite auf 400px */
 }
 
 .title-bar {
   padding: 8px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .title {
@@ -33,7 +30,7 @@ body {
 }
 
 .content {
-  padding: 20px;
+  padding: 30px;
 }
 
 input[type="text"],
