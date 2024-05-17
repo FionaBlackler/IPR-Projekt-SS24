@@ -1,40 +1,13 @@
 .parent{
-    
-        position: relative;
-        padding: 1.5rem;
-        font-size: 1rem;
-        border-style: solid;
-        border-width: 2px;
-        border-color: rgb(229, 190, 200) rgb(38, 3, 11) rgb(38, 3, 11) rgb(229, 190, 200);
-        box-shadow: rgba(0, 0, 0, 0.35) 4px 4px 10px 0px, rgb(241, 212, 220) 1px 1px 0px 1px inset, rgb(138, 91, 104) -1px -1px 0px 1px inset;
-        box-sizing: border-box;
-        display: inline-block;
-        background: rgb(214, 173, 184);
-        color: rgb(5, 6, 8);
         width:50%
 }
 
-.addSongtitleBar {
+.window-title{
     display: flex;
+    padding: 0;
+    margin: 0;
+    ju
 }
 
-.help{
-    background: #7C7C7C;
-	border-bottom: 0.07rem inset rgba(0,0,0,.5);
-	border-left:  0.07rem inset rgba(0,0,0,.5);
-	border-right: 0.07rem inset rgba(255,255,255,.5);
-	border-top: 0.07rem inset rgba(255,255,255,.5);
-	box-sizing: border-box;
-	color: white;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 0.5rem; 
-	min-width: 2rem;
-	width: auto;
-}
-
-.Test{
-   
-}
 
  
