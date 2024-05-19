@@ -1,6 +1,24 @@
-import React, { useState } from 'react'; 
-import PlaylistContent from './PlaylistContent'; 
+import React, { useState } from 'react';
+import PlaylistContent from './PlaylistContent';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import {
+  Window,
+  WindowHeader,
+  WindowContent,
+  Anchor,
+  MenuList,
+  MenuListItem,
+  Button
+} from 'react95';
+import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: 'ms_sans_serif';
+    background-color: #008080;
+  }
+`;
 
 function MusicGallery() {
   const [playlists, setPlaylists] = useState([
@@ -20,27 +38,44 @@ function MusicGallery() {
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
   };
+
   return (
-    <div className="music-gallery">
-      <div className="playlist-menu">        
-        <div sytle={{ flexGrow:1 }}>
-          <h1 className="music-gallery-header">MIXTAPES</h1> 
-          {playlists.map(playlist => (
-          <div key={playlist.id}>
-            <a className="playlist-link" href="#" onClick={(e) => { e.preventDefault(); selectPlaylist(playlist); }}>
-              {playlist.name}
-            </a>
-          </div>
-          ))}
-        </div>
-        
-      </div>
-      <div className="playlist-content">
-        <div style={{ flexGrow: 1 }}>
-          {selectedPlaylist ? <PlaylistContent playlist={selectedPlaylist} /> : <p>Please select a playlist.</p>}
-        </div>
-      </div>
-    </div>
+    <ThemeProvider theme={rose}>
+      <GlobalStyle />
+        <Window className="playlistwindow">
+          <WindowHeader className="window-header">
+            <span>MIXTAPES</span>
+          </WindowHeader>
+          <WindowContent>
+            <div className="music-gallery">
+              <div className="playlist-menu">
+                <MenuList>
+                  {playlists.map(playlist => (
+                    <MenuListItem key={playlist.id}>
+                      <Anchor className="anchor" href="#" onClick={(e) => { e.preventDefault(); selectPlaylist(playlist); }}>
+                        {playlist.name}
+                      </Anchor>
+                    </MenuListItem>
+                  ))}
+                </MenuList>
+              </div>
+              <div className="playlist-content">
+                {selectedPlaylist ? (
+                  <div>
+                    <div className="playlist-header">
+                      <h2>{selectedPlaylist.name}</h2>
+                      <Button>Play</Button>
+                    </div>
+                    <PlaylistContent playlist={selectedPlaylist} />
+                  </div>
+                ) : (
+                  <p>Please select a playlist.</p>
+                )}
+              </div>
+            </div>
+          </WindowContent>
+        </Window>
+    </ThemeProvider>
   );
 }
 
