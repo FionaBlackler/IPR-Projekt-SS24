@@ -2,12 +2,15 @@
 
 import React, { useState } from 'react';
 import '../../../src/index.css';
-
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import {Window, WindowHeader, Button} from 'react95';
-import vaporTeal from 'react95/dist/themes/vaporTeal'; //Thema der UI-Elemente
-import rose from 'react95/dist/themes/rose'; //Thema der UI-Elemente
+
+import {Window, WindowHeader, WindowContent, Button, Checkbox,TextInput} from 'react95';
+import vaporTeal from 'react95/dist/themes/vaporTeal'; 
+import rose from 'react95/dist/themes/rose';
+
+
+
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,23 +19,25 @@ function Login() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleLogin = () => {
-    // Hier könntest du die Überprüfung der Anmeldeinformationen durchführen
+    // Hier prüfung Anmeldedaten mit der Datenbank
     if (username === 'funda' && password === 'funda') {
       setIsLoggedIn(true);
     } else {
-      alert('Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Zugangsdaten.');
+      alert('Login failed. Please check your access data.');
     }
   };
 
+  /*
   const handleForgotPassword = () => {
-    // Hier könntest du die Funktion "Passwort vergessen" implementieren
+    //Seite Passwort vergessen?
     setShowForgotPassword(true);
   };
-
+  */
+/*
   const handleSignUp = () => {
-    // Hier könntest du die Funktion "Registrieren" implementieren
-    alert('Sign up Button wurde geklickt');
-  };
+    //Hier Registrieren
+    
+  */
 
   return (
   <ThemeProvider theme={vaporTeal}>
@@ -41,44 +46,54 @@ function Login() {
       <div className="window">
         <div className="title-bar">
           <div>
-            <WindowHeader className='window-title'>TripleF Music Sign in</WindowHeader> 
+            <WindowHeader>TripleF Music-Sign in</WindowHeader> 
           </div>
         </div>
         <div className="content">
+        <WindowContent>
           <div className="input-container">
-            <input
-              type="text"
-              placeholder="username"
+            <TextInput
               value={username}
+              placeholder="username"
               onChange={(e) => setUsername(e.target.value)}
+              
             />
             <br />
-            <input
+            <TextInput
               type="password"
-              placeholder="password"
               value={password}
+              placeholder="password"
               onChange={(e) => setPassword(e.target.value)}
-            />
+              />
           </div>
           <br />
+        
           <div className="checkbox-container">
-            <label>
-              <input
-                type="checkbox"
+              <Checkbox
+                label="remember me"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
               />
-              Remember me
-            </label>
-          </div>
+
+              <span
+                className="forgot-password"
+                onClick={() => setShowForgotPassword(true)}
+              >
+                forgot password?
+              </span>
+
+            </div>
+
+        </WindowContent>
+
           <div className="button-container">
             <ThemeProvider theme={rose}>
-            <Button primary>Login</Button>
-            <Button primary>Sign up</Button>
+              <Button primary>Login</Button>
+              <Button primary>Sign up</Button>
             </ThemeProvider>
           </div>
-          {showForgotPassword && <p>Keine Sorge! Kontaktieren Sie den Support für Hilfe.</p>}
-          {isLoggedIn && <p>Anmeldung erfolgreich! Willkommen zurück!</p>}
+          {showForgotPassword && <p>Contact support for help triplefmusic@support.de</p>}
+          {isLoggedIn && <p>logged in</p>}
         </div>
         
       </div>

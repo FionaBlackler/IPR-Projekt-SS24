@@ -1,94 +1,51 @@
-/* index.css */
-
 body {
   background-color: #ffcadc; /* Hintergrundfarbe der Webseite (Rosa) */
-  color: #0000; /* Schriftfarbe */
-  font-family: Arial, sans-serif;
   text-align: center;
-  margin: 0;
-  padding: 0;
 }
 
 .login-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Ändere von 'center' zu 'flex-start' */
-  height: 80vh; /* Ändere von '100vh' zu '80vh' */
-  margin-top: 50px; /* Füge einen oberen Abstand hinzu */
+  align-items: flex-start;  
+  margin-top: 5%;
 }
 
 .window {
-  width: 400px; /* Ändere die Breite auf 400px */
-  border-radius: 20px; /* Erhöhe die Rundung der Ecken */
+  width: 500px ;
 }
 
 .title-bar {
-  padding: 8px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.title {
-  font-weight: bold;
+  padding: 2%;
 }
 
 .content {
-  padding: 20px;
+  padding: 3%;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: calc(100% - 40px);
-  padding: 10px;
-  margin: 10px 0;
-  box-sizing: border-box;
-}
-
-button {
-  background-color: #668cff; /* Schaltflächenfarbe (Blau) */
-  color: #ffcadc; /* Schriftfarbe (Weiß) */
-  border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  cursor: pointer;
-  border-radius: 50px;
-}
-
-button:hover {
-  background-color: #668cff; /* Dunklere Schaltflächenfarbe (Dunkelblau) */
-}
-
-p {
-  margin-top: 20px;
-}
 .button-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 1%;
 }
 
 .button-container button {
   flex: 1;
-  margin: 0 5px;
+  margin: 1%;
 }
-
 
 .checkbox-container {
   display: flex;
-  align-items: flex-start;
-}
-
-.button-container {
-  display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  align-items: center; 
+  margin-top: 1rem;
 }
 
-.button-container button {
-  flex: 1;
-  margin: 0 5px;
+.forgot-password {
+  color: black;
+  cursor: pointer;
+  margin-left: auto;
 }
 
-.input-container {
-  text-align: left; /* Eingabefelder linksbündig ausrichten */
+.forgot-password:hover {
+  color: #3366ff;
 }
