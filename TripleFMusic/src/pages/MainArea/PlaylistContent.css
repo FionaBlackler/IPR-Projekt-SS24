@@ -1,0 +1,20 @@
+.playlist-content-container {
+    height: 350px;
+    overflow-y: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table td {
+    border: none;
+    padding: 10px;
+    text-align: left;
+}
+
+.table-cell {
+    text-align: left;
+    padding: 10px;
+}
