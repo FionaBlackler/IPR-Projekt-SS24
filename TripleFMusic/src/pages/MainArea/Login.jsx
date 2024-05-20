@@ -40,7 +40,7 @@ function Login() {
   */
 
   return (
-  <ThemeProvider theme={vaporTeal}>
+  <ThemeProvider theme={rose}>
     <div className="login-container">
       <Window resizable>
       <div className="window">
