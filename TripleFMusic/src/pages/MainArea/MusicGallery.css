@@ -27,7 +27,7 @@
     flex-direction: row;
     align-items: flex-start;
     height: 100%;
-    min-height: 400px; /* Adjust this as needed */
+    min-height: 400px;
 }
 
 .button-panel { 
@@ -38,8 +38,8 @@
 }
 
 .button-panel .button {
-    width: 100%; /* Make buttons full width of the sidebar */
-    margin-bottom: 10px; /* Space between buttons */
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .sidebar-separator {
