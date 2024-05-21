@@ -8,6 +8,14 @@ nav{
 }
 
 .logo{
-    width: 55%;
-    height: 55%;
+    margin-left: 2rem;
+    display: flex;
+    height: 5rem;
+    width: 3rem
+}
+
+
+.logo-image{
+    width: 30%;
+    height: 70%;
 }
