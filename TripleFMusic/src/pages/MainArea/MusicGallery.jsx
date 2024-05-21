@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PlaylistContent from './PlaylistContent';
 import { ThemeProvider } from 'styled-components';
-import { Window, WindowHeader, WindowContent, Button, Separator, Frame } from 'react95';
+import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput } from 'react95';
 import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
@@ -12,43 +12,6 @@ function MusicGallery() {
       id: 1,
       name: 'Pop Punk Favorites',
       songs: [
-        { title: 'Obsessed', artist: 'Olivia Rodrigo', genre: 'Pop Punk' },
-        { title: 'I Want You To Want Me', artist: 'Letters To Cleo', genre: 'Pop Punk' },
-        { title: 'Real Wild Child', artist: 'Iggy Pop', genre: 'Pop Punk' },
-        { title: 'Rebel Girl', artist: 'Bikini Kill', genre: 'Girl Pop Punk' },
-        { title: 'Misery Business', artist: 'Paramore', genre: 'Girl Pop Punk' },
-        { title: 'The Anthem', artist: 'Good Charlotte', genre: 'Girl Pop Punk' },
-        { title: 'Sk8er Boi', artist: 'Avril Lavigne', genre: 'Girl Pop Punk' },
-        { title: 'Complicated', artist: 'Avril Lavigne', genre: 'Girl Pop Punk' },
-        { title: 'Bad Reputation', artist: 'Joan Jett', genre: 'Girl Pop Punk' },
-        { title: 'Just a Girl', artist: 'No Doubt', genre: 'Girl Pop Punk' },
-        { title: 'He Wasn’t', artist: 'Avril Lavigne', genre: 'Girl Pop Punk' },
-        { title: 'Cherry Bomb', artist: 'The Runaways', genre: 'Girl Pop Punk' },
-        { title: 'She’s Kerosene', artist: 'The Interrupters', genre: 'Girl Pop Punk' },
-        { title: 'American Idiot', artist: 'Green Day', genre: 'Girl Pop Punk' },
-        { title: 'Dear Maria, Count Me In', artist: 'All Time Low', genre: 'Girl Pop Punk' },
-        { title: 'I Miss You', artist: 'blink-182', genre: 'Girl Pop Punk' },
-        { title: 'Sugar, We’re Goin Down', artist: 'Fall Out Boy', genre: 'Girl Pop Punk' },
-        { title: 'Welcome to the Black Parade', artist: 'My Chemical Romance', genre: 'Girl Pop Punk' },
-        { title: 'All the Small Things', artist: 'blink-182', genre: 'Girl Pop Punk' },
-        { title: 'In Too Deep', artist: 'Sum 41', genre: 'Girl Pop Punk' },
-        { title: 'Basket Case', artist: 'Green Day', genre: 'Girl Pop Punk' },
-        { title: 'Fat Lip', artist: 'Sum 41', genre: 'Girl Pop Punk' },
-        { title: 'Ocean Avenue', artist: 'Yellowcard', genre: 'Girl Pop Punk' },
-        { title: 'Girls & Boys', artist: 'Good Charlotte', genre: 'Girl Pop Punk' },
-        { title: 'My Friends Over You', artist: 'New Found Glory', genre: 'Girl Pop Punk' },
-        { title: 'The Middle', artist: 'Jimmy Eat World', genre: 'Girl Pop Punk' },
-        { title: 'Famous Last Words', artist: 'My Chemical Romance', genre: 'Girl Pop Punk' },
-        { title: 'Swing, Swing', artist: 'The All-American Rejects', genre: 'Girl Pop Punk' },
-        { title: 'Check Yes Juliet', artist: 'We The Kings', genre: 'Girl Pop Punk' },
-        { title: 'Dirty Little Secret', artist: 'The All-American Rejects', genre: 'Girl Pop Punk' },
-        { title: 'Headstrong', artist: 'Trapt', genre: 'Girl Pop Punk' },
-        { title: 'The Rock Show', artist: 'blink-182', genre: 'Girl Pop Punk' },
-        { title: 'Somewhere on Fullerton', artist: 'Allister', genre: 'Girl Pop Punk' },
-        { title: 'My Own Worst Enemy', artist: 'Lit', genre: 'Girl Pop Punk' },
-        { title: 'I Write Sins Not Tragedies', artist: 'Panic! At The Disco', genre: 'Girl Pop Punk' },
-        { title: 'Stacy’s Mom', artist: 'Fountains of Wayne', genre: 'Girl Pop Punk' },
-        { title: 'Dance, Dance', artist: 'Fall Out Boy', genre: 'Girl Pop Punk' },
         { title: 'Thnks fr th Mmrs', artist: 'Fall Out Boy', genre: 'Girl Pop Punk' },
         { title: '1985', artist: 'Bowling for Soup', genre: 'Girl Pop Punk' },
         { title: 'American Hi-Fi', artist: 'Flavor of the Weak', genre: 'Girl Pop Punk' },
@@ -64,7 +27,7 @@ function MusicGallery() {
       ]
     },
     {
-      id: 1,
+      id: 2,
       name: 'Pop Punk Favorites',
       songs: [
         { title: 'Obsessed', artist: 'Olivia Rodrigo', genre: 'Pop Punk' },
@@ -76,6 +39,9 @@ function MusicGallery() {
   ]);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newPlaylistName, setNewPlaylistName] = useState('');
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, playlistId: null });
 
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
@@ -89,6 +55,51 @@ function MusicGallery() {
           : playlist
       )
     );
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewPlaylistName('');
+  };
+
+  const handleNewPlaylistNameChange = (e) => {
+    setNewPlaylistName(e.target.value);
+  };
+
+  const addNewPlaylist = () => {
+    const newPlaylist = {
+      id: playlists.length + 1,
+      name: newPlaylistName,
+      songs: []
+    };
+    setPlaylists([...playlists, newPlaylist]);
+    closeModal();
+  };
+
+  const handleRightClick = (e, playlistId) => {
+    e.preventDefault();
+    setContextMenu({
+      visible: true,
+      x: e.pageX,
+      y: e.pageY,
+      playlistId: playlistId
+    });
+  };
+
+  const deletePlaylist = (playlistId) => {
+    setPlaylists(playlists.filter(playlist => playlist.id !== playlistId));
+    setContextMenu({ ...contextMenu, visible: false });
+    if (selectedPlaylist && selectedPlaylist.id === playlistId) {
+      setSelectedPlaylist(null);
+    }
+  };
+
+  const closeContextMenu = () => {
+    setContextMenu({ ...contextMenu, visible: false });
   };
 
   return (
@@ -113,7 +124,7 @@ function MusicGallery() {
             >
               <div className="button-panel">
                 <Link to="/addsong"><Button className="button">Add Song</Button></Link>
-                <Button>Add Playlist</Button>
+                <Button onClick={openModal}>Add Playlist</Button>
               </div>
               <Separator style={{ margin: '10px 0' }} />
               <div className="playlist-menu">
@@ -126,6 +137,7 @@ function MusicGallery() {
                         e.preventDefault();
                         selectPlaylist(playlist);
                       }}
+                      onContextMenu={(e) => handleRightClick(e, playlist.id)}
                     >
                       {playlist.name}
                     </a>
@@ -154,6 +166,35 @@ function MusicGallery() {
           </div>
         </WindowContent>
       </Window>
+
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Add New Playlist</h2>
+            <div className="input-container">
+              <TextInput
+                value={newPlaylistName}
+                placeholder="Playlist Name"
+                onChange={handleNewPlaylistNameChange}
+              />
+            </div>
+            <div className="modal-buttons">
+              <Button onClick={addNewPlaylist}>Add</Button>
+              <Button onClick={closeModal}>Cancel</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {contextMenu.visible && (
+        <div
+          className="context-menu"
+          style={{ top: contextMenu.y, left: contextMenu.x }}
+          onClick={closeContextMenu}
+        >
+          <Button onClick={() => deletePlaylist(contextMenu.playlistId)}>Delete Playlist</Button>
+        </div>
+      )}
     </ThemeProvider>
   );
 }
