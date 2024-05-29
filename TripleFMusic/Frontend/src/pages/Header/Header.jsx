@@ -11,7 +11,7 @@ import vaporTeal from "react95/dist/themes/vaporTeal";
 
 function Header() {
   return (
-    <>
+    <div className="header">
       <ThemeProvider theme={rose}>
         <AppBar>
           <Toolbar style={{ justifyContent: "space-between" }}>
@@ -26,7 +26,7 @@ function Header() {
           </Toolbar>
         </AppBar>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
 

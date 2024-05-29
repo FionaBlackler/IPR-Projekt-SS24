@@ -19,3 +19,8 @@ nav{
     width: 30%;
     height: 70%;
 }
+
+.header{
+    margin-bottom: 3rem;
+    padding: 0 0 0;
+}
