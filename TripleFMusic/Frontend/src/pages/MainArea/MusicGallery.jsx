@@ -98,6 +98,9 @@ function MusicGallery() {
       <Window className="playlistwindow">
         <WindowHeader className="window-header">
           <span>MIXTAPES</span>
+          <Button onClick={closeModal}>
+                <span className="close-icon" />
+          </Button>
         </WindowHeader>
         <WindowContent>
           <div className="music-gallery">
