@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PlaylistContent from './PlaylistContent';
 import { ThemeProvider } from 'styled-components';
-import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput } from 'react95';
+import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput, Slider } from 'react95';
 import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
@@ -36,6 +36,12 @@ function MusicGallery() {
 
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
+  };
+
+  const [value, setValue] = useState(30);
+  
+  const handleChange = newValue => {
+    setValue(newValue);
   };
 
   const addSong = (newSong) => {
@@ -98,9 +104,6 @@ function MusicGallery() {
       <Window className="playlistwindow">
         <WindowHeader className="window-header">
           <span>MIXTAPES</span>
-          <Button onClick={closeModal}>
-            <span className="close-icon" />
-          </Button>
         </WindowHeader>
         <WindowContent>
           <div className="music-gallery">
@@ -109,7 +112,7 @@ function MusicGallery() {
               style={{
                 width: '20%',
                 height: '416px',
-                backgroundColor: '#f0f0f0',
+                backgroundColor: '#ffffff',
                 borderLeft: '3px solid #333333',
                 borderTop: '3px solid #333333',
                 boxShadow: 'none',
@@ -154,9 +157,28 @@ function MusicGallery() {
             </div>
           </div>
           <div className="player-controls">
-            <Button>&lt;&lt;</Button>
-            <Button>Play</Button>
-            <Button>&gt;&gt;</Button>
+            <div className="player-left">
+              <img src="album-cover-url" alt="Album Cover" className="album-cover" />
+              <div className="song-info-player">
+                <div className="song-title-player">Song Title</div>
+                <div className="song-artist-player">Artist Name</div>
+              </div>
+            </div>
+            <div className="player-middle">
+              <Button>&lt;&lt;</Button>
+              <Button>►</Button>
+              <Button>&gt;&gt;</Button>
+              <Button>↻</Button>
+            </div>
+            <div className="player-right">
+              <div className="slider-wrapper">
+                <div className="slider-row">
+                  <div className="slider-col">
+                    <Slider size="200px" value={value} onChange={handleChange} />
+                 </div>
+                </div>
+              </div>
+            </div>
           </div>
         </WindowContent>
       </Window>
