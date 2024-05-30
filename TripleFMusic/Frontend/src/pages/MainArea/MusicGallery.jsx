@@ -12,11 +12,21 @@ function MusicGallery() {
       id: 1,
       name: 'Pop Punk Favorites',
       songs: [
-        { title: 'Thnks fr th Mmrs', artist: 'Fall Out Boy', genre: 'Girl Pop Punk' },
-        // More songs...
+        { title: 'Obsessed', artist: 'Olivia Rodrigo', genre: 'Pop Punk' },
+        { title: 'I Want You To Want Me', artist: 'Letters To Cleo', genre: 'Pop Punk' },
+        { title: 'Real Wild Child', artist: 'Iggy Pop', genre: 'Pop Punk' },
+        { title: 'Rebel Girl', artist: 'Bikini Kill', genre: 'Pop Punk' },
+        { title: 'Misery Business', artist: 'Paramore', genre: 'Pop Punk' },
+        { title: 'The Anthem', artist: 'Good Charlotte', genre: 'Pop Punk' },
+        { title: 'Sk8er Boi', artist: 'Avril Lavigne', genre: 'Pop Punk' },
+        { title: 'Complicated', artist: 'Avril Lavigne', genre: 'Pop Punk' },
+        { title: 'Bad Reputation', artist: 'Joan Jett', genre: 'Pop Punk' },
+        { title: 'Just a Girl', artist: 'No Doubt', genre: 'Pop Punk' },
+        { title: 'He Wasn’t', artist: 'Avril Lavigne', genre: 'Pop Punk' },
+        { title: 'Cherry Bomb', artist: 'The Runaways', genre: 'Pop Punk' },
       ]
     },
-    // More playlists...
+    // Add additional playlists as needed...
   ]);
 
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -84,7 +94,7 @@ function MusicGallery() {
   };
 
   return (
-    <ThemeProvider theme={rose}>
+    <ThemeProvider theme={rose}> 
       <Window className="playlistwindow">
         <WindowHeader className="window-header">
           <span>MIXTAPES</span>
@@ -110,13 +120,13 @@ function MusicGallery() {
               <Separator style={{ margin: '10px 0' }} />
               <div className="playlist-menu">
                 {playlists.map((playlist) => (
-                  <div key={playlist.id} className="playlist-item">
+                  <div key={playlist.id} className="playlist-item"> 
                     <a
-                      className="playlist-link"
+                      className="playlist-link" 
                       href="#"
                       onClick={(e) => {
                         e.preventDefault();
-                        selectPlaylist(playlist);
+                        selectPlaylist(playlist); 
                       }}
                       onContextMenu={(e) => handleRightClick(e, playlist.id)}
                     >
@@ -150,20 +160,27 @@ function MusicGallery() {
 
       {isModalOpen && (
         <div className="modal">
-          <div className="modal-content">
-            <h2>Add New Playlist</h2>
-            <div className="input-container">
-              <TextInput
-                value={newPlaylistName}
-                placeholder="Playlist Name"
-                onChange={handleNewPlaylistNameChange}
-              />
-            </div>
-            <div className="modal-buttons">
-              <Button onClick={addNewPlaylist}>Add</Button>
-              <Button onClick={closeModal}>Cancel</Button>
-            </div>
-          </div>
+          <Window className="modal-window">
+            <WindowHeader className="window-header">
+              <span>Add New Playlist</span>
+              <Button onClick={closeModal}>
+                <span className="close-icon" />
+              </Button>
+            </WindowHeader>
+            <WindowContent>
+              <div className="input-container">
+                <TextInput
+                  value={newPlaylistName}
+                  placeholder="Playlist Name"
+                  onChange={handleNewPlaylistNameChange}
+                />
+              </div>
+              <div className="modal-buttons">
+                <Button onClick={addNewPlaylist}>Add</Button>
+                <Button onClick={closeModal}>Cancel</Button>
+              </div>
+            </WindowContent>
+          </Window>
         </div>
       )}
 
