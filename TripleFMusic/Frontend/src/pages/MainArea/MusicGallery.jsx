@@ -99,7 +99,7 @@ function MusicGallery() {
         <WindowHeader className="window-header">
           <span>MIXTAPES</span>
           <Button onClick={closeModal}>
-                <span className="close-icon" />
+            <span className="close-icon" />
           </Button>
         </WindowHeader>
         <WindowContent>
