@@ -33,15 +33,11 @@ function MusicGallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, playlistId: null });
+  const [currentSong, setCurrentSong] = useState(null);
+  const [volume, setVolume] = useState(50); // Volume state
 
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
-  };
-
-  const [value, setValue] = useState(30);
-  
-  const handleChange = newValue => {
-    setValue(newValue);
   };
 
   const addSong = (newSong) => {
@@ -101,8 +97,8 @@ function MusicGallery() {
 
   return (
     <ThemeProvider theme={rose}> 
-      <Window className="playlistwindow">
-        <WindowHeader className="window-header">
+      <Window className="music-gallery-window">
+        <WindowHeader className="music-gallery-window-header">
           <span>MIXTAPES</span>
         </WindowHeader>
         <WindowContent>
@@ -119,9 +115,9 @@ function MusicGallery() {
                 borderRadius: '0'
               }}
             >
-              <div className="button-panel">
-                <Link to="/addsong"><Button className="button">Add Song</Button></Link>
-                <Button onClick={openModal}>Add Playlist</Button>
+              <div className="playlist-menu-button-panel">
+                <Link to="/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
+                <Button onClick={openModal}>Add MIXTAPE</Button>
               </div>
               <Separator style={{ margin: '10px 0' }} />
               <div className="playlist-menu">
@@ -147,21 +143,21 @@ function MusicGallery() {
                 <div>
                   <div className="playlist-header">
                     <h2>{selectedPlaylist.name}</h2>
-                    <Button>Play</Button>
+                    <Button>►</Button>
                   </div>
-                  <PlaylistContent playlist={selectedPlaylist} />
+                  <PlaylistContent playlist={selectedPlaylist} onSongClick={setCurrentSong} />
                 </div>
               ) : (
-                <p>Please select a playlist.</p>
+                <p>Please select a MIXTAPE.</p>
               )}
             </div>
           </div>
           <div className="player-controls">
             <div className="player-left">
-              <img src="album-cover-url" alt="Album Cover" className="album-cover" />
-              <div className="song-info-player">
-                <div className="song-title-player">Song Title</div>
-                <div className="song-artist-player">Artist Name</div>
+              <img src="album-cover-url" alt="Album Cover" className="player-album-cover" />
+              <div className="player-song-info">
+                <div className="player-song-title">{currentSong ? currentSong.title : 'Song Title'}</div>
+                <div className="player-song-artist">{currentSong ? currentSong.artist : 'Artist Name'}</div>
               </div>
             </div>
             <div className="player-middle">
@@ -171,36 +167,43 @@ function MusicGallery() {
               <Button>↻</Button>
             </div>
             <div className="player-right">
-              <div className="slider-wrapper">
-                <div className="slider-row">
-                  <div className="slider-col">
-                    <Slider size="200px" value={value} onChange={handleChange} />
-                 </div>
-                </div>
-              </div>
+              <Slider
+                value={volume}
+                onChange={(e) => setVolume(e.target.value)}
+                min={0}
+                max={100}
+                width={150}
+                style={{
+                  height: '10px',
+                  backgroundColor: '#C0C0C0',
+                  border: '2px solid #000',
+                  boxShadow: 'inset 1px 1px 1px rgba(255, 255, 255, 0.5)',
+                  borderRadius: '5px'
+                }}
+              />
             </div>
           </div>
         </WindowContent>
       </Window>
 
       {isModalOpen && (
-        <div className="modal">
-          <Window className="modal-window">
-            <WindowHeader className="window-header">
+        <div className="add-playlist-modal">
+          <Window className="add-playlist-modal-window">
+            <WindowHeader className="add-playlist-window-header">
               <span>Add New Playlist</span>
               <Button onClick={closeModal}>
                 <span className="close-icon" />
               </Button>
             </WindowHeader>
             <WindowContent>
-              <div className="input-container">
+              <div className="add-playlist-input-container">
                 <TextInput
                   value={newPlaylistName}
                   placeholder="Playlist Name"
                   onChange={handleNewPlaylistNameChange}
                 />
               </div>
-              <div className="modal-buttons">
+              <div className="add-playlist-modal-buttons">
                 <Button onClick={addNewPlaylist}>Add</Button>
                 <Button onClick={closeModal}>Cancel</Button>
               </div>
@@ -211,7 +214,7 @@ function MusicGallery() {
 
       {contextMenu.visible && (
         <div
-          className="context-menu"
+          className="add-playlist-context-menu"
           style={{ top: contextMenu.y, left: contextMenu.x }}
           onClick={closeContextMenu}
         >
