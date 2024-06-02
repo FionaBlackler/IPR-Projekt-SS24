@@ -13,7 +13,7 @@ function Header() {
   return (
     <div className="header">
       <ThemeProvider theme={rose}>
-        <AppBar>
+        <AppBar position="fixed">
           <Toolbar style={{ justifyContent: "space-between" }}>
             <Button onClick={() => {}} style={{ fontWeight: "bold" }}>
               <img
