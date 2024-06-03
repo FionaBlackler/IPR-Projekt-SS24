@@ -63,13 +63,13 @@ const About = () => {
             <Panel variant="well" className="about-section">
               <h2 className="section-header">Our motivation</h2>
               <Cutout className="cutout">
-          <Tooltip text='Lets tackle this module like its a piñata filled with passing grades – swing hard and aim for success! 🤷' enterDelay={100} leaveDelay={200} position='top'>
-                 <div className='matze'>
-                  <Button>Matze</Button>
-                </div>
-              </Tooltip>
-            </Cutout>
-          </Panel>
+                <Tooltip text='Lets tackle this module like its a piñata filled with passing grades – swing hard and aim for success! 🤷' enterDelay={100} leaveDelay={200} position='top'>
+                  <div className='matze'>
+                   <Button>Matze</Button>
+                  </div>
+                </Tooltip>
+              </Cutout>
+            </Panel>
 
             <Panel variant="well" className="about-section">
               <h2 className="section-header">Contact</h2>
