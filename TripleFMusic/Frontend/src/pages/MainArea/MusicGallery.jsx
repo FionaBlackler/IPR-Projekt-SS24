@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PlaylistContent from './PlaylistContent.jsx';
 import { ThemeProvider } from 'styled-components';
 import Draggable from 'react-draggable';
-import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput, Slider } from 'react95';
+import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput } from 'react95';
 import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
 function MusicGallery() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [playlists, setPlaylists] = useState([
     {
@@ -98,11 +98,11 @@ function MusicGallery() {
   };
 
   const handleClose = () => {
-    history.push('/welcome/home');
+    navigate('/welcome/home');
   };
 
   return (
-    <ThemeProvider theme={rose}> 
+    <ThemeProvider theme={rose}>
       <Draggable handle=".music-gallery-window-header">
         <div className="draggable-window">
           <Window className="music-gallery-window">
@@ -127,19 +127,19 @@ function MusicGallery() {
                   }}
                 >
                   <div className="playlist-menu-button-panel">
-                    <Link to="/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
+                    <Link to="welcome/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
                     <Button onClick={openModal}>Add MIXTAPE</Button>
                   </div>
                   <Separator style={{ margin: '10px 0' }} />
                   <div className="playlist-menu">
                     {playlists.map((playlist) => (
-                      <div key={playlist.id} className="playlist-item"> 
+                      <div key={playlist.id} className="playlist-item">
                         <a
-                          className="playlist-link" 
+                          className="playlist-link"
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            selectPlaylist(playlist); 
+                            selectPlaylist(playlist);
                           }}
                           onContextMenu={(e) => handleRightClick(e, playlist.id)}
                         >
@@ -186,31 +186,34 @@ function MusicGallery() {
       </Draggable>
 
       {isModalOpen && (
-        <Draggable handle=".add-playlist-window-header">
-          <div className="add-playlist-modal">
-            <Window className="add-playlist-modal-window">
-              <WindowHeader className="add-playlist-window-header">
-                <span>Add New MIXTAPE</span>
-                <Button onClick={closeModal}>
-                  <span className="close-icon" />
-                </Button>
-              </WindowHeader>
-              <WindowContent>
-                <div className="add-playlist-input-container">
-                  <TextInput
-                    value={newPlaylistName}
-                    placeholder="Playlist Name"
-                    onChange={handleNewPlaylistNameChange}
-                  />
-                </div>
-                <div className="add-playlist-modal-buttons">
-                  <Button onClick={addNewPlaylist}>Add</Button>
-                  <Button onClick={closeModal}>Cancel</Button>
-                </div>
-              </WindowContent>
-            </Window>
-          </div>
-        </Draggable>
+        <>
+          <div className="modal-background" />
+          <Draggable handle=".add-playlist-window-header">
+            <div className="add-playlist-modal">
+              <Window className="add-playlist-modal-window">
+                <WindowHeader className="add-playlist-window-header">
+                  <span>Add New MIXTAPE</span>
+                  <Button onClick={closeModal}>
+                    <span className="close-icon" />
+                  </Button>
+                </WindowHeader>
+                <WindowContent>
+                  <div className="add-playlist-input-container">
+                    <TextInput
+                      value={newPlaylistName}
+                      placeholder="Playlist Name"
+                      onChange={handleNewPlaylistNameChange}
+                    />
+                  </div>
+                  <div className="add-playlist-modal-buttons">
+                    <Button onClick={addNewPlaylist}>Add</Button>
+                    <Button onClick={closeModal}>Cancel</Button>
+                  </div>
+                </WindowContent>
+              </Window>
+            </div>
+          </Draggable>
+        </>
       )}
 
       {contextMenu.visible && (
