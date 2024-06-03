@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PlaylistContent from './PlaylistContent.jsx';
 import { ThemeProvider } from 'styled-components';
 import Draggable from 'react-draggable';
@@ -8,6 +8,8 @@ import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
 function MusicGallery() {
+  const history = useHistory();
+
   const [playlists, setPlaylists] = useState([
     {
       id: 1,
@@ -95,6 +97,10 @@ function MusicGallery() {
     setContextMenu({ ...contextMenu, visible: false });
   };
 
+  const handleClose = () => {
+    history.push('/welcome/home');
+  };
+
   return (
     <ThemeProvider theme={rose}> 
       <Draggable handle=".music-gallery-window-header">
@@ -102,7 +108,7 @@ function MusicGallery() {
           <Window className="music-gallery-window">
             <WindowHeader className="music-gallery-window-header">
               <span>MIXTAPES</span>
-              <Button onClick={closeModal}>
+              <Button onClick={handleClose}>
                 <span className="close-icon" />
               </Button>
             </WindowHeader>
@@ -121,7 +127,7 @@ function MusicGallery() {
                   }}
                 >
                   <div className="playlist-menu-button-panel">
-                    <Link to="/welcome/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
+                    <Link to="/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
                     <Button onClick={openModal}>Add MIXTAPE</Button>
                   </div>
                   <Separator style={{ margin: '10px 0' }} />
