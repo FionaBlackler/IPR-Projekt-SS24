@@ -7,6 +7,7 @@ import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInpu
 import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
+
 function MusicGallery() {
   const navigate = useNavigate();
 
@@ -109,7 +110,7 @@ function MusicGallery() {
             <WindowHeader className="music-gallery-window-header">
               <span>MIXTAPES</span>
               <Button onClick={handleClose}>
-                <span className="close-icon" />
+                <span className="music-gallery-close-icon" />
               </Button>
             </WindowHeader>
             <WindowContent>
@@ -194,7 +195,7 @@ function MusicGallery() {
                 <WindowHeader className="add-playlist-window-header">
                   <span>Add New MIXTAPE</span>
                   <Button onClick={closeModal}>
-                    <span className="close-icon" />
+                    <span className="music-gallery-close-icon" />
                   </Button>
                 </WindowHeader>
                 <WindowContent>
