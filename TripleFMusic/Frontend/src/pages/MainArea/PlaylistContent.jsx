@@ -4,18 +4,18 @@ import { ThemeProvider } from 'styled-components';
 import rose from 'react95/dist/themes/rose';
 import './PlaylistContent.css';
 
-function PlaylistContent({ playlist }) {
+function PlaylistContent({ playlist, onSongClick }) {
   return (
     <ThemeProvider theme={rose}>
       <div className="playlist-content-container">
         <Table className="playlist-table">
           <TableBody>
             {playlist.songs.map((song, index) => (
-              <TableRow key={index}>
-                <TableDataCell className="table-cell">{index + 1}</TableDataCell>
-                <TableDataCell className="table-cell">{song.title}</TableDataCell>
-                <TableDataCell className="table-cell">{song.artist}</TableDataCell>
-                <TableDataCell className="table-cell">{song.genre}</TableDataCell>
+              <TableRow key={index} onClick={() => onSongClick(song)}>
+                <TableDataCell className="playlist-table-cell">{index + 1}</TableDataCell>
+                <TableDataCell className="playlist-table-cell">{song.title}</TableDataCell>
+                <TableDataCell className="playlist-table-cell">{song.artist}</TableDataCell>
+                <TableDataCell className="playlist-table-cell">{song.genre}</TableDataCell>
               </TableRow>
             ))}
           </TableBody>

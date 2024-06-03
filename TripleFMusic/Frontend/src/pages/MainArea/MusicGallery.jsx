@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PlaylistContent from './PlaylistContent';
+import PlaylistContent from './PlaylistContent.jsx';
 import { ThemeProvider } from 'styled-components';
 import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInput, Slider } from 'react95';
 import rose from 'react95/dist/themes/rose';
@@ -34,7 +34,6 @@ function MusicGallery() {
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, playlistId: null });
   const [currentSong, setCurrentSong] = useState(null);
-  const [volume, setVolume] = useState(50); // Volume state
 
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
@@ -100,6 +99,9 @@ function MusicGallery() {
       <Window className="music-gallery-window">
         <WindowHeader className="music-gallery-window-header">
           <span>MIXTAPES</span>
+          <Button onClick={closeModal}>
+            <span className="close-icon" />
+          </Button>
         </WindowHeader>
         <WindowContent>
           <div className="music-gallery">
@@ -167,20 +169,6 @@ function MusicGallery() {
               <Button>↻</Button>
             </div>
             <div className="player-right">
-              <Slider
-                value={volume}
-                onChange={(e) => setVolume(e.target.value)}
-                min={0}
-                max={100}
-                width={150}
-                style={{
-                  height: '10px',
-                  backgroundColor: '#C0C0C0',
-                  border: '2px solid #000',
-                  boxShadow: 'inset 1px 1px 1px rgba(255, 255, 255, 0.5)',
-                  borderRadius: '5px'
-                }}
-              />
             </div>
           </div>
         </WindowContent>
@@ -190,7 +178,7 @@ function MusicGallery() {
         <div className="add-playlist-modal">
           <Window className="add-playlist-modal-window">
             <WindowHeader className="add-playlist-window-header">
-              <span>Add New Playlist</span>
+              <span>Add New MIXTAPE</span>
               <Button onClick={closeModal}>
                 <span className="close-icon" />
               </Button>

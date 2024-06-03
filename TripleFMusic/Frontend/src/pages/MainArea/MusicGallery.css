@@ -3,7 +3,7 @@
     src: url('https://static-webfonts.netlify.app/ms-sans-serif/ms-sans-serift.ttf') format('truetype');
 }
 
-.playlistwindow {
+.music-gallery-window {
     width: 90%;
     margin: 20px auto;
     border: 2px solid #000;
@@ -11,7 +11,7 @@
     border-radius: 0;
 }
 
-.window-header {
+.music-gallery-window-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,21 +30,16 @@
     min-height: 400px;
 }
 
-.button-panel { 
+.playlist-menu-button-panel { 
     display: flex;
     flex-direction: column;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.button-panel .button {
+.playlist-menu-button-panel .playlist-menu-button {
     width: 100%;
     margin-bottom: 10px;
-}
-
-.sidebar-separator {
-    border: 1px solid #000;
-    width: 100%;
 }
 
 .playlist-menu {
@@ -105,24 +100,27 @@
     margin-right: 30px;
 }
 
-.album-cover {
+.player-album-cover {
     width: 50px;
     height: 50px;
     margin-right: 20px;
     margin-left: 20px;
 }
 
-.song-info-player {
+.player-song-info {
     display: flex;
     flex-direction: column;
 }
 
-.song-title-player {
+.player-song-title {
     font-weight: bold;
+    text-align: left;
+    
 }
 
-.song-artist-player {
+.player-song-artist {
     font-style: italic;
+    text-align: left;
 }
 
 .player-middle {
@@ -139,26 +137,7 @@
     align-items: center;
 }
 
-.slider-wrapper {
-    background: var(--material);
-}
-  
-.slider-col {
-display: flex;
-flex-direction: column;
-justify-content: space-around;
-}
-
-.slider-row {
-display: flex;
-}
-
-.slider-row > *:first-child {
-margin-top: 2rem;
-margin-right: 1rem;
-}
-
-.modal {
+.add-playlist-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -170,27 +149,27 @@ margin-right: 1rem;
   justify-content: center;
 }
 
-.modal-window {
-  width: 400px;
+.add-playlist-modal-window {
+  width: 400px; /* Adjust width as needed */
 }
 
-.window-header {
+.add-playlist-window-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
 }
 
-.input-container {
+.add-playlist-input-container {
   margin-bottom: 1rem;
 }
 
-.modal-buttons {
+.add-playlist-modal-buttons {
   display: flex;
   justify-content: space-between;
 }
     
-.context-menu {
+.add-playlist-context-menu {
     position: absolute;
     background: #ffffff;
     border: 1px solid #ccc;
