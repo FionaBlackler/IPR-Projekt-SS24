@@ -8,7 +8,7 @@
     justify-content: space-between;
     padding: 0;
     margin: 0;
- 
+  
 }
 
 span.newSong{
@@ -40,3 +40,39 @@ button.help{
     width:100%;
     height:100%;
 }
+
+.addsong-body {
+    display: flex;
+    height:58.8rem
+  }
+  
+  .icons-menu {
+    flex: 1; /* Adjust the value to control the width ratio */
+    /*background-color: lightblue; /* Just for visibility */
+    
+}
+  
+  .addsong-window-container {
+    flex: 7.5; /* Adjust the value to control the width ratio */
+    display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; 
+  }
+
+  .home-window{
+    padding: 2rem, 2rem, 2rem;
+    width:80%;
+    height: 85%;
+    margin-left: 3rem;
+  }
+
+  .buffer{
+    height:2rem;
+  }
+
+  .icon{
+    display: flex;
+    flex-direction: column; /* Align items as a column */
+  justify-content: center; /* Optional: Center vertically within the parent */
+  align-items: center;
+  }

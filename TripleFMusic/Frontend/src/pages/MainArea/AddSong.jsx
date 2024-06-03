@@ -15,12 +15,18 @@ import {
   GroupBox,
   Checkbox,
 } from "react95";
-import vaporTeal from "react95/dist/themes/vaporTeal";
+import aboutIcon from "../Images/icons/recycle2.png";
+import galleryIcon from "../Images/icons/gallery4.png";
+import addSongIcon from "../Images/icons/addsong2.png";
+import { useNavigate } from "react-router-dom";
+import homeIcon from "../Images/icons/computer3.png";
 
 function AddSong() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   return (
     <ThemeProvider theme={rose}>
-      <Window className="parent">
+      <Window className="addsong-window-container">
         <WindowHeader className="window-title">
           <span className="newSong">Add new song</span>
           <Button className="help"> ? </Button>
