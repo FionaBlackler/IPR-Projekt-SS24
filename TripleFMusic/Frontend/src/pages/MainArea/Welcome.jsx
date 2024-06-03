@@ -41,9 +41,11 @@ function Welcome() {
           </AppBar>
         </ThemeProvider>
       </div>
-      <section className="home-container">
-        <ComputerCanvas />
-      </section>
+      <a onClick={() => {}}>
+        <section className="home-container">
+          <ComputerCanvas />
+        </section>
+      </a>
     </>
   );
 }
