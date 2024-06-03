@@ -1,0 +1,55 @@
+.about-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%; / Seitenübergreifend /
+  }
+
+  .window {
+    width: 100%; / Fensterbreite /
+  }
+
+  .window-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .content {
+    text-align: center;
+  }
+
+  .cutout {
+    margin: 1em 0;
+    padding: 1em;
+    width: 100%; / Volle Breite /
+    text-align: center; / Text zentrieren /
+  }
+
+  .about-section {
+    margin-bottom: 1em;
+    width: 100%; / Volle Breite /
+  }
+
+  .section-header {
+    text-align: center;
+  }
+
+  .team-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%; / Volle Breite /
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .team-member img {
+    width: 150px; / Rechteckige Bilder /
+    height: 200px;
+    margin-bottom: 0.5em;
+    object-fit: cover; / Zuschneiden des Bildes, um das Rechteck zu füllen */
+  }
