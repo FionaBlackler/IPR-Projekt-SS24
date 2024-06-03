@@ -3,11 +3,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%; / Seitenübergreifend /
+    width: 100%; /* Seitenübergreifend */
   }
 
   .window {
-    width: 100%; / Fensterbreite /
+    width: 100%; /* Fensterbreite */
   }
 
   .window-header {
@@ -23,13 +23,13 @@
   .cutout {
     margin: 1em 0;
     padding: 1em;
-    width: 100%; / Volle Breite /
-    text-align: center; / Text zentrieren /
+    width: 100%; /* Volle Breite */
+    text-align: center; /* Text zentrieren */
   }
 
   .about-section {
     margin-bottom: 1em;
-    width: 100%; / Volle Breite /
+    width: 100%; /* Volle Breite */
   }
 
   .section-header {
@@ -40,7 +40,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%; / Volle Breite /
+    width: 100%; /* Volle Breite */
   }
 
   .team-member {
@@ -48,8 +48,8 @@
   }
 
   .team-member img {
-    width: 150px; / Rechteckige Bilder /
+    width: 150px; /* Rechteckige Bilder */
     height: 200px;
     margin-bottom: 0.5em;
-    object-fit: cover; / Zuschneiden des Bildes, um das Rechteck zu füllen */
+    object-fit: cover; /* Zuschneiden des Bildes, um das Rechteck zu füllen */
   }
