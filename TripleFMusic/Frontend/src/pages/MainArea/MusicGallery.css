@@ -1,9 +1,18 @@
+.draggable-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .music-gallery-window {
     width: 90%;
     margin: 20px auto;
     border: 2px solid #000;
     box-shadow: none;
     border-radius: 0;
+    background-color: #ffffff;
 }
 
 .music-gallery-window-header {
@@ -15,6 +24,7 @@
     padding: 5px 10px;
     box-shadow: none;
     border-radius: 0;
+    cursor: move;
 }
 
 .music-gallery {
@@ -87,12 +97,13 @@
     background-color: #ffffff;
     border-top: 2px solid #000;
     border-left: 2px solid #000;
+    padding: 10px;
 }
 
 .player-left {
     display: flex;
     align-items: center;
-    margin-right: 30px;
+    flex: 1;
 }
 
 .player-album-cover {
@@ -105,22 +116,33 @@
 .player-song-info {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player-song-title {
     font-weight: bold;
     text-align: left;
-    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player-song-artist {
     font-style: italic;
     text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player-middle {
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex: 1;
 }
 
 .player-middle Button {
@@ -130,38 +152,41 @@
 .player-right {
     display: flex;
     align-items: center;
+    flex: 1;
+    justify-content: flex-end;
 }
 
 .add-playlist-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-playlist-modal-window {
-  width: 400px; /* Adjust width as needed */
+    width: 400px; /* Adjust width as needed */
 }
 
 .add-playlist-window-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    cursor: move;
 }
 
 .add-playlist-input-container {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .add-playlist-modal-buttons {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
     
 .add-playlist-context-menu {
