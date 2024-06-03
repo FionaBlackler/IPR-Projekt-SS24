@@ -121,7 +121,7 @@ function MusicGallery() {
                   }}
                 >
                   <div className="playlist-menu-button-panel">
-                    <Link to="/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
+                    <Link to="/welcome/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
                     <Button onClick={openModal}>Add MIXTAPE</Button>
                   </div>
                   <Separator style={{ margin: '10px 0' }} />
