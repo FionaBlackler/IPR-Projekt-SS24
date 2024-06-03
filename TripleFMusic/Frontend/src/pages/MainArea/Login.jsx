@@ -1,7 +1,7 @@
 //Funda
 
 import React, { useState } from "react";
-import "../../../src/index.css";
+import "./Login.css";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import logo from "../Images/TripleF3_2.png";
 
