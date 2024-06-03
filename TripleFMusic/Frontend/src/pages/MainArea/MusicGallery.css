@@ -131,7 +131,6 @@
 }
 
 .player-song-artist {
-    font-style: italic;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
