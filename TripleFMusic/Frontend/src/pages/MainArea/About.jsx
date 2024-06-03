@@ -3,6 +3,9 @@ import { ThemeProvider } from 'styled-components';
 import { Window, WindowHeader, WindowContent, Panel, Cutout, Button, Tooltip } from 'react95';
 import rose from 'react95/dist/themes/rose';
 import './About.css';
+import Fatima from '../Images/Fatima.png';
+import Funda from '../Images/Funda.png';
+import Fiona from '../Images/Fiona.png';
 
 const About = () => {
   return (
@@ -45,15 +48,15 @@ const About = () => {
               <Cutout className="cutout">
                 <div className="team-container">
                   <div className="team-member">
-                    <img src="/Fatima.png" alt="Fatima" />
+                    <img src={Fatima} alt="Fatima" />
                     <p>Fatima</p>
                   </div>
                   <div className="team-member">
-                    <img src="/Funda.png" alt="Funda" />
+                    <img src={Funda} alt="Funda" />
                     <p>Funda</p>
                   </div>
                   <div className="team-member">
-                    <img src="/Fiona.png" alt="Fiona" />
+                    <img src={Fiona} alt="Fiona" />
                     <p>Fiona</p>
                   </div>
                 </div>

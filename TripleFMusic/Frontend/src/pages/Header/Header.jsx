@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.css";
-import logo from "./TripleF3_2.png";
+import logo from "../Images/TripleF3_2.png";
 
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
