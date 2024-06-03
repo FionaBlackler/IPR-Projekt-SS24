@@ -1,21 +1,34 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
 
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-
-import rose from "react95/dist/themes/rose"; //Thema der UI-Elemente
-import { AppBar, Toolbar, Button } from "react95";
-import vaporTeal from "react95/dist/themes/vaporTeal";
+import { ThemeProvider } from "styled-components";
+import rose from "react95/dist/themes/rose"; // Thema der UI-Elemente
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  Handle,
+  MenuList,
+  Separator,
+  MenuListItem,
+} from "react95";
 
 function Header() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   return (
-    <div className="header">
+    <div className="main-header">
       <ThemeProvider theme={rose}>
-        <AppBar position="fixed">
+        <AppBar className="appbar" position="relative">
           <Toolbar style={{ justifyContent: "space-between" }}>
-            <Button onClick={() => {}} style={{ fontWeight: "bold" }}>
+            <Button
+              onClick={() => {
+                navigate("home");
+              }}
+              style={{ fontWeight: "bold", marginLeft: "2rem" }}
+            >
               <img
                 src={logo}
                 alt="TripleF Music"
@@ -23,6 +36,17 @@ function Header() {
               />
               TripleF Music
             </Button>
+            <Button
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Logout
+            </Button>
+
+            <p style={{ marginRight: "2rem" }}>
+              {new Date().getFullYear()} TripleF Music. All rights reserved.
+            </p>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
@@ -31,16 +55,3 @@ function Header() {
 }
 
 export default Header;
-
-/* 
-   <nav>
-        <div className='headerBody'>
-          <NavLink to='/'>
-            <img src={logo} className="logo" alt="TripleF Music" />
-          </NavLink>
-        </div>
-      </nav>
-
-
-
-*/

@@ -1,16 +1,9 @@
-nav{
-   background-color: #ffcadc;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 2% 5%;
-   width: 100%;
-}
+
 
 .logo{
     margin-left: 2rem;
     display: flex;
-    height: 5rem;
+    height: 5rem; 
     width: 3rem
 }
 
@@ -20,7 +13,10 @@ nav{
     height: 70%;
 }
 
-.header{
-    margin-bottom: 3rem;
-    padding: 0 0 0;
+.main-header {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

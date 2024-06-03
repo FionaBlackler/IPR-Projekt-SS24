@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hand-painted Low Poly Computer
+* source:	https://sketchfab.com/3d-models/hand-painted-low-poly-computer-c4e5d67781ca4bba960673f67a7cef30
+* author:	NoodleBaguette (https://sketchfab.com/NoodleBaguette)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hand-painted Low Poly Computer" (https://sketchfab.com/3d-models/hand-painted-low-poly-computer-c4e5d67781ca4bba960673f67a7cef30) by NoodleBaguette (https://sketchfab.com/NoodleBaguette) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
