@@ -7,7 +7,6 @@ import { Window, WindowHeader, WindowContent, Button, Separator, Frame, TextInpu
 import rose from 'react95/dist/themes/rose';
 import './MusicGallery.css';
 
-
 function MusicGallery() {
   const navigate = useNavigate();
 
@@ -119,12 +118,13 @@ function MusicGallery() {
                   variant='field'
                   style={{
                     width: '20%',
-                    height: '416px',
+                    height: '432px',
                     backgroundColor: '#ffffff',
                     borderLeft: '3px solid #333333',
                     borderTop: '3px solid #333333',
                     boxShadow: 'none',
-                    borderRadius: '0'
+                    borderRadius: '0',
+                    marginBottom: '10px'
                   }}
                 >
                   <div className="playlist-menu-button-panel">

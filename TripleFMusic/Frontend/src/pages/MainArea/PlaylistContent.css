@@ -1,6 +1,11 @@
 .playlist-content-container {
     height: 350px;
     overflow-y: auto;
+    border: none;
+}
+
+.playlist-content-scrollview {
+    padding: 0;
 }
 
 .playlist-table {
