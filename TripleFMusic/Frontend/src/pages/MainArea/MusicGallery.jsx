@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PlaylistContent from './PlaylistContent.jsx';
 import { ThemeProvider } from 'styled-components';
 import Draggable from 'react-draggable';
@@ -101,6 +101,10 @@ function MusicGallery() {
     navigate('/welcome/home');
   };
 
+  const handleAddSong = () => {
+    navigate('/welcome/addsong');
+  };
+
   return (
     <ThemeProvider theme={rose}>
       <Draggable handle=".music-gallery-window-header">
@@ -128,7 +132,7 @@ function MusicGallery() {
                   }}
                 >
                   <div className="playlist-menu-button-panel">
-                    <Link to="welcome/addsong"><Button className="playlist-menu-button">Add Song</Button></Link>
+                    <Button onClick={handleAddSong} className="playlist-menu-button">Add Song</Button>
                     <Button onClick={openModal}>Add MIXTAPE</Button>
                   </div>
                   <Separator style={{ margin: '10px 0' }} />
@@ -160,7 +164,7 @@ function MusicGallery() {
                       <PlaylistContent playlist={selectedPlaylist} onSongClick={setCurrentSong} />
                     </div>
                   ) : (
-                    <p>Please select a MIXTAPE.</p>
+                    <p></p>
                   )}
                 </div>
               </div>
