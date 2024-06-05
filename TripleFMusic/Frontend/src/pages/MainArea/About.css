@@ -1,55 +1,220 @@
-.about-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%; /* Seitenübergreifend */
-  }
+.about-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: move;
+}
 
-  .window {
-    width: 100%; /* Fensterbreite */
-  }
+.draggable-aboutWindow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-  .window-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.about-window {
+  width: 600px; /* Feste Breite */
+  height: 400px; /* Feste Höhe */
+  margin: 20px auto;
+  border: 2px solid #000;
+  box-shadow: none;
+  border-radius: 0;
+  background-color: #ffffff;
+  overflow-y: auto; /* Keine Scrollbalken hier */
+}
 
-  .content {
-    text-align: center;
-  }
+.about-scrollview {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* Scrollbalken hinzufügen */
+}
 
-  .cutout {
-    margin: 1em 0;
-    padding: 1em;
-    width: 100%; /* Volle Breite */
-    text-align: center; /* Text zentrieren */
-  }
+.about-close-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+  margin-top: -1px;
+  transform: rotateZ(45deg);
+  position: relative;
+}
+.about-close-icon:before,
+.about-close-icon:after {
+  content: '';
+  position: absolute;
+  background: black;
+}
+.about-close-icon:before {
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.about-close-icon:after {
+  height: 3px;
+  width: 100%;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-  .about-section {
-    margin-bottom: 1em;
-    width: 100%; /* Volle Breite */
-  }
+.about {
+  padding: 10px;
+}
 
-  .section-header {
-    text-align: center;
-  }
+.content {
+  text-align: center;
+}
 
-  .team-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%; /* Volle Breite */
-  }
+.cutout {
+  margin: 1em 0;
+  padding: 1em;
+  width: 100%; /* Volle Breite */
+  text-align: center; /* Text zentrieren */
+}
 
-  .team-member {
-    text-align: center;
-  }
+.about-section {
+  margin-bottom: 1em;
+  width: 100%; /* Volle Breite */
+}
 
-  .team-member img {
-    width: 150px; /* Rechteckige Bilder */
-    height: 200px;
-    margin-bottom: 0.5em;
-    object-fit: cover; /* Zuschneiden des Bildes, um das Rechteck zu füllen */
-  }
+.section-header {
+  text-align: center;
+}
+
+.team-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%; /* Volle Breite */
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-member img {
+  width: 150px; /* Rechteckige Bilder */
+  height: 200px;
+  margin-bottom: 0.5em;
+  object-fit: cover; /* Zuschneiden des Bildes, um das Rechteck zu füllen */
+}
+.about-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: move;
+}
+
+.draggable-aboutWindow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.about-window {
+  width: 600px; /* Feste Breite */
+  height: 400px; /* Feste Höhe */
+  margin: 20px auto;
+  border: 2px solid #000;
+  box-shadow: none;
+  border-radius: 0;
+  background-color: #ffffff;
+  
+}
+
+.about-scrollview {
+padding: 0;
+}
+
+.about-close-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+  margin-top: -1px;
+  transform: rotateZ(45deg);
+  position: relative;
+}
+.about-close-icon:before,
+.about-close-icon:after {
+  content: '';
+  position: absolute;
+  background: black;
+}
+.about-close-icon:before {
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.about-close-icon:after {
+  height: 3px;
+  width: 100%;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.about {
+  padding: 10px;
+}
+
+.content {
+  text-align: center;
+}
+
+.cutout {
+  margin: 1em 0;
+  padding: 1em;
+  width: 100%; /* Volle Breite */
+  text-align: center; /* Text zentrieren */
+}
+
+.about-section {
+  margin-bottom: 1em;
+  width: 100%; /* Volle Breite */
+}
+
+.section-header {
+  text-align: center;
+}
+
+.team-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%; /* Volle Breite */
+}
+
+.team-member {
+  text-align: center;
+}
+
+.team-member img {
+  width: 150px; /* Rechteckige Bilder */
+  height: 200px;
+  margin-bottom: 0.5em;
+  object-fit: cover; /* Zuschneiden des Bildes, um das Rechteck zu füllen */
+}
+
+
+
+.about-window-content {
+  max-height: 80vh; /* Adjust based on your design */
+  overflow: hidden;
+}
+
+.about-wrapper {
+  overflow: auto;
+  height: 100%;
+}
