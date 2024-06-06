@@ -52,26 +52,30 @@ button.help{
 .addsong-body {
     display: flex;
     height:58.8rem
-  }
-  
-  .icons-menu {
-    flex: 1; /* Adjust the value to control the width ratio */
-    /*background-color: lightblue; /* Just for visibility */
-    
 }
   
-  .addsong-window-container {
-    flex: 7.5; /* Adjust the value to control the width ratio */
-    display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; 
+.icons-menu {
+    flex:1;
+ /*background-color: lightblue; /* Just for visibility */
+    
+}
+
+.space{
+    flex: 7.5; 
+}
+  
+.sc-fhzEvr.heDfsD.add-song-window-content {
+    
+
+  padding-top: 0rem;
   }
 
-  .home-window{
+  .add-song-window{
     padding: 2rem, 2rem, 2rem;
     width:80%;
     height: 85%;
     margin-left: 3rem;
+    margin-top: 1rem;
   }
 
   .buffer{
@@ -83,4 +87,28 @@ button.help{
     flex-direction: column; /* Align items as a column */
   justify-content: center; /* Optional: Center vertically within the parent */
   align-items: center;
+  }
+
+  .mp3-button{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .cover-button{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .other-genres{
+    display: flex;
+
+  }
+  .genres-box-1{
+    flex: 1;
+  }
+  .genres-box-2{
+    flex: 1;
+  }
+  .genres-box-3{
+    flex: 1;
   }

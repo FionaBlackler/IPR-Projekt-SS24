@@ -15,12 +15,14 @@ import Login from "./pages/MainArea/Login.jsx";
 import AddSong from "./pages/MainArea/AddSong.jsx";
 import About from "./pages/MainArea/About.jsx";
 import Welcome from "./pages/MainArea/Welcome.jsx";
+import Register from "./pages/MainArea/Register.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="" element={<Welcome />} />
       <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
       <Route path="welcome" element={<Layout />}>
         <Route path="home" element={<Home />} />
         <Route path="musicgallery" element={<MusicGallery />} />

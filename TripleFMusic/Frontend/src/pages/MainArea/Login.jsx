@@ -99,7 +99,14 @@ function Login() {
                     <Button primary onClick={handleLogin}>
                       Login
                     </Button>
-                    <Button primary>Sign up</Button>
+                    <Button
+                      primary
+                      onClick={() => {
+                        navigate("/register");
+                      }}
+                    >
+                      Sign up
+                    </Button>
                   </ThemeProvider>
                 </div>
                 {showForgotPassword && (
