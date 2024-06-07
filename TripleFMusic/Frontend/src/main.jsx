@@ -16,6 +16,7 @@ import AddSong from "./pages/MainArea/AddSong.jsx";
 import About from "./pages/MainArea/About.jsx";
 import Welcome from "./pages/MainArea/Welcome.jsx";
 import Register from "./pages/MainArea/Register.jsx";
+import Internet from "./pages/MainArea/Internet.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="song" element={<Song />} />
         <Route path="addsong" element={<AddSong />} />
         <Route path="about" element={<About />} />
+        <Route path="internet" element={<Internet />} />
       </Route>
     </Route>
   )

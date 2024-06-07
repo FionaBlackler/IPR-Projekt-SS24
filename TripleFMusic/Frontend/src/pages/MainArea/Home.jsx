@@ -14,6 +14,7 @@ import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import { useNavigate } from "react-router-dom";
 import homeIcon from "../Images/icons/computer3.png";
+import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
 function Home() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -78,6 +79,23 @@ function Home() {
           >
             <img src={addSongIcon} alt="addsong" style={{ marginRight: 4 }} />
             <span>Upload new song</span>
+          </a>
+        </div>
+        <div className="buffer"></div>
+
+        <div>
+          <a
+            onClick={() => {
+              navigate("/welcome/addsong");
+            }}
+            className="icon"
+          >
+            <img
+              src={internetexplorerIcon}
+              alt="internetexplorer"
+              style={{ marginRight: 4 }}
+            />
+            <span>Internet Explorer</span>
           </a>
         </div>
       </div>
