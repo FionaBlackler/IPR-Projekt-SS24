@@ -1,4 +1,4 @@
-# IPR-Projekt-SS24
+# Triple F Music Webplayer
 
 Hochschule: HFT Stuttgart;<br>
 Modul: Internetprogrammierung;<br>
@@ -6,7 +6,7 @@ Dozent: Mathias Maciossek;<br>
 Semester: Sommersemester 2024;<br>
 Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Smati, Fiona Blackler<br>
 <br>
-The project is a full-stack web application with a focus on managing music playlists and providing functions for adding, organizing and playing mp3-files. The overall look of the web application is based on the old Windows 95 design.<br>
+This project is a full-stack web application with a focus on managing music playlists and providing functions for adding, organizing and playing mp3-files. The overall look of the web application is based on the old Windows 95 design.<br>
 <br>
 Languages Used:<br>
 - JavaScript
