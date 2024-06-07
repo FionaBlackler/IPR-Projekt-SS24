@@ -1,8 +1,9 @@
 //Funda
 
 import React, { useState } from "react";
-import "../../../src/index.css";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import "./Login.css";
+
+import { ThemeProvider } from "styled-components";
 import logo from "../Images/TripleF3_2.png";
 
 import {
@@ -15,7 +16,7 @@ import {
   AppBar,
   Toolbar,
 } from "react95";
-import vaporTeal from "react95/dist/themes/vaporTeal";
+
 import rose from "react95/dist/themes/rose";
 import { useNavigate } from "react-router-dom";
 
@@ -54,8 +55,8 @@ function Login() {
       <ThemeProvider theme={rose}>
         <div className="login-container">
           <Window resizable>
-            <div className="window">
-              <div className="title-bar">
+            <div className="login-window">
+              <div className="title-bar-login">
                 <div>
                   <WindowHeader>TripleF Music-Sign in</WindowHeader>
                 </div>
