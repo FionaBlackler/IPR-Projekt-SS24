@@ -38,4 +38,5 @@ User-Stories:<br>
 - Search for Playlist
 - Search for individual Songs
 - Search for Song in Mixtape
+- Easter Egg -> Play Snake in "Browser" because of no Internet
 
