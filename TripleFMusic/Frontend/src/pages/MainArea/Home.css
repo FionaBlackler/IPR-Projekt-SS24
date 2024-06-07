@@ -1,35 +1,94 @@
-.home-body {
-    display: flex;
-    height:58.8rem
-  }
-  
-  .icons-menu {
-    flex: 1; /* Adjust the value to control the width ratio */
-    /*background-color: lightblue; /* Just for visibility */
-    
+.internet-body {
+  display: flex;
+  height: 58.8rem;
 }
-  
-  .home-window-container {
-    flex: 7.5; /* Adjust the value to control the width ratio */
-    display: flex;
-  justify-content: center; /* Centers horizontally */
-  align-items: center; 
-  }
 
-  .home-window{
-    padding: 2rem, 2rem, 2rem;
-    width:80%;
-    height: 85%;
-    margin-left: 3rem;
-  }
+.icons-menu {
+  flex: 1;
+}
 
-  .buffer{
-    height:2rem;
-  }
+.space {
+  flex: 7.5;
+}
 
-  .icon{
-    display: flex;
-    flex-direction: column; /* Align items as a column */
-  justify-content: center; /* Optional: Center vertically within the parent */
+.draggable-window-internet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.internet-window {
+  padding: 2rem;
+  width: 80%;
+  height: 85%;
+  margin-left: 3rem;
+  margin-top: 1rem;
+}
+
+.internetwindow-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.internet-window-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-bar {
+  flex: 1;
+  display: flex;
   align-items: center;
-  }
+}
+
+.address-input {
+  flex-grow: 1;
+}
+
+.separator-horizontal {
+  border-top: 2px solid #ccc; /* Etwas dickere Linie */
+  margin: 0.5rem 0;
+}
+
+.separator-vertical {
+  border-left: 2px solid #ccc; /* Etwas dickere Linie */
+  margin: 0 0.5rem;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Restliche Stile aus der AddSong.css */
+.mp3-button {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.cover-button {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.other-genres {
+  display: flex;
+}
+
+.genres-box-1 {
+  flex: 1;
+}
+
+.genres-box-2 {
+  flex: 1;
+}
+
+.genres-box-3 {
+  flex: 1;
+}

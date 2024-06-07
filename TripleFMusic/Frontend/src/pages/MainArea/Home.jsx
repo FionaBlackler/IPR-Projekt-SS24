@@ -86,7 +86,7 @@ function Home() {
         <div>
           <a
             onClick={() => {
-              navigate("/welcome/addsong");
+              navigate("/welcome/internet");
             }}
             className="icon"
           >
