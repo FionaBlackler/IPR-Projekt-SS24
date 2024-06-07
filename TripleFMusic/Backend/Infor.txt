@@ -1,0 +1,7 @@
+create a new Playlist: create(object)
+find a Playlist by id: findByPk(id)
+get all Playlist: findAll()
+update a Playlist by id: update(data, where: { id: id })
+remove a Playlist: destroy(where: { id: id })
+remove all Playlist: destroy(where: {})
+find all Playlists by title: findAll({ where: { title: ... } })

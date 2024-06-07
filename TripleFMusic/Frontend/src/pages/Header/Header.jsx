@@ -4,7 +4,7 @@ import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
 
 import { ThemeProvider } from "styled-components";
-import rose from "react95/dist/themes/rose"; // Thema der UI-Elemente
+import rose from "react95/dist/themes/millenium"; // Thema der UI-Elemente
 import {
   AppBar,
   Toolbar,

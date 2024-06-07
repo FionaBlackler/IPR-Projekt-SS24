@@ -82,14 +82,14 @@ function Home() {
         </div>
       </div>
       <div className="home-window-container">
-        <ThemeProvider theme={rose}>
+        {/*<ThemeProvider theme={rose}>
           <Window className="home-window">
             <WindowHeader className="home-window-header">header</WindowHeader>
             <WindowContent className="home-window-content">
               content
             </WindowContent>
           </Window>
-        </ThemeProvider>
+        </ThemeProvider>*/}
       </div>
     </div>
   );
