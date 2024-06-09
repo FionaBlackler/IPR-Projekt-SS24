@@ -28,8 +28,8 @@
   }
 
   .icon{
-    display: flex;
-    flex-direction: column; /* Align items as a column */
+  display: flex;
+  flex-direction: column; /* Align items as a column */
   justify-content: center; /* Optional: Center vertically within the parent */
   align-items: center;
   }
