@@ -1,0 +1,38 @@
+Tabellen der Datenbank musicdb:
+
+Playlist:
+- id
+- name
+- Verlinkungen zu Songs
+
+Song:
+- id
+- name
+- Genre
+- (Verlinkung zu) mp3-Datei
+- jpg-Datei
+
+User:
+- id
+- name
+- passwort
+- Verlinkungen zu Playlists
+
+Playlists können...
+...auch leer sein
+
+Songs können...
+...in mehreren Playlists gleichzeit sein
+...den Artist hinterlegt haben
+...andere Notizen hinterlegt haben
+
+Playlists müssen...
+...einen einzigartigen Namen haben (damit nach Playlists gesucht werden kann)
+
+Songs müssen...
+...in der Playlist "All Songs" sein
+...in der Playlist mit der entsprechenden Genre 
+...eine mp3 Datei haben
+...ein Cover haben
+...einen einzigartigen Namen haben (damit nach Songs gesucht werden kann, um sie in Playlists einzufügen
+...
