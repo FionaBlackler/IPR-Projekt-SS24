@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import ComputerCanvas from "../../models/computer";
 import logo from "../Images/TripleF3_2.png";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import rose from "react95/dist/themes/rose"; //Thema der UI-Elemente
+import original from "react95/dist/themes/original"; //Thema der UI-Elemente
 import { AppBar, Toolbar, Button, Handle } from "react95";
 import vaporTeal from "react95/dist/themes/vaporTeal";
 import "./Welcome.css";
@@ -17,7 +17,7 @@ function Welcome() {
   return (
     <>
       <div className="header">
-        <ThemeProvider theme={rose}>
+        <ThemeProvider theme={original}>
           <AppBar>
             <Toolbar style={{ justifyContent: "space-between" }}>
               <Button
