@@ -16,6 +16,7 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+// Read all model files and import them
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -31,11 +32,23 @@ fs
     db[model.name] = model;
   });
 
+// Set up associations if any model has them
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
+
+// Establish relationship between Playlist and Song models
+if (db.Playlist && db.Song) {
+  db.Playlist.hasMany(db.Song, {
+    foreignKey: 'PlaylistId',
+    onDelete: 'CASCADE',
+  });
+  db.Song.belongsTo(db.Playlist, {
+    foreignKey: 'PlaylistId',
+  });
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
