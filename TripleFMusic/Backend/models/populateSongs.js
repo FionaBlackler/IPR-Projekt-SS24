@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
-const config = require('./config/config.json').development;
+const config = require('./../config/config.json').development;
 
 // Initialize Sequelize
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
@@ -23,6 +23,10 @@ const Song = sequelize.define('Song', {
 // Function to read file paths from the songs directory
 const readFilePaths = (dir) => {
   let filepaths = [];
+  if (!fs.existsSync(dir)) {
+    console.error(`Directory ${dir} does not exist.`);
+    return filepaths;
+  }
   const files = fs.readdirSync(dir);
   files.forEach((file) => {
     const fullPath = path.join(dir, file);
