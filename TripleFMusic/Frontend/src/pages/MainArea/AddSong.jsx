@@ -5,7 +5,7 @@ import Draggable from "react-draggable";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
 import rose from "react95/dist/themes/rose"; //Thema der UI-Elemente
-import def from "react95/dist/themes/millenium"; //Thema der UI-Elemente
+import def from "react95/dist/themes/original"; //Thema der UI-Elemente
 
 import {
   Button,
