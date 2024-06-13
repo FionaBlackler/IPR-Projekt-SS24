@@ -1,59 +1,58 @@
 body {
     background-color: #5f5f5fc8; 
-    
-}
-
-.login-container {
+  }
+  
+  .login-container {
+    position: absolute; /* Make the container absolutely positioned */
+    top: 50%; /* Position it in the middle vertically */
+    left: 50%; /* Position it in the middle horizontally */
+    transform: translate(-50%, -50%); /* Center it */
     display: grid;
     justify-content: center; 
-    margin-top: 10%; /* höhe des Containers */
-}
+  }
+  .funda{
+    width: 563px;
+  }
+  
+  .login-window {
+    width: 550px; /* The width of the element to 100% of the parent element */
+    height: 100%; /* The height of the element to 100% of the parent element */
 
-.login-window {
-    width: 100%; /* Die Breite des Elements auf 100% des übergeordneten Elements setzen */
-    height: 100%; /* Die Höhe des Elements auf 100% des übergeordneten Elements setzen */
-}
+  }
 
-.title-bar {
-    padding: 4%; /* Innenabstand innerhalb des Elements auf 2% setzen */
-}
-
-.content {
-    padding: 0%; /* Innenabstand innerhalb des Elements auf 3% setzen */
-}
-
-.button-container {
-    display: flex; /* Verwende das Flexbox-Layout-System */
-    justify-content: space-between; /* Verteile die Schaltflächen gleichmäßig mit Platz dazwischen */
-    margin-top: 1%; /* Abstand vom oberen Rand des Containers */
-}
-
-.button-container button {
-    flex: 1; /* Jede Schaltfläche nimmt den gleichen Platz ein */
-    margin: 1%; /* Abstand um jede Schaltfläche herum */
-}
-
-.checkbox-container {
-    display: flex; /* Verwende das Flexbox-Layout-System */
-    justify-content: space-between; /* Verteile die Checkbox und das Label gleichmäßig */
-    align-items: center; /* Richte die Checkbox und das Label zentriert aus */
-    margin-top: 1rem; /* Abstand vom oberen Rand des Containers */
-}
-
-.forgot-password {
-    color: black; /* Textfarbe auf Schwarz setzen */
-    cursor: pointer; /* Zeiger-Cursor anzeigen, um anzuzeigen, dass es klickbar ist */
-    margin-left: auto; /* Automatische linke Margine, um das Element nach rechts zu schieben */
-}
-
-.forgot-password:hover {
-    color: #3366ff; /* Ändere die Textfarbe bei Hover auf Blau */
-}
-
-.login-header {
-    margin-top: 37.7vh; /* Abstand vom oberen Rand des Containers in Viewport-Höhe (vh) */
-    width: 100%; /* Die Breite des Elements auf 100% des übergeordneten Elements setzen */
-    display: flex; /* Verwende das Flexbox-Layout-System */
-    justify-content: center; /* Zentriere den Inhalt horizontal */
-    align-items: center; /* Zentriere den Inhalt vertikal */
-}
+  .button-container {
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: space-between; /* Distribute buttons evenly with space between */
+    margin-top: 2%; /* Space from the top edge of the container */
+  }
+  
+  .button-container button {
+    flex: 1; /* Each button takes up the same amount of space */
+    margin: 1%; /* Space around each button */
+  }
+  
+  .checkbox-container {
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: space-between; /* Distribute the checkbox and label evenly */
+    align-items: center; /* Center align the checkbox and label */
+    margin-top: 1rem; /* Space from the top edge of the container */
+  }
+  
+  .forgot-password {
+    
+    cursor: pointer; /* Show pointer cursor to indicate it is clickable */
+    margin-left: auto; /* Automatically margin-left to push the element to the right */
+  }
+  
+  .forgot-password:hover {
+    color: #3366ff; /* Change text color to blue on hover */
+  }
+  
+  .login-header {
+    margin-top: 37.7vh; /* Space from the top edge of the container in viewport height */
+    width: 100%; /* The width of the element to 100% of the parent element */
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
+  

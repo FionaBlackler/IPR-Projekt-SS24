@@ -1,10 +1,9 @@
-//Funda
-
 import React, { useState } from "react";
 import "./Login.css";
 
 import { ThemeProvider } from "styled-components";
 import logo from "../Images/TripleF3_2.png";
+import ComputerCanvas from "../../models/computer";
 
 import {
   Window,
@@ -14,10 +13,10 @@ import {
   Checkbox,
   TextInput,
   AppBar,
-  Toolbar,
+  Toolbar
 } from "react95";
 
-import rose from "react95/dist/themes/rose";
+import original from "react95/dist/themes/original";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -46,15 +45,45 @@ function Login() {
   /*
   const handleSignUp = () => {
     //Hier Registrieren
-    
   */
   const navigate = useNavigate();
 
   return (
     <>
-      <ThemeProvider theme={rose}>
+      <ThemeProvider theme={original}>
+        <div className="header">
+          <AppBar>
+            <Toolbar style={{ justifyContent: "space-between" }}>
+              <Button
+                disabled
+                style={{
+                  fontWeight: "bold",
+                  marginLeft: "2rem",
+                  color: "white",
+                }}
+              >
+                <img
+                  src={logo}
+                  alt="TripleF Music"
+                  style={{ height: "20px", marginRight: 4 }}
+                />
+                Login
+              </Button>
+              <p style={{ marginRight: "2rem", color: "white" }}>
+                {new Date().getFullYear()} TripleF Music. All rights reserved.
+              </p>
+            </Toolbar>
+          </AppBar>
+        </div>
+
+        <a>
+          <section className="home-container">
+            <ComputerCanvas />
+          </section>
+        </a>
+
         <div className="login-container">
-          <Window resizable>
+          <Window className="funda" >
             <div className="login-window">
               <div className="title-bar-login">
                 <div>
@@ -96,7 +125,7 @@ function Login() {
                 </WindowContent>
 
                 <div className="button-container">
-                  <ThemeProvider theme={rose}>
+                  <ThemeProvider theme={original}>
                     <Button primary onClick={handleLogin}>
                       Login
                     </Button>
@@ -119,32 +148,6 @@ function Login() {
           </Window>
         </div>
       </ThemeProvider>
-      <div className="login-header">
-        <ThemeProvider theme={rose}>
-          <AppBar position="relative">
-            <Toolbar style={{ justifyContent: "space-between" }}>
-              <Button
-                className="back"
-                onClick={() => {
-                  navigate("/");
-                }}
-                style={{ fontWeight: "bold", marginLeft: "2rem" }}
-              >
-                <img
-                  src={logo}
-                  alt="TripleF Music"
-                  style={{ height: "20px", marginRight: 4 }}
-                />
-                Back
-              </Button>
-
-              <p style={{ marginRight: "2rem" }}>
-                {new Date().getFullYear()} TripleF Music. All rights reserved.
-              </p>
-            </Toolbar>
-          </AppBar>
-        </ThemeProvider>
-      </div>
     </>
   );
 }
