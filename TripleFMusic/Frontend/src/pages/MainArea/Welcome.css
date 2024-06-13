@@ -8,7 +8,9 @@
   margin-top: 6rem;
   }
 
+  /* Welcome.css */
 
+ /* Welcome.css */
 
 .progress-bar-container {
   position: absolute;
@@ -26,3 +28,4 @@
   width: 0%; /* Breite wird dynamisch durch JavaScript/React gesetzt */
   background-color: blue; /* Farbe des Fortschrittsbalkens */
 }
+
