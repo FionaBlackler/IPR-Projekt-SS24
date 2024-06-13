@@ -1,65 +1,35 @@
 const express = require('express');
-const app = express();
-
-const db = require('./models');
-
-db.sequelize.sync().then(()=>{
-  app.listen(3001, () => {console.log("Server running on port 3001");})
-
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const express = require("express");
-const cors = require("cors");
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const { sequelize } = require('./models');
+const playlistsRouter = require('./routes/playlists');
 
 const app = express();
 
-const db = require("./app/models");
-db.sequelize.sync();
-
-
+// CORS options
 var corsOptions = {
   origin: "http://localhost:8080"
 };
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
-app.use(express.json());
+// Parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
+// Parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// simple route
+// Simple route
 app.get("/", (req, res) => {
   res.json({ message: "Server läuft" });
 });
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+// API routes
+app.use('/api/playlists', playlistsRouter);
+
+// Set port, listen for requests
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, async () => {
+  console.log(`Server is running on port ${PORT}`);
+  await sequelize.sync();
 });
-*/

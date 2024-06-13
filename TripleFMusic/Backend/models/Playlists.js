@@ -1,12 +1,17 @@
-const { STRING } = require("sequelize")
-
 module.exports = (sequelize, DataTypes) => {
-    const Playlists = sequelize.define("Playlists", {
-        name: {
-            type: DataTypes.TEXT('tiny'),
-            allowNull: false,
-        },
-        
-    })
-    return Playlists
-}
+    const Playlist = sequelize.define("Playlist", {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+  
+    Playlist.associate = (models) => {
+      Playlist.hasMany(models.Song, {
+        onDelete: "CASCADE",
+      });
+    };
+  
+    return Playlist;
+  };
+  
