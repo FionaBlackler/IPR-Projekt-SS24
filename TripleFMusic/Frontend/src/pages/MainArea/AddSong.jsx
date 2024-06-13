@@ -94,46 +94,47 @@ function AddSong() {
       <ThemeProvider theme={def}>
         <Draggable>
           <div className="draggable-window-add-song">
-            <Window className="add-song-window">
-              <WindowHeader className="window-title">
-                <span className="newSong">Add new song</span>
-                <Button className="help"> x </Button>
-              </WindowHeader>
+            <div className="space-2" />
+            <div className="add-song-space">
+              <Window className="add-song-window">
+                <WindowHeader className="window-title">
+                  <span className="newSong">Add new song</span>
+                  <Button className="help"> x </Button>
+                </WindowHeader>
 
-              <WindowContent className="add-song-window-content">
-                <Button primary className="mp3-button">
-                  Upload mp3-file
-                </Button>
-
-                <Separator />
-
-                <div>
-                  <Button primary className="cover-button">
-                    Upload song cover
+                <WindowContent className="add-song-window-content">
+                  <Button primary className="mp3-button">
+                    Upload mp3-file
                   </Button>
-                </div>
 
-                <Separator />
+                  <Separator />
 
-                <div className="song-title">
-                  <TextInput
-                    className="input-field-title"
-                    placeholder="Add song title"
-                    fullWidth
-                  />
-                </div>
+                  <div>
+                    <Button primary className="cover-button">
+                      Upload song cover
+                    </Button>
+                  </div>
 
-                <Separator />
+                  <Separator />
 
-                <div className="Test">Playlist-Zuordnung</div>
+                  <div className="song-title">
+                    <TextInput
+                      className="input-field-title"
+                      placeholder="Add song title"
+                      fullWidth
+                    />
+                  </div>
 
-                <GroupBox label="Genre">
-                  <ScrollView>
-                    <div>
-                      <Checkbox name="allGenres" label="All" />
-                    </div>
-                    <div className="other-genres">
-                      <div className="genres-box-1">
+                  <Separator />
+
+                  <div className="Test">Playlist-Zuordnung</div>
+
+                  <GroupBox label="Genre">
+                    <ScrollView>
+                      <div>
+                        <Checkbox name="allGenres" label="All" />
+                      </div>
+                      <div className="other-genres">
                         <Checkbox
                           className="girlpunk"
                           name="genre"
@@ -141,33 +142,35 @@ function AddSong() {
                         />
                         <Checkbox className="rock" name="genre" label="Rock" />
                         <Checkbox className="pop" name="genre" label="Pop" />
-                      </div>
-                      <div className="genres-box-2">
+
                         <Checkbox name="genre" label="Blues" />
                         <Checkbox name="genre" label="Country" />
                         <Checkbox name="genre" label="Rap" />
-                      </div>
-                      <div className="genres-box-3">
+
                         <Checkbox name="genre" label="Reggae" />
                         <Checkbox name="genre" label="EDM" />
                         <Checkbox name="genre" label="R&B" />
                       </div>
-                    </div>
-                  </ScrollView>
-                </GroupBox>
+                    </ScrollView>
+                  </GroupBox>
 
-                <div className="notes">
-                  <ScrollView className="notes-scroll" fullWidth>
-                    <TextInput
-                      className="input-field-notes"
-                      placeholder="Add other notes or lyrics here"
-                      multiline
-                      fullWidth
-                    />
-                  </ScrollView>
-                </div>
-              </WindowContent>
-            </Window>
+                  <div className="notes">
+                    <ScrollView className="notes-scroll" fullWidth>
+                      <TextInput
+                        className="input-field-notes"
+                        placeholder="Add other notes or lyrics here"
+                        multiline
+                        fullWidth
+                      />
+                    </ScrollView>
+                    <div className="save-cancle">
+                      <Button>Save</Button>
+                      <Button>Cancle</Button>
+                    </div>
+                  </div>
+                </WindowContent>
+              </Window>
+            </div>
           </div>
         </Draggable>
       </ThemeProvider>

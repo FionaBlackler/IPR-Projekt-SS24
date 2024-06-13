@@ -4,6 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
+    display: flex;
 }
 
 .parent{
@@ -42,6 +43,7 @@ button.help{
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
+    justify-content: space-evenly;
 }
 
 .gFeJFO{
@@ -72,10 +74,11 @@ button.help{
 
   .add-song-window{
     padding: 2rem, 2rem, 2rem;
-    width:80%;
-    height: 85%;
+    width:70%;
+    height: 80%;
     margin-left: 3rem;
     margin-top: 1rem;
+    
   }
 
   .buffer{
@@ -101,14 +104,30 @@ button.help{
 
   .other-genres{
     display: flex;
+    justify-content: space-between;
 
   }
-  .genres-box-1{
-    flex: 1;
+ 
+  .space-2{
+    flex:1;
   }
-  .genres-box-2{
-    flex: 1;
+
+  .add-song-space{
+    flex:7.5;
   }
-  .genres-box-3{
-    flex: 1;
+
+  .notes-scroll{
+    width:70%;
+    height: 10rem;
+  }
+
+  .input-field-notes{
+    width: 100%;
+    height: 100%;
+  }
+
+  .save-cancle{
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
   }
