@@ -39,7 +39,7 @@ button.help{
 
 .notes{
     width: 100%;
-    height: 7rem;
+    height: 4rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
@@ -75,7 +75,7 @@ button.help{
   .add-song-window{
     padding: 2rem, 2rem, 2rem;
     width:70%;
-    height: 80%;
+    height: 85%;
     margin-left: 3rem;
     margin-top: 1rem;
     
@@ -118,7 +118,7 @@ button.help{
 
   .notes-scroll{
     width:70%;
-    height: 10rem;
+    height: 7rem;
   }
 
   .input-field-notes{
@@ -131,4 +131,33 @@ button.help{
     display: flex;
     justify-content: space-between;
     padding-top: 3.5rem;
+  }
+
+  .add-song-close-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: -1px;
+    margin-top: -1px;
+    transform: rotateZ(45deg);
+    position: relative;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      background: black;
+    }
+    &:before {
+      height: 100%;
+      width: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &:after {
+      height: 3px;
+      width: 100%;
+      left: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }

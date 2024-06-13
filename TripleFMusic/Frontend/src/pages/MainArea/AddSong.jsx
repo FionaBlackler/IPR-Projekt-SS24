@@ -23,6 +23,9 @@ import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import { useNavigate } from "react-router-dom";
 import homeIcon from "../Images/icons/computer3.png";
+import internetexplorerIcon from "../Images/icons/internetexplorer.png";
+
+const playlists = [{ name: "playlist 1" }];
 
 function AddSong() {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -89,6 +92,24 @@ function AddSong() {
             <span>Upload new song</span>
           </a>
         </div>
+
+        <div className="buffer"></div>
+
+        <div>
+          <a
+            onClick={() => {
+              navigate("/welcome/internet");
+            }}
+            className="icon"
+          >
+            <img
+              src={internetexplorerIcon}
+              alt="internetexplorer"
+              style={{ marginRight: 4 }}
+            />
+            <span>Internet Explorer</span>
+          </a>
+        </div>
       </div>
       <div className="space" />
       <ThemeProvider theme={def}>
@@ -99,20 +120,35 @@ function AddSong() {
               <Window className="add-song-window">
                 <WindowHeader className="window-title">
                   <span className="newSong">Add new song</span>
-                  <Button className="help"> x </Button>
+                  <Button
+                    style={{ margin: "0.2rem" }}
+                    onClick={() => {
+                      navigate("/welcome/home");
+                    }}
+                  >
+                    <span className="add-song-close-icon" />
+                  </Button>
                 </WindowHeader>
 
                 <WindowContent className="add-song-window-content">
-                  <Button primary className="mp3-button">
-                    Upload mp3-file
-                  </Button>
+                  <div style={{ display: "flex" }}>
+                    <Button primary className="mp3-button">
+                      Upload mp3 file
+                    </Button>
+                    <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
+                      No file uploaded
+                    </p>
+                  </div>
 
                   <Separator />
 
-                  <div>
+                  <div style={{ display: "flex" }}>
                     <Button primary className="cover-button">
                       Upload song cover
                     </Button>
+                    <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
+                      No file uploaded
+                    </p>
                   </div>
 
                   <Separator />
@@ -126,32 +162,42 @@ function AddSong() {
                   </div>
 
                   <Separator />
+                  <div style={{ height: "1rem" }}></div>
 
-                  <div className="Test">Playlist-Zuordnung</div>
-
-                  <GroupBox label="Genre">
+                  <div>
+                    Add to playlist
+                    <div style={{ height: "0.5rem" }}></div>
                     <ScrollView>
                       <div>
-                        <Checkbox name="allGenres" label="All" />
+                        <Checkbox name="allPlaylists" label="All" />
                       </div>
-                      <div className="other-genres">
-                        <Checkbox
-                          className="girlpunk"
-                          name="genre"
-                          label="Girl Punk"
-                        />
-                        <Checkbox className="rock" name="genre" label="Rock" />
-                        <Checkbox className="pop" name="genre" label="Pop" />
-
-                        <Checkbox name="genre" label="Blues" />
-                        <Checkbox name="genre" label="Country" />
-                        <Checkbox name="genre" label="Rap" />
-
-                        <Checkbox name="genre" label="Reggae" />
-                        <Checkbox name="genre" label="EDM" />
-                        <Checkbox name="genre" label="R&B" />
-                      </div>
+                      <div className="other-playlists">ahhhhhhhhhhhh</div>
                     </ScrollView>
+                  </div>
+
+                  <div style={{ height: "1rem" }}></div>
+
+                  <GroupBox label="Genre">
+                    <div>
+                      <Checkbox name="allGenres" label="All" />
+                    </div>
+                    <div className="other-genres">
+                      <Checkbox
+                        className="girlpunk"
+                        name="genre"
+                        label="Girl Punk"
+                      />
+                      <Checkbox className="rock" name="genre" label="Rock" />
+                      <Checkbox className="pop" name="genre" label="Pop" />
+
+                      <Checkbox name="genre" label="Blues" />
+                      <Checkbox name="genre" label="Country" />
+                      <Checkbox name="genre" label="Rap" />
+
+                      <Checkbox name="genre" label="Reggae" />
+                      <Checkbox name="genre" label="EDM" />
+                      <Checkbox name="genre" label="R&B" />
+                    </div>
                   </GroupBox>
 
                   <div className="notes">
@@ -165,7 +211,13 @@ function AddSong() {
                     </ScrollView>
                     <div className="save-cancel">
                       <Button>Save</Button>
-                      <Button>Cancel</Button>
+                      <Button
+                        onClick={() => {
+                          navigate("/welcome/home");
+                        }}
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   </div>
                 </WindowContent>
