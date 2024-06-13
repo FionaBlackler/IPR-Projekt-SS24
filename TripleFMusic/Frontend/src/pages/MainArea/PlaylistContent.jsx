@@ -1,12 +1,12 @@
 import React from "react";
 import { Table, TableBody, TableRow, TableDataCell, ScrollView } from "react95";
 import { ThemeProvider } from "styled-components";
-import rose from "react95/dist/themes/rose";
+import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
 
 function PlaylistContent({ playlist, onSongClick }) {
   return (
-    <ThemeProvider theme={rose}>
+    <ThemeProvider theme={original}>
       <ScrollView classname="playlist-content-scrollview">
         <div className="playlist-content-container">
           <Table className="playlist-table">
