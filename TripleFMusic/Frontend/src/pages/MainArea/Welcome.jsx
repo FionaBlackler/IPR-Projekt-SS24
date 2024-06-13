@@ -1,18 +1,36 @@
-import React, { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Loader from "./Loader";
+import React, { useState } from "react";
 import ComputerCanvas from "../../models/computer";
 import logo from "../Images/TripleF3_2.png";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import original from "react95/dist/themes/original"; //Thema der UI-Elemente
-import { AppBar, Toolbar, Button, Handle } from "react95";
-import vaporTeal from "react95/dist/themes/vaporTeal";
-import "./Welcome.css";
+import { ThemeProvider } from "styled-components";
+import original from "react95/dist/themes/original"; // Theme der UI-Elemente
+import { AppBar, Toolbar, Button } from "react95";
+import "./Welcome.css"; // Importiere deine CSS-Datei für das Styling
 import { useNavigate } from "react-router-dom";
 
 function Welcome() {
   const navigate = useNavigate(); // Initialize useNavigate
+  const [progress, setProgress] = useState(0);
+  const [showProgressBar, setShowProgressBar] = useState(false);
+
+  const handleLoginClick = () => {
+    setShowProgressBar(true);
+
+    // Simuliere einen Fortschritt (ersetze durch deine eigene Logik)
+    const progressInterval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress < 100) {
+          return prevProgress + 10; // Beispiel: Erhöhe den Fortschritt um 10%
+        } else {
+          clearInterval(progressInterval);
+          navigate("/login"); // Navigiere zur Login-Seite nach Abschluss
+          return 100;
+        }
+      });
+    }, 500); // Beispiel: Aktualisiere alle 0,5 Sekunden
+
+    // Hier kannst du deine Login-Logik implementieren
+    // Beispiel: API-Aufrufe, Authentifizierung usw.
+  };
 
   return (
     <>
@@ -21,9 +39,7 @@ function Welcome() {
           <AppBar>
             <Toolbar style={{ justifyContent: "space-between" }}>
               <Button
-                onClick={() => {
-                  navigate("login");
-                }}
+                onClick={handleLoginClick}
                 style={{ fontWeight: "bold", marginLeft: "2rem" }}
               >
                 <img
@@ -46,12 +62,16 @@ function Welcome() {
           <ComputerCanvas />
         </section>
       </a>
+      {showProgressBar && (
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar-fill"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      )}
     </>
   );
 }
 
 export default Welcome;
-
-/* 
-   
-*/

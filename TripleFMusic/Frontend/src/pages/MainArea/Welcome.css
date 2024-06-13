@@ -8,4 +8,21 @@
   margin-top: 6rem;
   }
 
- 
+
+
+.progress-bar-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px; /* Breite der ProgressBar erhöht */
+  height: 30px; /* Höhe der ProgressBar erhöht */
+  border: 2px solid black; /* Rand der ProgressBar */
+  background-color: white; /* Hintergrundfarbe der ProgressBar */
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%; /* Breite wird dynamisch durch JavaScript/React gesetzt */
+  background-color: blue; /* Farbe des Fortschrittsbalkens */
+}
