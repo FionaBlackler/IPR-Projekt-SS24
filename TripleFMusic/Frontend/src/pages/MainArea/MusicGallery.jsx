@@ -12,7 +12,7 @@ import {
   Frame,
   TextInput,
 } from "react95";
-import rose from "react95/dist/themes/rose";
+import original from "react95/dist/themes/original";
 import "./MusicGallery.css";
 
 function MusicGallery() {
@@ -123,7 +123,7 @@ function MusicGallery() {
   };
 
   return (
-    <ThemeProvider theme={rose}>
+    <ThemeProvider theme={original}>
       <Draggable handle=".music-gallery-window-header">
         <div className="draggable-window">
           <Window className="music-gallery-window">
