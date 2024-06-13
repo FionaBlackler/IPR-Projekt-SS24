@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PlaylistContent from "./PlaylistContent.jsx";
+import PlaylistContent from "./PlaylistContent";
 import { ThemeProvider } from "styled-components";
 import Draggable from "react-draggable";
 import {
@@ -14,36 +14,12 @@ import {
 } from "react95";
 import original from "react95/dist/themes/original";
 import "./MusicGallery.css";
+import axios from 'axios';
 
 function MusicGallery() {
   const navigate = useNavigate();
 
-  const [playlists, setPlaylists] = useState([
-    {
-      id: 1,
-      name: "Pop Punk Favorites",
-      songs: [
-        { title: "Obsessed", artist: "Olivia Rodrigo", genre: "Pop Punk" },
-        {
-          title: "I Want You To Want Me",
-          artist: "Letters To Cleo",
-          genre: "Pop Punk",
-        },
-        { title: "Real Wild Child", artist: "Iggy Pop", genre: "Pop Punk" },
-        { title: "Rebel Girl", artist: "Bikini Kill", genre: "Pop Punk" },
-        { title: "Misery Business", artist: "Paramore", genre: "Pop Punk" },
-        { title: "The Anthem", artist: "Good Charlotte", genre: "Pop Punk" },
-        { title: "Sk8er Boi", artist: "Avril Lavigne", genre: "Pop Punk" },
-        { title: "Complicated", artist: "Avril Lavigne", genre: "Pop Punk" },
-        { title: "Bad Reputation", artist: "Joan Jett", genre: "Pop Punk" },
-        { title: "Just a Girl", artist: "No Doubt", genre: "Pop Punk" },
-        { title: "He Wasn’t", artist: "Avril Lavigne", genre: "Pop Punk" },
-        { title: "Cherry Bomb", artist: "The Runaways", genre: "Pop Punk" },
-      ],
-    },
-    // Add additional playlists as needed...
-  ]);
-
+  const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState("");
@@ -55,18 +31,39 @@ function MusicGallery() {
   });
   const [currentSong, setCurrentSong] = useState(null);
 
+  useEffect(() => {
+    async function fetchPlaylists() {
+      try {
+        const response = await axios.get('/api/playlists');
+        if (Array.isArray(response.data)) {
+          setPlaylists(response.data);
+        } else {
+          console.error("Fetched data is not an array", response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching playlists", error);
+      }
+    }
+    fetchPlaylists();
+  }, []);
+
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
   };
 
-  const addSong = (newSong) => {
-    setPlaylists((prevPlaylists) =>
-      prevPlaylists.map((playlist) =>
-        playlist.id === selectedPlaylist.id
-          ? { ...playlist, songs: [...playlist.songs, newSong] }
-          : playlist
-      )
-    );
+  const addSong = async (newSong) => {
+    try {
+      const response = await axios.post(`/api/playlists/${selectedPlaylist.id}/songs`, newSong);
+      setPlaylists((prevPlaylists) =>
+        prevPlaylists.map((playlist) =>
+          playlist.id === selectedPlaylist.id
+            ? { ...playlist, songs: [...playlist.songs, response.data] }
+            : playlist
+        )
+      );
+    } catch (error) {
+      console.error("Error adding song", error);
+    }
   };
 
   const openModal = () => {
@@ -82,14 +79,14 @@ function MusicGallery() {
     setNewPlaylistName(e.target.value);
   };
 
-  const addNewPlaylist = () => {
-    const newPlaylist = {
-      id: playlists.length + 1,
-      name: newPlaylistName,
-      songs: [],
-    };
-    setPlaylists([...playlists, newPlaylist]);
-    closeModal();
+  const addNewPlaylist = async () => {
+    try {
+      const response = await axios.post('/api/playlists', { name: newPlaylistName });
+      setPlaylists([...playlists, response.data]);
+      closeModal();
+    } catch (error) {
+      console.error("Error adding new playlist", error);
+    }
   };
 
   const handleRightClick = (e, playlistId) => {
@@ -102,11 +99,16 @@ function MusicGallery() {
     });
   };
 
-  const deletePlaylist = (playlistId) => {
-    setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
-    setContextMenu({ ...contextMenu, visible: false });
-    if (selectedPlaylist && selectedPlaylist.id === playlistId) {
-      setSelectedPlaylist(null);
+  const deletePlaylist = async (playlistId) => {
+    try {
+      await axios.delete(`/api/playlists/${playlistId}`);
+      setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
+      setContextMenu({ ...contextMenu, visible: false });
+      if (selectedPlaylist && selectedPlaylist.id === playlistId) {
+        setSelectedPlaylist(null);
+      }
+    } catch (error) {
+      console.error("Error deleting playlist", error);
     }
   };
 

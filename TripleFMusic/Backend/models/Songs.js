@@ -1,12 +1,18 @@
-const { STRING } = require("sequelize")
-
 module.exports = (sequelize, DataTypes) => {
-    const Playlists = sequelize.define("Songs", {
-        title: {
-            type: DataTypes.TEXT('tiny'),
-            allowNull: false,
-        },
-        
-    })
-    return Songs
-}
+    const Song = sequelize.define("Song", {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      artist: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      genre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+    return Song;
+  };
+  
