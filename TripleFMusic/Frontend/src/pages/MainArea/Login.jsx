@@ -36,6 +36,10 @@ function Login() {
     }
   };
 
+  const handleClose = () => {
+    navigate("/");
+  };
+
   /*
   const handleForgotPassword = () => {
     //Seite Passwort vergessen?
@@ -87,7 +91,17 @@ function Login() {
             <div className="login-window">
               <div className="title-bar-login">
                 <div>
-                  <WindowHeader>TripleF Music-Sign in</WindowHeader>
+                  <WindowHeader className="login-window-header">
+                    <span>
+                    TripleF Music-Sign in 
+                    </span>
+                    
+                    <Button onClick={handleClose}>
+                      <span className="login-close-icon" />
+                  </Button>
+
+                  </WindowHeader>
+                  
                 </div>
               </div>
               <div className="content">
