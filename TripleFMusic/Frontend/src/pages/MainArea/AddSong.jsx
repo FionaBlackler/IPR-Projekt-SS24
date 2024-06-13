@@ -163,9 +163,9 @@ function AddSong() {
                         fullWidth
                       />
                     </ScrollView>
-                    <div className="save-cancle">
+                    <div className="save-cancel">
                       <Button>Save</Button>
-                      <Button>Cancle</Button>
+                      <Button>Cancel</Button>
                     </div>
                   </div>
                 </WindowContent>
