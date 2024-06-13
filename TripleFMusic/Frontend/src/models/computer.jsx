@@ -39,8 +39,8 @@ const ComputerCanvas = () => {
           maxPolarAngle={Math.PI - Math.PI / 2}
         />
         <hemisphereLight intensity={1} position={[0, 10, 0]} />
-        <spotLight intensity={1} position={[0, 10, 0]} angle={0.3} />
-        <ambientLight intensity={5} />
+        <spotLight intensity={100} position={[0, 10, 0]} angle={0.3} />
+        <ambientLight intensity={0.5} />
         <Computer />
       </Suspense>
       <Preload all />

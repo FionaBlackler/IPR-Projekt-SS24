@@ -1,7 +1,7 @@
 .main-body {
     display: flex;
     flex-direction: column;
-    min-height: 65vh;
+    min-height: 16rem;
     }
     
     .outlet {

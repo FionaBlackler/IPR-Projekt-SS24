@@ -126,8 +126,9 @@ button.help{
     height: 100%;
   }
 
-  .save-cancle{
+  .save-cancel{
     width: 10rem;
     display: flex;
     justify-content: space-between;
+    padding-top: 3.5rem;
   }
