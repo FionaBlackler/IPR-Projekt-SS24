@@ -4,7 +4,6 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
@@ -17,7 +16,6 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-// Read all model files and import them
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -25,22 +23,29 @@ fs
       file.indexOf('.') !== 0 &&
       file !== basename &&
       file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
+      file.indexOf('.test.js') === -1 &&
+      file !== 'populateSongs.js'  // Exclude populateSongs.js
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
+    console.log(`Importing model file: ${file}`);
+    const modelPath = path.join(__dirname, file);
+    const modelFunction = require(modelPath);
+    console.log(`Type of model function for ${file}:`, typeof modelFunction);
+    if (typeof modelFunction === 'function') {
+      const model = modelFunction(sequelize, Sequelize.DataTypes);
+      db[model.name] = model;
+    } else {
+      console.error(`Error: ${file} does not export a function.`);
+    }
   });
 
-// Set up associations if any model has them
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
-// Establish relationship between Playlist and Song models
 if (db.Playlist && db.Song) {
   db.Playlist.hasMany(db.Song, {
     foreignKey: 'PlaylistId',

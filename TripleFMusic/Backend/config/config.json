@@ -1,23 +1,9 @@
 {
   "development": {
-    "username": "${DB_USER}",
-    "password": "${DB_PASSWORD}",
-    "database": "${DB_NAME}",
-    "host": "${DB_HOST}",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "${DB_USER}",
-    "password": "${DB_PASSWORD}",
-    "database": "${DB_NAME}",
-    "host": "${DB_HOST}",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "${DB_USER}",
-    "password": "${DB_PASSWORD}",
-    "database": "${DB_NAME}",
-    "host": "${DB_HOST}",
+    "username": "root",
+    "password": "fifafu455..",
+    "database": "musicdb",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
