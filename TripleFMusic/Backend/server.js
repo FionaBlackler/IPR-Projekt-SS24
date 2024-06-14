@@ -1,65 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-
 const db = require('./models');
+const apiRoutes = require('./api'); // Import the API routes
 
-db.sequelize.sync().then(()=>{
-  app.listen(8080, () => {console.log("Server running on port 8080");})
+// Middleware to parse JSON requests
+app.use(bodyParser.json());
 
-})
+// Use the API routes, prefixed with /api
+app.use('/api', apiRoutes);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const express = require("express");
-const cors = require("cors");
-
-const app = express();
-
-const db = require("./app/models");
-db.sequelize.sync();
-
-
-var corsOptions = {
-  origin: "http://localhost:8080"
-};
-
-app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
-app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Server läuft" });
+db.sequelize.sync().then(() => {
+  app.listen(8080, () => {
+    console.log("Server running on port 8080");
+  });
 });
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-*/

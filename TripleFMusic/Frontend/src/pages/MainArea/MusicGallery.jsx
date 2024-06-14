@@ -82,10 +82,22 @@ function MusicGallery() {
   const addNewPlaylist = async () => {
     try {
       const response = await axios.post('/api/playlists', { name: newPlaylistName });
-      setPlaylists([...playlists, response.data]);
-      closeModal();
+      setPlaylists([...playlists, response.data]); // Add new playlist to the list
+      closeModal(); // Close the modal
     } catch (error) {
-      console.error("Error adding new playlist", error);
+      // Log the detailed error to the console
+      console.error("Error adding new playlist:", error);
+
+      // Check if the error response exists and show a specific message
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert('Playlist name must be unique');
+        } else {
+          alert(`An error occurred: ${error.response.data.message}`);
+        }
+      } else {
+        alert('An error occurred while creating the playlist. Please check the console for details.');
+      }
     }
   };
 
