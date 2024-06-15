@@ -40,12 +40,9 @@ function Login() {
     navigate("/");
   };
 
-  /*
-  const handleForgotPassword = () => {
-    //Seite Passwort vergessen?
-    setShowForgotPassword(true);
-  };
-  */
+  
+ 
+  
   /*
   const handleSignUp = () => {
     //Hier Registrieren
@@ -131,7 +128,7 @@ function Login() {
 
                     <span
                       className="forgot-password"
-                      onClick={() => setShowForgotPassword(true)}
+                      onClick={() => navigate("/forgotPassword")}
                     >
                       forgot password?
                     </span>

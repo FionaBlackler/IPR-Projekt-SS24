@@ -1,0 +1,81 @@
+.register-window {
+    width: 550px; /* The width of the element to 100% of the parent element */
+    height: 100%;
+  }
+  
+  .register-container {
+    position: absolute; /* Make the container absolutely positioned */
+    top: 50%; /* Position it in the middle vertically */
+    left: 50%; /* Position it in the middle horizontally */
+    transform: translate(-50%, -50%); /* Center it */
+    display: grid;
+    justify-content: center; 
+  }
+  
+  .register-header {
+    margin-top: 37.7vh; /* Space from the top edge of the container in viewport height */
+    width: 100%; /* The width of the element to 100% of the parent element */
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+  }
+  
+  .register-close-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: -1px;
+    margin-top: -1px;
+    transform: rotateZ(45deg);
+    position: relative;
+  }
+  
+  .register-close-icon:before,
+  .register-close-icon:after {
+    content: "";
+    position: absolute;
+    background: black;
+  }
+  
+  .register-close-icon:before {
+    height: 100%;
+    width: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .register-close-icon:after {
+    height: 3px;
+    width: 100%;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .register-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    box-shadow: none;
+    border-radius: 0;
+    cursor: move;
+  }
+  
+  .register-checkbox {
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: space-between; /* Distribute the checkbox and label evenly */
+    align-items: center; /* Center align the checkbox and label */
+    margin-top: 1rem; /* Space from the top edge of the container */
+  }
+  
+  .button-container {
+    display: flex; /* Use the Flexbox layout system */
+    justify-content: flex-end; /* Align the buttons to the right */
+    margin-top: 1rem; /* Space from the top edge of the container */
+  }
+  
+  .termsAndConditions {
+  
+  }
+  
