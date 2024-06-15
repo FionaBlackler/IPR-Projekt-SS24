@@ -17,6 +17,7 @@ import About from "./pages/MainArea/About.jsx";
 import Welcome from "./pages/MainArea/Welcome.jsx";
 import Register from "./pages/MainArea/Register.jsx";
 import Internet from "./pages/MainArea/Internet.jsx";
+import SnakeGame from "./pages/MainArea/SnakeGame.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
         <Route path="addsong" element={<AddSong />} />
         <Route path="about" element={<About />} />
         <Route path="internet" element={<Internet />} />
+        <Route path="snake" element={<SnakeGame />} />
       </Route>
     </Route>
   )

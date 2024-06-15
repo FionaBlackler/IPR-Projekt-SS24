@@ -1,157 +1,107 @@
-import React from "react";
-import "./Internet.css";
-import Draggable from "react-draggable";
-import { ThemeProvider } from "styled-components";
-import def from "react95/dist/themes/millenium";
+import React, { useState } from 'react';
+import './Internet.css';
+import Draggable from 'react-draggable';
+import { ThemeProvider } from 'styled-components';
+import original from 'react95/dist/themes/original';
+import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator } from 'react95';
 
-import {
-  Button,
-  Window,
-  WindowHeader,
-  WindowContent,
-  Toolbar
-} from "react95";
+import aboutIcon from '../Images/icons/recycle2.png';
+import galleryIcon from '../Images/icons/gallery4.png';
+import addSongIcon from '../Images/icons/addsong2.png';
+import homeIcon from '../Images/icons/computer3.png';
+import internetexplorerIcon from '../Images/icons/internetexplorer.png';
+import SnakeGame from './SnakeGame'; // Import the SnakeGame component
 
-import aboutIcon from "../Images/icons/recycle2.png";
-import galleryIcon from "../Images/icons/gallery4.png";
-import addSongIcon from "../Images/icons/addsong2.png";
-import homeIcon from "../Images/icons/computer3.png";
-import internetexplorerIcon from "../Images/icons/internetexplorer.png";
-import { useNavigate } from "react-router-dom";
+const Internet = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-function Internet() {
-  const navigate = useNavigate();
+  const handleClose = () => {
+    navigate("/welcome/home");
+  };
+
+  const handleRetry = () => {
+    // Handle retry action
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="internet-body">
-     <div className="icons-menu">
-        <div style={{ height: "3rem" }} />
-
-        <div>
-          <a
-            onClick={() => {
-              navigate("/welcome/about");
-            }}
-            className="icon"
-          >
-            <img src={aboutIcon} alt="About" style={{ marginRight: 4 }} />
-            <span>About</span>
-          </a>
-        </div>
-
-        <div className="buffer"></div>
-
-        <div>
-          <a
-            onClick={() => {
-              navigate("/welcome/home");
-            }}
-            className="icon"
-          >
-            <img src={homeIcon} alt="home" style={{ marginRight: 4 }} />
-            <span>Home</span>
-          </a>
-        </div>
-
-        <div className="buffer"></div>
-
-        <div>
-          <a
-            onClick={() => {
-              navigate("/welcome/musicgallery");
-            }}
-            className="icon"
-          >
-            <img
-              src={galleryIcon}
-              alt="Music Gallery"
-              style={{ marginRight: 4 }}
-            />
-            <span>Music Gallery</span>
-          </a>
-        </div>
-
-        <div className="buffer"></div>
-
-        <div>
-          <a
-            onClick={() => {
-              navigate("/welcome/addsong");
-            }}
-            className="icon"
-          >
-            <img src={addSongIcon} alt="addsong" style={{ marginRight: 4 }} />
-            <span>Upload new song</span>
-          </a>
-        </div>
-        <div className="buffer"></div>
-
-        <div>
-          <a
-            onClick={() => {
-              navigate("/welcome/internet");
-            }}
-            className="icon"
-          >
-            <img
-              src={internetexplorerIcon}
-              alt="internetexplorer"
-              style={{ marginRight: 4 }}
-            />
-            <span>Internet Explorer</span>
-          </a>
-        </div>
+      <div className="icons-menu">
+        {/* Your icon menu here */}
       </div>
       <div className="space" />
-      <ThemeProvider theme={def}>
+      <ThemeProvider theme={original}>
         <div className="draggable-window-internet">
           <Draggable handle=".internetwindow-title">
             <Window className="internet-window">
-              <WindowHeader className="internetwindow-title">
+              <WindowHeader className="internet-window-header">
                 <span>Microsoft Internet Explorer - [No Document]</span>
-
-                <Button
-                  size={"sm"}
-                  onClick={() => alert("Close button clicked")}
-                >
-                  X
+                <Button onClick={handleClose}>
+                  <span className="internet-close-icon" />
                 </Button>
               </WindowHeader>
               <Toolbar>
-                <Button variant='menu' size='sm'>
+                <Button variant="menu" size="sm">
                   File
                 </Button>
-                <Button variant='menu' size='sm'>
+                <Button variant="menu" size="sm">
                   Edit
                 </Button>
-                <Button variant='menu' size='sm'>
+                <Button variant="menu" size="sm">
                   View
                 </Button>
-                <Button variant='menu' size='sm' disabled>
+                <Button variant="menu" size="sm" disabled>
                   Favorites
                 </Button>
-                <Button variant='menu' size='sm'>
+                <Button variant="menu" size="sm">
                   Help
                 </Button>
               </Toolbar>
               <div className="separator-horizontal" />
               <WindowContent className="internet-window-content">
-                  <div className="address-bar">
-                    <span>Adresse:</span>
-                    <input type="text" className="address-input" />
-                  </div>
-                  
-                  <div className="separator-horizontal" />
-                  <div className="text-internet">
-                    Unfortunately no internet connection can be established
-                  </div>
+                {/* Your content here */}
+                <div className="internet-button">
+                  <Button className="button-retry" onClick={handleRetry}>
+                    ↻
+                  </Button>
+                  <Button className="button-game" onClick={openModal}>
+                    Let's play a game
+                  </Button>
+                </div>
               </WindowContent>
             </Window>
           </Draggable>
         </div>
+
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="snake-overlay">
+              <Draggable handle=".modal-header">
+                <Window className="modal-window">
+                  <WindowHeader className="modal-header">
+                    <span>Snake Game</span>
+                    <Button onClick={closeModal}>
+                      <span className="close-icon" />
+                    </Button>
+                  </WindowHeader>
+                  <WindowContent>
+                    <SnakeGame onClose={closeModal} /> {/* Pass onClose function */}
+                  </WindowContent>
+                </Window>
+              </Draggable>
+            </div>
+          </div>
+        )}
       </ThemeProvider>
     </div>
   );
-}
+};
 
 export default Internet;
