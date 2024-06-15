@@ -38,8 +38,8 @@ User-Stories:<br>
 - Song vor-/zurückspulen
 - Songdetails anzeigen
 - Songdetails bearbeiten
-- Song erneut abspielen/überspringen
-✔ Neue Playlist hinzufügen
+- Song erneut abspielen/überspringen<br>
+✔ Neue Playlist hinzufügen<br>
 ✔ Playlist löschen 
 - Mehrere Playlists gleichzeitig löschen
 - Playlist abspielen/zufällig wiedergeben
