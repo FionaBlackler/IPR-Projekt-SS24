@@ -1,65 +1,34 @@
-const express = require('express');
-const app = express();
-
-const db = require('./models');
-
-db.sequelize.sync().then(()=>{
-  app.listen(8080, () => {console.log("Server running on port 8080");})
-
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const express = require("express");
-const cors = require("cors");
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors"); // Import the cors middleware
+const db = require("./models");
+const apiRoutes = require("./api");
 
 const app = express();
 
-const db = require("./app/models");
-db.sequelize.sync();
-
-
-var corsOptions = {
-  origin: "http://localhost:8080"
+// CORS configuration to allow only specific origin
+const corsOptions = {
+  origin: "http://localhost:5173",
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
+// Use CORS middleware with options
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
-app.use(express.json());
+// Middleware to parse JSON requests
+app.use(bodyParser.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+// Use the API routes, prefixed with /api
+app.use("/api", apiRoutes);
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Server läuft" });
-});
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
-*/
+// Sync the models and start the server
+db.sequelize
+  .sync()
+  .then(() => {
+    app.listen(8080, () => {
+      console.log("Server running on port 8080");
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to sync database:", err);
+  });

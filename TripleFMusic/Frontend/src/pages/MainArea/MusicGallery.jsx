@@ -14,7 +14,7 @@ import {
 } from "react95";
 import original from "react95/dist/themes/original";
 import "./MusicGallery.css";
-import axios from 'axios';
+import axios from "../../axiosConfig";
 
 function MusicGallery() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function MusicGallery() {
   useEffect(() => {
     async function fetchPlaylists() {
       try {
-        const response = await axios.get('/api/playlists');
+        const response = await axios.get("/api/playlists");
         if (Array.isArray(response.data)) {
           setPlaylists(response.data);
         } else {
@@ -49,21 +49,6 @@ function MusicGallery() {
 
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
-  };
-
-  const addSong = async (newSong) => {
-    try {
-      const response = await axios.post(`/api/playlists/${selectedPlaylist.id}/songs`, newSong);
-      setPlaylists((prevPlaylists) =>
-        prevPlaylists.map((playlist) =>
-          playlist.id === selectedPlaylist.id
-            ? { ...playlist, songs: [...playlist.songs, response.data] }
-            : playlist
-        )
-      );
-    } catch (error) {
-      console.error("Error adding song", error);
-    }
   };
 
   const openModal = () => {
@@ -81,11 +66,25 @@ function MusicGallery() {
 
   const addNewPlaylist = async () => {
     try {
-      const response = await axios.post('/api/playlists', { name: newPlaylistName });
-      setPlaylists([...playlists, response.data]);
-      closeModal();
+      const response = await axios.post("/api/playlists", {
+        name: newPlaylistName,
+      });
+      setPlaylists([...playlists, response.data]); // Add new playlist to the list
+      closeModal(); // Close the modal
     } catch (error) {
-      console.error("Error adding new playlist", error);
+      console.error("Error adding new playlist:", error);
+
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert("Playlist name must be unique");
+        } else {
+          alert(`An error occurred: ${error.response.data.message}`);
+        }
+      } else {
+        alert(
+          "An error occurred while creating the playlist. Please check the console for details."
+        );
+      }
     }
   };
 
