@@ -6,39 +6,45 @@ Dozent: Mathias Maciossek;<br>
 Semester: Sommersemester 2024;<br>
 Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
 <br>
-This project is a full-stack web application with a focus on managing mp3-files and providing functions for adding, organizing and playing the mp3-files. The overall look of the web application is based on the old Windows 95 design.<br>
+Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
-Languages Used:<br>
+NACH DEM CLONEN DES REPOS: Im Frontend (cd TripdleFMusic/Frontend) und Backend (cd TripleFMusic/Backend) bitte erstmal einen npm install machen. Im Frontend muss vite separat mit npm install vite installiert werden.<br>
+<br>
+Anwendung starten:<br>
+1. Backend starten --> cd TripleFMusic/Backend --> nodemon server.js<br>
+2. Frontend starten --> cd TripleFMusic/Frontend --> npm run dev<br>
+
+Verwendete Sprachen:<br>
 
 - JavaScript
 - HTML
 - CSS
 
-Libraries Used:<br>
+Verwendete Bibliotheken:<br>
 
 - React JS
 - React95 component library
 
 User-Stories:<br>
 
-- Log In/Out
-- Register Account
-- Forgot Password
-- Go to Music Gallery
-- Add new Song
-- Delete Song
-- Delete multiple Songs at once
-- Play/Pause Song
-- Fastforward/Rewind Song
-- View Song Details
-- Edit Song Details
-- Replay/Skip Song
-- Add new Playlist
-- Delete Playlist
-- Delete musltiple Mixtapes at once
-- Play/Shuffle Playlist
-- Sort Songs ind Playlist (?)
-- Search for Playlist
-- Search for individual Songs
-- Search for Song in Mixtape
-- Easter Egg -> Play Snake in "Browser" because of no Internet
+- An-/Abmelden
+- Konto registrieren
+- Passwort vergessen
+- Zur Musikgalerie gehen
+- Neuen Song hinzufügen
+- Song löschen
+- Mehrere Songs gleichzeitig löschen
+- Song abspielen/pausieren
+- Song vor-/zurückspulen
+- Songdetails anzeigen
+- Songdetails bearbeiten
+- Song erneut abspielen/überspringen
+- Neue Playlist hinzufügen
+- Playlist löschen
+- Mehrere Mixtapes gleichzeitig löschen
+- Playlist abspielen/zufällig wiedergeben
+- Songs in Playlist sortieren (?)
+- Nach Playlist suchen
+- Nach einzelnen Songs suchen
+- Nach Song im Mixtape suchen
+- Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
