@@ -43,8 +43,8 @@ User-Stories:<br>
 - Songdetails bearbeiten
 - Song erneut abspielen/überspringen<br>
 ✔ Neue Playlist hinzufügen (und in Playlist Menu angezeigt auch nach einem reload)<br>
-✔ Playlist löschen 
-- Mehrere Playlists gleichzeitig löschen
+✔ Playlist löschen <br>
+✔ Mehrere Playlists gleichzeitig löschen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
 - Nach Playlist suchen
