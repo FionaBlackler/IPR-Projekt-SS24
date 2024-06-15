@@ -14,7 +14,7 @@ import {
 } from "react95";
 import original from "react95/dist/themes/original";
 import "./MusicGallery.css";
-import axios from '../../axiosConfig';
+import axios from "../../axiosConfig";
 
 function MusicGallery() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function MusicGallery() {
   useEffect(() => {
     async function fetchPlaylists() {
       try {
-        const response = await axios.get('/api/playlists');
+        const response = await axios.get("/api/playlists");
         if (Array.isArray(response.data)) {
           setPlaylists(response.data);
         } else {
@@ -66,20 +66,24 @@ function MusicGallery() {
 
   const addNewPlaylist = async () => {
     try {
-      const response = await axios.post('/api/playlists', { name: newPlaylistName });
+      const response = await axios.post("/api/playlists", {
+        name: newPlaylistName,
+      });
       setPlaylists([...playlists, response.data]); // Add new playlist to the list
       closeModal(); // Close the modal
     } catch (error) {
       console.error("Error adding new playlist:", error);
-  
+
       if (error.response) {
         if (error.response.status === 400) {
-          alert('Playlist name must be unique');
+          alert("Playlist name must be unique");
         } else {
           alert(`An error occurred: ${error.response.data.message}`);
         }
       } else {
-        alert('An error occurred while creating the playlist. Please check the console for details.');
+        alert(
+          "An error occurred while creating the playlist. Please check the console for details."
+        );
       }
     }
   };

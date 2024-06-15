@@ -1,5 +1,11 @@
 import React from "react";
-import { Table, TableBody, TableRow, TableDataCell, ScrollView } from "react95";
+import { 
+  Table, 
+  TableBody, 
+  TableRow, 
+  TableDataCell, 
+  ScrollView 
+} from "react95";
 import { ThemeProvider } from "styled-components";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
