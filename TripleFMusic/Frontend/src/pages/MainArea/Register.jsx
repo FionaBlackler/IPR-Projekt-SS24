@@ -26,6 +26,7 @@ function Register() {
   const [password, setPassword] = useState("");
   /*const [passwordConfirm, setPasswordConfirm] = useState("");*/
   const [termsAndConditions, settermsAndConditions] = useState(false);
+  const[username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
@@ -39,6 +40,7 @@ function Register() {
     setLastName("");
     setEmail("");
     setPassword("");
+    setUsername("");
     settermsAndConditions(false);
   };
 
@@ -92,6 +94,12 @@ function Register() {
                 />
                 <Separator />
                 <Separator />
+                <span>username:</span>
+                <TextInput
+                  value={username}
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
                 <span>e-mail:</span>
                 <TextInput
                   value={email}

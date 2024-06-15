@@ -63,7 +63,7 @@ function ForgotPassword() {
               <span>please enter your email/username</span>
                 <TextInput
                   value={email}
-                  placeholder="e-mail"
+                  placeholder="e-mail/username"
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <Separator />
