@@ -66,7 +66,8 @@ const Internet = () => {
               </Toolbar>
               <div className="separator-horizontal" />
               <WindowContent className="internet-window-content">
-                {/* Your content here */}
+                <span className='internet-text'>Unfortunately no internet connection could be established</span>
+                <Separator></Separator>
                 <div className="internet-button">
                   <Button className="button-retry" onClick={handleRetry}>
                     ↻
