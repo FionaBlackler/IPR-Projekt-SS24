@@ -8,7 +8,10 @@ Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blac
 <br>
 Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
-NACH DEM CLONEN DES REPOS: Im Frontend (cd TripdleFMusic/Frontend) und Backend (cd TripleFMusic/Backend) bitte erstmal einen npm install machen. Im Frontend muss vite separat mit npm install vite installiert werden.<br>
+NACH DEM CLONEN DES REPOS:<br>
+Im Frontend (cd TripdleFMusic/Frontend) und Backend (cd TripleFMusic/Backend) bitte erstmal einen npm install machen.<br>
+Im Frontend muss vite separat mit npm install vite installiert werden.<br>
+Im Backend muss nodemon extra installiert werden mit npm install -g nodemon und npm install nodemon --save-dev.<br>
 <br>
 Anwendung starten:<br>
 1. Backend starten --> cd TripleFMusic/Backend --> nodemon server.js<br>
