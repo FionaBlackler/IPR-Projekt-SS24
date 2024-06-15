@@ -1,3 +1,24 @@
+.music-gallery-body {
+  display: flex;
+  height:58.8rem
+}
+
+.icons-menu {
+  flex:1;
+/*background-color: lightblue; /* Just for visibility */
+}
+
+.buffer{
+  height:2rem;
+}
+
+.icon{
+  display: flex;
+  flex-direction: column; /* Align items as a column */
+  justify-content: center; /* Optional: Center vertically within the parent */
+  align-items: center;
+}
+
 .draggable-window {
   position: fixed;
   top: 0;
