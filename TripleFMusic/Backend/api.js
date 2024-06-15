@@ -26,6 +26,21 @@ router.get('/playlists', async (req, res) => {
       res.status(500).json({ message: 'Error fetching playlists', error });
     }
   });
+
+// Route to delete a playlist
+router.delete('/playlists/:id', async (req, res) => {
+    try {
+      const playlistId = req.params.id;
+      const playlist = await Playlist.findByPk(playlistId);
+      if (!playlist) {
+        return res.status(404).json({ message: 'Playlist not found' });
+      }
+      await playlist.destroy();
+      res.status(204).end();
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting playlist', error });
+    }
+  });
   
 
 module.exports = router;

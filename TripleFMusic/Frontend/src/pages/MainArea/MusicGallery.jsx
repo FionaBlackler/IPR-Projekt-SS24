@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
 import { ThemeProvider } from "styled-components";
@@ -18,9 +18,10 @@ import axios from 'axios';
 
 function MusicGallery() {
   const navigate = useNavigate();
+  const contextMenuRef = useRef(null);
 
   const [playlists, setPlaylists] = useState([]);
-  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [selectedPlaylists, setSelectedPlaylists] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState("");
   const [contextMenu, setContextMenu] = useState({
@@ -65,8 +66,16 @@ function MusicGallery() {
     };
   }, [contextMenu.visible]);
 
-  const selectPlaylist = (playlist) => {
-    setSelectedPlaylist(playlist);
+  const selectPlaylist = (playlist, event) => {
+    if (event.ctrlKey) {
+      if (selectedPlaylists.includes(playlist)) {
+        setSelectedPlaylists(selectedPlaylists.filter((p) => p !== playlist));
+      } else {
+        setSelectedPlaylists([...selectedPlaylists, playlist]);
+      }
+    } else {
+      setSelectedPlaylists([playlist]);
+    }
   };
 
   const openModal = () => {
@@ -85,8 +94,8 @@ function MusicGallery() {
   const addNewPlaylist = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/playlists', { name: newPlaylistName });
-      setPlaylists([...playlists, response.data]); // Add new playlist to the list
-      closeModal(); // Close the modal
+      setPlaylists([...playlists, response.data]);
+      closeModal();
     } catch (error) {
       console.error("Error adding new playlist:", error);
 
@@ -102,24 +111,38 @@ function MusicGallery() {
     }
   };
 
-  const handleRightClick = (e, playlistId) => {
+  const handleRightClick = (e, playlist) => {
     e.preventDefault();
+    if (!selectedPlaylists.includes(playlist)) {
+      setSelectedPlaylists([playlist]);
+    }
     setContextMenu({
       visible: true,
       x: e.pageX,
       y: e.pageY,
-      playlistId: playlistId,
+      playlistId: playlist.id,
     });
+  };
+
+  const deletePlaylists = async () => {
+    try {
+      await Promise.all(selectedPlaylists.map(async (playlist) => {
+        await axios.delete(`http://localhost:8080/api/playlists/${playlist.id}`);
+      }));
+      setPlaylists(playlists.filter((playlist) => !selectedPlaylists.includes(playlist)));
+      setContextMenu({ ...contextMenu, visible: false });
+      setSelectedPlaylists([]);
+    } catch (error) {
+      console.error("Error deleting playlists", error);
+    }
   };
 
   const deletePlaylist = async (playlistId) => {
     try {
-      await axios.delete(`/api/playlists/${playlistId}`);
+      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
       setContextMenu({ ...contextMenu, visible: false });
-      if (selectedPlaylist && selectedPlaylist.id === playlistId) {
-        setSelectedPlaylist(null);
-      }
+      setSelectedPlaylists([]);
     } catch (error) {
       console.error("Error deleting playlist", error);
     }
@@ -172,15 +195,15 @@ function MusicGallery() {
                   <Separator style={{ margin: "10px 0" }} />
                   <div className="playlist-menu">
                     {playlists.map((playlist) => (
-                      <div key={playlist.id} className="playlist-item">
+                      <div key={playlist.id} className={`playlist-item ${selectedPlaylists.includes(playlist) ? 'selected' : ''}`}>
                         <a
                           className="playlist-link"
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            selectPlaylist(playlist);
+                            selectPlaylist(playlist, e);
                           }}
-                          onContextMenu={(e) => handleRightClick(e, playlist.id)}
+                          onContextMenu={(e) => handleRightClick(e, playlist)}
                         >
                           {playlist.name}
                         </a>
@@ -189,16 +212,16 @@ function MusicGallery() {
                   </div>
                 </Frame>
                 <div className="playlist-content">
-                  {selectedPlaylist ? (
+                  {selectedPlaylists.length === 1 ? (
                     <div>
                       <div className="playlist-header">
-                        <h2>{selectedPlaylist.name}</h2>
+                        <h2>{selectedPlaylists[0].name}</h2>
                         <Button>►</Button>
                       </div>
-                      <PlaylistContent playlist={selectedPlaylist} onSongClick={setCurrentSong} />
+                      <PlaylistContent playlist={selectedPlaylists[0]} onSongClick={setCurrentSong} />
                     </div>
                   ) : (
-                    <p></p>
+                    <p>Select a playlist to view its content</p>
                   )}
                 </div>
               </div>
@@ -264,13 +287,19 @@ function MusicGallery() {
 
       {contextMenu.visible && (
         <div
+          ref={contextMenuRef}
           className="add-playlist-context-menu"
-          style={{ top: contextMenu.y, left: contextMenu.x }}
-          onClick={closeContextMenu}
+          style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          <Button onClick={() => deletePlaylist(contextMenu.playlistId)}>
-            Delete Playlist
-          </Button>
+          {selectedPlaylists.length === 1 ? (
+            <Button onClick={() => deletePlaylist(contextMenu.playlistId)}>
+              Delete Playlist
+            </Button>
+          ) : (
+            <Button onClick={deletePlaylists}>
+              Delete Selected Playlists
+            </Button>
+          )}
         </div>
       )}
     </ThemeProvider>

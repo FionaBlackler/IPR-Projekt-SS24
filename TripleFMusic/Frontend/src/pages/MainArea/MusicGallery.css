@@ -83,6 +83,7 @@
 .playlist-item {
   margin-bottom: 10px;
   text-align: left;
+  padding: 5px;
 }
 
 .playlist-link {
@@ -91,6 +92,10 @@
   cursor: pointer;
   transition: color 0.3s ease;
   display: inline;
+}
+
+.playlist-item.selected {
+  background-color: #87ceeb;
 }
 
 .playlist-link:hover {
