@@ -39,9 +39,9 @@ User-Stories:<br>
 - Songdetails anzeigen
 - Songdetails bearbeiten
 - Song erneut abspielen/überspringen
-- Neue Playlist hinzufügen
-- Playlist löschen
-- Mehrere Mixtapes gleichzeitig löschen
+✔ Neue Playlist hinzufügen
+✔ Playlist löschen 
+- Mehrere Playlists gleichzeitig löschen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
 - Nach Playlist suchen

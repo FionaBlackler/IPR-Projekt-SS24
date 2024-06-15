@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
 import { ThemeProvider } from "styled-components";
@@ -18,6 +18,7 @@ import axios from 'axios';
 
 function MusicGallery() {
   const navigate = useNavigate();
+  const contextMenuRef = useRef(null); // Add ref for context menu
 
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -114,7 +115,7 @@ function MusicGallery() {
 
   const deletePlaylist = async (playlistId) => {
     try {
-      await axios.delete(`/api/playlists/${playlistId}`);
+      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
       setContextMenu({ ...contextMenu, visible: false });
       if (selectedPlaylist && selectedPlaylist.id === playlistId) {
@@ -264,6 +265,7 @@ function MusicGallery() {
 
       {contextMenu.visible && (
         <div
+          ref={contextMenuRef} // Add ref here
           className="add-playlist-context-menu"
           style={{ top: contextMenu.y, left: contextMenu.x }}
           onClick={closeContextMenu}
