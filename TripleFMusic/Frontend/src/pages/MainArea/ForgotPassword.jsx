@@ -29,6 +29,9 @@ function ForgotPassword() {
   };
 
   const handleInquiry = () => {
+    /** Meldung anfrage wurde dem support geschickt bitte warten Sie
+     *
+    */
 
   }
 
