@@ -34,7 +34,7 @@ function MusicGallery() {
   useEffect(() => {
     async function fetchPlaylists() {
       try {
-        const response = await axios.get('/api/playlists');
+        const response = await axios.get('http://localhost:8080/api/playlists');
         if (Array.isArray(response.data)) {
           setPlaylists(response.data);
         } else {
@@ -47,23 +47,26 @@ function MusicGallery() {
     fetchPlaylists();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target)) {
+        closeContextMenu();
+      }
+    };
+
+    if (contextMenu.visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [contextMenu.visible]);
+
   const selectPlaylist = (playlist) => {
     setSelectedPlaylist(playlist);
-  };
-
-  const addSong = async (newSong) => {
-    try {
-      const response = await axios.post(`/api/playlists/${selectedPlaylist.id}/songs`, newSong);
-      setPlaylists((prevPlaylists) =>
-        prevPlaylists.map((playlist) =>
-          playlist.id === selectedPlaylist.id
-            ? { ...playlist, songs: [...playlist.songs, response.data] }
-            : playlist
-        )
-      );
-    } catch (error) {
-      console.error("Error adding song", error);
-    }
   };
 
   const openModal = () => {
@@ -81,14 +84,12 @@ function MusicGallery() {
 
   const addNewPlaylist = async () => {
     try {
-      const response = await axios.post('/api/playlists', { name: newPlaylistName });
+      const response = await axios.post('http://localhost:8080/api/playlists', { name: newPlaylistName });
       setPlaylists([...playlists, response.data]); // Add new playlist to the list
       closeModal(); // Close the modal
     } catch (error) {
-      // Log the detailed error to the console
       console.error("Error adding new playlist:", error);
 
-      // Check if the error response exists and show a specific message
       if (error.response) {
         if (error.response.status === 400) {
           alert('Playlist name must be unique');
@@ -163,10 +164,7 @@ function MusicGallery() {
                   }}
                 >
                   <div className="playlist-menu-button-panel">
-                    <Button
-                      onClick={handleAddSong}
-                      className="playlist-menu-button"
-                    >
+                    <Button onClick={handleAddSong} className="playlist-menu-button">
                       Add Song
                     </Button>
                     <Button onClick={openModal}>Add MIXTAPE</Button>
@@ -182,9 +180,7 @@ function MusicGallery() {
                             e.preventDefault();
                             selectPlaylist(playlist);
                           }}
-                          onContextMenu={(e) =>
-                            handleRightClick(e, playlist.id)
-                          }
+                          onContextMenu={(e) => handleRightClick(e, playlist.id)}
                         >
                           {playlist.name}
                         </a>
@@ -199,10 +195,7 @@ function MusicGallery() {
                         <h2>{selectedPlaylist.name}</h2>
                         <Button>►</Button>
                       </div>
-                      <PlaylistContent
-                        playlist={selectedPlaylist}
-                        onSongClick={setCurrentSong}
-                      />
+                      <PlaylistContent playlist={selectedPlaylist} onSongClick={setCurrentSong} />
                     </div>
                   ) : (
                     <p></p>
@@ -226,9 +219,9 @@ function MusicGallery() {
                   </div>
                 </div>
                 <div className="player-middle">
-                  <Button>&lt;&lt;</Button>
+                  <Button>{'<<'}</Button>
                   <Button>►</Button>
-                  <Button>&gt;&gt;</Button>
+                  <Button>{'>>'}</Button>
                   <Button>↻</Button>
                 </div>
                 <div className="player-right"></div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Window, WindowHeader, WindowContent, Panel, Cutout, Button, Tooltip, ScrollView } from 'react95';
-import rose from 'react95/dist/themes/rose';
+import original from 'react95/dist/themes/original';
 import './About.css';
 import Fatima from '../Images/Fatima.png';
 import Funda from '../Images/Funda.png';
@@ -17,7 +17,7 @@ function About() {
   };
 
   return (
-    <ThemeProvider theme={rose}>
+    <ThemeProvider theme={original}>
       <Draggable handle=".about-window-header">
         <div className="draggable-aboutWindow">
           <Window className="about-window">
