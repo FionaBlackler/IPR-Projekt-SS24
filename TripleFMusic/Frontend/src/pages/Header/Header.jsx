@@ -4,7 +4,7 @@ import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
 
 import { ThemeProvider } from "styled-components";
-import rose from "react95/dist/themes/original"; // Thema der UI-Elemente
+import original from "react95/dist/themes/original"; // Thema der UI-Elemente
 import {
   AppBar,
   Toolbar,
@@ -21,7 +21,7 @@ function Header() {
 
   return (
     <div className="main-header">
-      <ThemeProvider theme={rose}>
+      <ThemeProvider theme={original}>
         <AppBar className="appbar" position="relative">
           <Toolbar style={{ justifyContent: "space-between", position: "relative" }}>
             <Button
