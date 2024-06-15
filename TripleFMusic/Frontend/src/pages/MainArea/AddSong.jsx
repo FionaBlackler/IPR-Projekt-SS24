@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddSong.css";
 import Draggable from "react-draggable";
-
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-
-import rose from "react95/dist/themes/rose"; //Thema der UI-Elemente
-import def from "react95/dist/themes/original"; //Thema der UI-Elemente
-
+import { ThemeProvider } from "styled-components";
+import def from "react95/dist/themes/original";
 import {
   Button,
   Window,
@@ -18,17 +14,71 @@ import {
   GroupBox,
   Checkbox,
 } from "react95";
+import { useNavigate } from "react-router-dom";
 import aboutIcon from "../Images/icons/recycle2.png";
 import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
-import { useNavigate } from "react-router-dom";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
-const playlists = [{ name: "playlist 1" }];
+// Example playlists
+const initialPlaylists = [
+  { name: "Playlist 1" },
+  { name: "Playlist 2" },
+  { name: "Playlist 3" },
+];
 
 function AddSong() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+
+  const [mp3File, setMp3File] = useState(null);
+  const [coverImage, setCoverImage] = useState(null);
+  const [songTitle, setSongTitle] = useState("");
+  const [selectedPlaylists, setSelectedPlaylists] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [notes, setNotes] = useState("");
+  const [playlists, setPlaylists] = useState([]);
+  const [allPlaylistsChecked, setAllPlaylistsChecked] = useState(false);
+
+  const handlePlaylistChange = (playlist) => {
+    setSelectedPlaylists((prevSelected) =>
+      prevSelected.includes(playlist)
+        ? prevSelected.filter((item) => item !== playlist)
+        : [...prevSelected, playlist]
+    );
+  };
+
+  const handleGenreChange = (genre) => {
+    setSelectedGenres((prevSelected) =>
+      prevSelected.includes(genre)
+        ? prevSelected.filter((item) => item !== genre)
+        : [...prevSelected, genre]
+    );
+  };
+
+  const handleMp3Upload = (event) => {
+    setMp3File(event.target.files[0]);
+  };
+
+  const handleCoverUpload = (event) => {
+    setCoverImage(event.target.files[0]);
+  };
+
+  const handleAllPlaylistsChange = () => {
+    if (allPlaylistsChecked) {
+      setSelectedPlaylists([]);
+    } else {
+      setSelectedPlaylists(playlists.map((playlist) => playlist.name));
+    }
+    setAllPlaylistsChecked(!allPlaylistsChecked);
+  };
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8080/api/playlists")
+      .then((response) => response.json())
+      .then((data) => setPlaylists(data))
+      .catch((error) => console.error("Error fetching playlists:", error));
+  }, []);
 
   return (
     <div className="addsong-body">
@@ -113,7 +163,7 @@ function AddSong() {
       </div>
       <div className="space" />
       <ThemeProvider theme={def}>
-        <Draggable>
+        <Draggable defaultPosition={{ x: 250, y: 0 }}>
           <div className="draggable-window-add-song">
             <div className="space-2" />
             <div className="add-song-space">
@@ -131,24 +181,44 @@ function AddSong() {
                 </WindowHeader>
 
                 <WindowContent className="add-song-window-content">
-                  <div style={{ display: "flex" }}>
-                    <Button primary className="mp3-button">
-                      Upload mp3 file
-                    </Button>
-                    <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
-                      No file uploaded
-                    </p>
-                  </div>
+                  <div style={{ display: "flex", gap: "13rem" }}>
+                    <div style={{ display: "flex" }}>
+                      <Button primary className="mp3-button">
+                        Upload mp3 file
+                        <input
+                          type="file"
+                          accept=".mp3"
+                          onChange={handleMp3Upload}
+                          style={{
+                            position: "absolute",
+                            opacity: 0,
+                            cursor: "pointer",
+                          }}
+                        />
+                      </Button>
+                      <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
+                        {mp3File ? mp3File.name : "No file uploaded"}
+                      </p>
+                    </div>
 
-                  <Separator />
-
-                  <div style={{ display: "flex" }}>
-                    <Button primary className="cover-button">
-                      Upload song cover
-                    </Button>
-                    <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
-                      No file uploaded
-                    </p>
+                    <div style={{ display: "flex" }}>
+                      <Button primary className="cover-button">
+                        Upload song cover
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleCoverUpload}
+                          style={{
+                            position: "absolute",
+                            opacity: 0,
+                            cursor: "pointer",
+                          }}
+                        />
+                      </Button>
+                      <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
+                        {coverImage ? coverImage.name : "No file uploaded"}
+                      </p>
+                    </div>
                   </div>
 
                   <Separator />
@@ -158,6 +228,8 @@ function AddSong() {
                       className="input-field-title"
                       placeholder="Add song title"
                       fullWidth
+                      value={songTitle}
+                      onChange={(e) => setSongTitle(e.target.value)}
                     />
                   </div>
 
@@ -167,11 +239,34 @@ function AddSong() {
                   <div>
                     Add to playlist
                     <div style={{ height: "0.5rem" }}></div>
-                    <ScrollView>
+                    <ScrollView
+                      className="notes-scroll"
+                      style={{ width: "100%" }}
+                    >
                       <div>
-                        <Checkbox name="allPlaylists" label="All" />
+                        <div>
+                          <Checkbox
+                            name="allPlaylists"
+                            label="All"
+                            checked={allPlaylistsChecked}
+                            onChange={handleAllPlaylistsChange}
+                          />
+                        </div>
+                        {playlists.map((playlist, index) => (
+                          <div key={index}>
+                            <Checkbox
+                              name={`playlist-${index}`}
+                              label={playlist.name}
+                              checked={selectedPlaylists.includes(
+                                playlist.name
+                              )}
+                              onChange={() =>
+                                handlePlaylistChange(playlist.name)
+                              }
+                            />
+                          </div>
+                        ))}
                       </div>
-                      <div className="other-playlists">ahhhhhhhhhhhh</div>
                     </ScrollView>
                   </div>
 
@@ -179,24 +274,50 @@ function AddSong() {
 
                   <GroupBox label="Genre">
                     <div>
-                      <Checkbox name="allGenres" label="All" />
+                      <Checkbox
+                        name="allGenres"
+                        label="All"
+                        checked={selectedGenres.length === 0}
+                        onChange={() =>
+                          setSelectedGenres(
+                            selectedGenres.length === 0
+                              ? [
+                                  "Girl Punk",
+                                  "Rock",
+                                  "Pop",
+                                  "Blues",
+                                  "Country",
+                                  "Rap",
+                                  "Reggae",
+                                  "EDM",
+                                  "R&B",
+                                ]
+                              : []
+                          )
+                        }
+                      />
                     </div>
                     <div className="other-genres">
-                      <Checkbox
-                        className="girlpunk"
-                        name="genre"
-                        label="Girl Punk"
-                      />
-                      <Checkbox className="rock" name="genre" label="Rock" />
-                      <Checkbox className="pop" name="genre" label="Pop" />
-
-                      <Checkbox name="genre" label="Blues" />
-                      <Checkbox name="genre" label="Country" />
-                      <Checkbox name="genre" label="Rap" />
-
-                      <Checkbox name="genre" label="Reggae" />
-                      <Checkbox name="genre" label="EDM" />
-                      <Checkbox name="genre" label="R&B" />
+                      {[
+                        "Girl Punk",
+                        "Rock",
+                        "Pop",
+                        "Blues",
+                        "Country",
+                        "Rap",
+                        "Reggae",
+                        "EDM",
+                        "R&B",
+                      ].map((genre, index) => (
+                        <Checkbox
+                          key={index}
+                          className={genre.toLowerCase().replace(" ", "-")}
+                          name="genre"
+                          label={genre}
+                          checked={selectedGenres.includes(genre)}
+                          onChange={() => handleGenreChange(genre)}
+                        />
+                      ))}
                     </div>
                   </GroupBox>
 
@@ -207,10 +328,12 @@ function AddSong() {
                         placeholder="Add other notes or lyrics here"
                         multiline
                         fullWidth
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
                       />
                     </ScrollView>
                     <div className="save-cancel">
-                      <Button>Save</Button>
+                      <Button onClick={() => console.log("Save")}>Save</Button>
                       <Button
                         onClick={() => {
                           navigate("/welcome/home");
