@@ -30,10 +30,10 @@ Verwendete Bibliotheken:<br>
 
 User-Stories:<br>
 
-- An-/Abmelden
+- An-/Abmelden (mit Authentifizierung)
 - Konto registrieren
-- Passwort vergessen
-- Zur Musikgalerie gehen
+- Passwort vergessen<br>
+✔ Zur Musikgalerie gehen
 - Neuen Song hinzufügen
 - Song löschen
 - Mehrere Songs gleichzeitig löschen
