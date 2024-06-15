@@ -163,7 +163,7 @@ function AddSong() {
       </div>
       <div className="space" />
       <ThemeProvider theme={def}>
-        <Draggable>
+        <Draggable defaultPosition={{ x: 250, y: 0 }}>
           <div className="draggable-window-add-song">
             <div className="space-2" />
             <div className="add-song-space">
