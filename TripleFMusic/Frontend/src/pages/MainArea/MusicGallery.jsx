@@ -162,7 +162,7 @@ function MusicGallery() {
 
   return (
     <ThemeProvider theme={original}>
-      <Draggable handle=".music-gallery-window-header">
+      <Draggable handle=".music-gallery-window-header" defaultPosition={{x: '80%', y: '400px'}}>
         <div className="draggable-window">
           <Window className="music-gallery-window">
             <WindowHeader className="music-gallery-window-header">
