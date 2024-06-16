@@ -22,6 +22,7 @@ const Internet = () => {
 
   }
 
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -91,24 +92,35 @@ const Internet = () => {
         </div>
 
         {isModalOpen && (
-          <div className="modal-overlay">
-            <div className="snake-overlay">
-              <Draggable handle="modal-header">
-                <Window className="modal-window">
-                  <WindowHeader className="modal-header">
-                    <span>Snake Game</span>
-                    <Button onClick={closeModal}>
-                      <span className="close-icon" />
-                    </Button>
-                  </WindowHeader>
-                  <WindowContent>
-                    <SnakeGame onClose={closeModal} /> {/* Pass onClose function */}
-                  </WindowContent>
-                </Window>
-              </Draggable>
-            </div>
-          </div>
-        )}
+  <>
+    <div className="snakeBackground">
+      <div className="snake-modal">
+        <Window className="snake-modal-window">
+          <WindowHeader className="snake-window-header">
+            <span>Terms and Conditions</span>
+            <Button onClick={closeModal}>
+              <span className="internet-close-icon" />
+            </Button>
+          </WindowHeader>
+         
+          <WindowContent>
+          <div>
+            /**Hier logik */
+            
+            
+           
+ 
+          </div> 
+
+      </WindowContent>
+        </Window>
+      </div>
+    </div>
+  </>
+)}
+
+
+
       </ThemeProvider>
     </div>
   );

@@ -132,3 +132,37 @@
   flex: 1;
   height: 20px;
 }
+
+.snakeBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+}
+.snake-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the modal */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.snake-modal-window {
+  width: 600px; /* Adjusted width to make the modal smaller */
+  height: 400px; /* Adjusted height to fit the content */
+  max-height: 70vh; /* Ensure it doesn't go beyond viewport height */
+  overflow-y:auto; /* Add vertical scrolling if content overflows */
+}
+.snake-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  cursor: move;
+}

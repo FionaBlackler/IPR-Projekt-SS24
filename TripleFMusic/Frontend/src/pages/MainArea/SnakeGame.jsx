@@ -1,148 +1,144 @@
-import React, { useEffect, useRef, useState } from 'react';
+// SnakeGame.jsx
+
+import React, { useState, useEffect, useRef } from 'react';
 import './SnakeGame.css';
 
 const SnakeGame = ({ onClose }) => {
-  const canvasRef = useRef(null);
-  const [score, setScore] = useState(0);
+  const [snakeDots, setSnakeDots] = useState([
+    [0, 0],
+    [2, 0]
+  ]);
+  const [foodDot, setFoodDot] = useState([5, 5]);
+  const [direction, setDirection] = useState('RIGHT');
+  const [speed, setSpeed] = useState(100);
   const [gameOver, setGameOver] = useState(false);
 
-  const snakeSpeed = 100; // milliseconds
-  const canvasSize = 400;
-  const tileSize = 20;
-  const totalTiles = canvasSize / tileSize;
+  const gameRef = useRef();
 
-  const getRandomTile = () => {
-    return {
-      x: Math.floor(Math.random() * totalTiles) * tileSize,
-      y: Math.floor(Math.random() * totalTiles) * tileSize,
-    };
-  };
+  useEffect(() => {
+    const context = gameRef.current.getContext('2d');
+    const interval = setInterval(() => {
+      moveSnake();
+    }, speed);
 
-  const [snake, setSnake] = useState([
-    { x: tileSize * 2, y: 0 },
-    { x: tileSize, y: 0 },
-    { x: 0, y: 0 },
-  ]);
+    document.onkeydown = onKeyDown;
 
-  const [direction, setDirection] = useState({ x: tileSize, y: 0 });
-  const [food, setFood] = useState(getRandomTile());
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleKeyDown = (event) => {
-    switch (event.key) {
-      case 'ArrowUp':
-        if (direction.y === 0) setDirection({ x: 0, y: -tileSize });
+  useEffect(() => {
+    checkIfOutOfBorders();
+    checkIfCollapsed();
+    checkIfEat();
+    if (gameOver) {
+      onClose();
+    }
+  }, [snakeDots]);
+
+  const onKeyDown = (e) => {
+    e = e || window.event;
+    switch (e.keyCode) {
+      case 38:
+        setDirection('UP');
         break;
-      case 'ArrowDown':
-        if (direction.y === 0) setDirection({ x: 0, y: tileSize });
+      case 40:
+        setDirection('DOWN');
         break;
-      case 'ArrowLeft':
-        if (direction.x === 0) setDirection({ x: -tileSize, y: 0 });
+      case 37:
+        setDirection('LEFT');
         break;
-      case 'ArrowRight':
-        if (direction.x === 0) setDirection({ x: tileSize, y: 0 });
+      case 39:
+        setDirection('RIGHT');
         break;
       default:
         break;
     }
   };
 
-  const checkCollision = (head, array) => {
-    for (let i = 0; i < array.length; i++) {
-      if (head.x === array[i].x && head.y === array[i].y) {
-        return true;
-      }
+  const moveSnake = () => {
+    let dots = [...snakeDots];
+    let head = dots[dots.length - 1];
+
+    switch (direction) {
+      case 'RIGHT':
+        head = [head[0] + 2, head[1]];
+        break;
+      case 'LEFT':
+        head = [head[0] - 2, head[1]];
+        break;
+      case 'DOWN':
+        head = [head[0], head[1] + 2];
+        break;
+      case 'UP':
+        head = [head[0], head[1] - 2];
+        break;
+      default:
+        break;
     }
-    return false;
+
+    dots.push(head);
+    dots.shift();
+    setSnakeDots(dots);
   };
 
-  const gameLoop = () => {
-    setSnake((prevSnake) => {
-      const newSnake = [...prevSnake];
-      const head = {
-        x: newSnake[0].x + direction.x,
-        y: newSnake[0].y + direction.y,
-      };
+  const checkIfOutOfBorders = () => {
+    let head = snakeDots[snakeDots.length - 1];
+    if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
+      gameOverFunction();
+    }
+  };
 
-      if (
-        head.x < 0 ||
-        head.x >= canvasSize ||
-        head.y < 0 ||
-        head.y >= canvasSize ||
-        checkCollision(head, newSnake)
-      ) {
-        setGameOver(true);
-        return prevSnake;
+  const checkIfCollapsed = () => {
+    let snake = [...snakeDots];
+    let head = snake[snake.length - 1];
+    snake.pop();
+    snake.forEach(dot => {
+      if (head[0] === dot[0] && head[1] === dot[1]) {
+        gameOverFunction();
       }
-
-      newSnake.unshift(head);
-
-      if (head.x === food.x && head.y === food.y) {
-        setFood(getRandomTile());
-        setScore(score + 1);
-      } else {
-        newSnake.pop();
-      }
-
-      return newSnake;
     });
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+  const checkIfEat = () => {
+    let head = snakeDots[snakeDots.length - 1];
+    if (head[0] === foodDot[0] && head[1] === foodDot[1]) {
+      setFoodDot([
+        Math.floor(Math.random() * 50) * 2,
+        Math.floor(Math.random() * 50) * 2
+      ]);
+      enlargeSnake();
+      increaseSpeed();
+    }
+  };
 
-    context.clearRect(0, 0, canvasSize, canvasSize);
+  const enlargeSnake = () => {
+    let newSnake = [...snakeDots];
+    newSnake.unshift([]);
+    setSnakeDots(newSnake);
+  };
 
-    snake.forEach((segment) => {
-      context.fillStyle = 'green';
-      context.fillRect(segment.x, segment.y, tileSize, tileSize);
-    });
+  const increaseSpeed = () => {
+    if (speed > 10) {
+      setSpeed(speed - 10);
+    }
+  };
 
-    context.fillStyle = 'red';
-    context.fillRect(food.x, food.y, tileSize, tileSize);
-  }, [snake, food]);
-
-  useEffect(() => {
-    if (gameOver) return;
-
-    const interval = setInterval(() => {
-      gameLoop();
-    }, snakeSpeed);
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      clearInterval(interval);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [direction, gameOver]);
-
-  const resetGame = () => {
-    setSnake([
-      { x: tileSize * 2, y: 0 },
-      { x: tileSize, y: 0 },
-      { x: 0, y: 0 },
-    ]);
-    setDirection({ x: tileSize, y: 0 });
-    setFood(getRandomTile());
-    setScore(0);
-    setGameOver(false);
-    onClose(); // Close the modal when restarting game
+  const gameOverFunction = () => {
+    setGameOver(true);
   };
 
   return (
     <div className="snake-game">
       <canvas
-        ref={canvasRef}
-        width={canvasSize}
-        height={canvasSize}
-        className="snake-canvas"
+        ref={gameRef}
+        width="100%"
+        height="100%"
+        className="game-area"
       />
-      <div className="snake-score">Score: {score}</div>
       {gameOver && (
-        <div className="snake-game-over">
-          <div>Game Over</div>
-          <button onClick={resetGame}>Restart</button>
+        <div className="game-over">
+          <h2>Game Over</h2>
+          <button onClick={onClose}>Close</button>
         </div>
       )}
     </div>
