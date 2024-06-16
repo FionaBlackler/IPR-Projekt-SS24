@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../Images/TripleF3_2.png";
 import { ThemeProvider } from "styled-components";
-import original from "react95/dist/themes/original"; // Theme der UI-Elemente
+import original from "react95/dist/themes/original"; 
 import { 
   AppBar, 
   Toolbar, 
@@ -13,20 +13,17 @@ import {
   Separator,
   Checkbox 
 } from "react95";
-import "./Welcome.css"; // Importiere deine CSS-Datei für das Styling
-import { useNavigate } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  /*const [emailConfirm, setEmailConfirm] = useState("");*/
   const [password, setPassword] = useState("");
-  /*const [passwordConfirm, setPasswordConfirm] = useState("");*/
   const [termsAndConditions, settermsAndConditions] = useState(false);
-  const[username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
@@ -47,6 +44,11 @@ function Register() {
   const handleRegister = () => {
     //hier noch Datenbank logik
     navigate("/login");
+  };
+
+  const handleTermsAndConditions = () => {
+    // Hier Modal-Logik einfügen
+    
   };
 
   return (
@@ -115,16 +117,18 @@ function Register() {
                   placeholder="password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
-
               </div>
 
               <div className="register-checkbox">
                 <Checkbox
-                  className="termsAndConditions"
-                  label="I agree to the terms and conditions"
+                  id="termsCheckbox"
                   checked={termsAndConditions}
                   onChange={() => settermsAndConditions(!termsAndConditions)}
                 />
+                <label className="termsCheckbox">
+                  I agree to the 
+                  <span className="terms-link" onClick={handleTermsAndConditions}> terms and conditions</span>
+                </label>
               </div>
               <div className="button-container">
                 <Button onClick={handleReset} style={{ marginLeft: 4 }}>

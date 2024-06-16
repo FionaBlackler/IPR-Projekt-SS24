@@ -70,7 +70,7 @@ function Login() {
                 />
                 Login
               </Button>
-              <p style={{ marginRight: "2rem", color: "white" }}>
+              <p style={{ marginRight: "2rem", color: "black" }}>
                 {new Date().getFullYear()} TripleF Music. All rights reserved.
               </p>
             </Toolbar>

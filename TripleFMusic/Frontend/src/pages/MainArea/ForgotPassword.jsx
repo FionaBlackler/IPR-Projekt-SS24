@@ -10,8 +10,7 @@ import {
   WindowHeader, 
   WindowContent, 
   TextInput, 
-  Separator,
-  Checkbox 
+  Separator
 } from "react95";
 import "./Welcome.css"; // Importiere deine CSS-Datei für das Styling
 import { useNavigate } from "react-router-dom";
@@ -21,7 +20,6 @@ import "./ForgotPassword.css";
 function ForgotPassword() {
   const [email, setEmail] = useState("");
 
-
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -29,10 +27,11 @@ function ForgotPassword() {
   };
 
   const handleInquiry = () => {
-    /** Meldung anfrage wurde dem support geschickt bitte warten Sie
-     *
+    /** 
+     * Alert
     */
-
+    alert("Your request has been forwarded to the support team. If you have any further questions, please contact support@triplefmusic.com");
+    navigate("/login");
   }
 
   return (
@@ -64,17 +63,15 @@ function ForgotPassword() {
             </WindowHeader>
             <WindowContent className="register-window-content">
               <span>please enter your email/username</span>
-                <TextInput
-                  value={email}
-                  placeholder="e-mail/username"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Separator />
-                <Separator />
-                
+              <TextInput
+                value={email}
+                placeholder="e-mail/username"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Separator />
+              <Separator />
 
               <div className="button-container">
-
                 <Button onClick={handleInquiry} style={{ marginLeft: 4 }}>
                   send Inquiry
                 </Button>
