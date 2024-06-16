@@ -1,18 +1,134 @@
-.internet-message-container {
+.internet-body {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* Vertikal zentriert */
+  align-items: center; /* Horizontal zentriert */
+  height: 100vh;
+}
+
+.icons-menu {
+  /* Your icon menu styles */
+}
+
+.space {
+  height: 2rem;
+}
+
+.draggable-window-internet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.internet-window {
+  padding: 2rem;
+  width: 80%;
+  height: 85%;
+  margin-left: 3rem;
+  margin-top: 1rem;
+}
+
+.internetwindow-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+
+.internet-window-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  padding: 5px 10px;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: move;
+}
+
+.internet-close-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+  margin-top: -1px;
+  transform: rotateZ(45deg);
+  position: relative;
+}
+.internet-close-icon:before,
+.internet-close-icon:after {
+  content: "";
+  position: absolute;
+  background: black;
+}
+.internet-close-icon:before {
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.internet-close-icon:after {
+  height: 3px;
+  width: 100%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: move;
+}
+
+.internet-text {
   text-align: center;
-  margin-top: 20px; /* Adjust margin as needed */
+  margin-bottom: 10px;
+}
+
+.address-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.address-input-container span {
+  margin-right: 10px;
+}
+
+.internet-message-container {
+  display: flex;
+  justify-content: center; /* Horizontal zentriert */
+  align-items: center; /* Vertikal zentriert */
+  flex-direction: column;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .internet-button-container {
   display: flex;
-  justify-content: space-around;
-  margin-top: 10px; /* Adjust margin as needed */
+  justify-content: center; /* Horizontal zentriert */
+  align-items: center; /* Vertikal zentriert */
+  margin-top: 10px;
 }
 
-.internet-text {
-  margin-bottom: 10px; /* Optional: Add spacing between text and buttons */
+.button-retry,
+.button-game {
+  width: 250px; /* Breite der Buttons */
+  margin: 0 30px; /* Abstand zwischen den Buttons */
+}
+
+.separator-horizontal {
+  border-top: 2px solid #ccc;
+  margin: 0.5rem 0;
+}
+
+.textinput {
+  flex: 1;
+  height: 20px;
 }

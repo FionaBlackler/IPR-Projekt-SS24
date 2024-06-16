@@ -3,25 +3,24 @@ import './Internet.css';
 import Draggable from 'react-draggable';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
-import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator, TextInput } from 'react95';
-
-import aboutIcon from '../Images/icons/recycle2.png';
-import galleryIcon from '../Images/icons/gallery4.png';
-import addSongIcon from '../Images/icons/addsong2.png';
-import homeIcon from '../Images/icons/computer3.png';
-import internetexplorerIcon from '../Images/icons/internetexplorer.png';
+import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator, TextInput, MenuList, MenuListItem } from 'react95';
 import SnakeGame from './SnakeGame'; // Import the SnakeGame component
+import { useNavigate } from "react-router-dom";
 
 const Internet = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = () => {
-    // Implement your close logic here
+    navigate("/welcome/home");
   };
 
   const handleRetry = () => {
     // Handle retry action
   };
+  const handleClick= () => {
+
+  }
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -57,8 +56,8 @@ const Internet = () => {
                 <Button variant="menu" size="sm">
                   View
                 </Button>
-                <Button variant="menu" size="sm" disabled>
-                  Favorites
+                <Button variant="menu" size="sm" onClick={handleClick}>
+                   Favorites
                 </Button>
                 <Button variant="menu" size="sm">
                   Help
@@ -66,24 +65,23 @@ const Internet = () => {
               </Toolbar>
               <div className="separator-horizontal" />
               <WindowContent className="internet-window-content">
-                <div className="flex-container">
-                  <Separator style={{ margin: "10px 0" }}>
-                    <span>Adresse:</span>
-                    <TextInput
-                      className="textinput"
-                      placeholder='type address here...'
-                    />
-                  </Separator>
+                <div className="address-input-container">
+                  <span>Adresse:</span>
+                  <TextInput
+                    className="textinput"
+                    placeholder='type address here...'
+                  />
+                  <Button className="button-retry" onClick={handleRetry}>
+                      ↻ 
+                  </Button>
                 </div>
+                <Separator></Separator>
 
                 <div className="internet-message-container">
                   <span className='internet-text'>Unfortunately no internet connection could be established</span>
                   <div className="internet-button-container">
-                    <Button className="button-retry" onClick={handleRetry}>
-                      ↻ Retry
-                    </Button>
                     <Button className="button-game" onClick={openModal}>
-                      Let's play a game
+                    Snake Me Up! 
                     </Button>
                   </div>
                 </div>
@@ -95,7 +93,7 @@ const Internet = () => {
         {isModalOpen && (
           <div className="modal-overlay">
             <div className="snake-overlay">
-              <Draggable handle=".modal-header">
+              <Draggable handle="modal-header">
                 <Window className="modal-window">
                   <WindowHeader className="modal-header">
                     <span>Snake Game</span>
