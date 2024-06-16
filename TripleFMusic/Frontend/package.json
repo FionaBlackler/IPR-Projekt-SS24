@@ -23,6 +23,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
     "react95": "^4.0.0",
+    "style-components": "^0.1.0",
     "styled-components": "^6.1.11",
     "three": "^0.165.0"
   },

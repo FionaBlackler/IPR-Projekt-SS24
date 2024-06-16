@@ -106,10 +106,10 @@
   
 }
 .terms-modal-window {
-  width: 500px; /* Adjusted width to make the modal smaller */
-  height: auto; /* Adjusted height to fit the content */
-  max-height: 55vh; /* Ensure it doesn't go beyond viewport height */
-  overflow-y: auto; /* Add vertical scrolling if content overflows */
+  width: 600px; /* Adjusted width to make the modal smaller */
+  height: 400px; /* Adjusted height to fit the content */
+  max-height: 70vh; /* Ensure it doesn't go beyond viewport height */
+  overflow-y:auto; /* Add vertical scrolling if content overflows */
 }
 .terms-window-header {
   display: flex;
@@ -145,16 +145,28 @@
     transform: translateY(-50%);
   }
 }
-
-.terms-container{
-
+.notes-scroll{
+  width:50%;
+  height: 18rem;
 }
-.terms-welcome{
 
+.terms-title {
+  display: block;
+  font-weight:bolder;
+  margin-top: 1rem;
 }
-.terms-title{
-
+.welcome-text{
+  display: block;
+  font-weight:bolder;
+  margin-top: 1rem;
 }
-.terms-text{
 
+
+.terms-text {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.terms-separator {
+  margin: 1rem 0;
 }

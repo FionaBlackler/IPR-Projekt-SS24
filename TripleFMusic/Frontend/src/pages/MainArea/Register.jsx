@@ -17,6 +17,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
+import styled from 'styled-components';
 
 function Register() {
   const [firstname, setFirstName] = useState("");
@@ -145,7 +146,7 @@ function Register() {
             </WindowContent>
           </Window>
 
-          {isModalOpen && (
+  {isModalOpen && (
   <>
     <div className="termsBackground">
       <div className="terms-modal">
@@ -156,26 +157,26 @@ function Register() {
               <span className="register-close-icon" />
             </Button>
           </WindowHeader>
-          <WindowContent className="terms-container">
-          <div className="FundaVerzweifeltt">
-          <ThemeProvider theme={original}>
-          <ScrollView
-            className="notes-scroll"
-            style={{ width: "100%" }}
-          >
-            <div>
-            <span className="terms-welcome">
-                Welcome to TripleF Music! Before you dive into our world of melodious wonders, 
-                we need you to read and agree to the following terms and conditions. But don't worry, 
-                we promise to keep it light and fun.
-              </span>
-              <Separator></Separator>
-              <span className="terms-title">Acceptance of Terms</span>
-              <span className="terms-text">
-                By using our services, you agree to these terms. If you don't agree,
-                you can still hum your favorite tunes, but you can't use our app. Sorry, not sorry!
-              </span>
-              <Separator></Separator>
+         
+          <WindowContent>
+        <ScrollView className="notes-scroll" style={{ width: "555px" }}>
+          <div>
+            <span style={{textAlign: "center", fontSize: '17px',display: "block", fontWeight: "bolder" }}> 
+             Welcome to TripleF Music!
+            </span> 
+
+           <span className="terms-text">
+              Before you dive into our world of melodious wonders, 
+              we need you to read and agree to the following terms and conditions. But don't worry, 
+              we promise to keep it light and fun.
+           </span>
+            <Separator></Separator>
+            <span className="terms-title">Acceptance of Terms</span>
+            <span className="terms-text">
+              By using our services, you agree to these terms. If you don't agree,
+              you can still hum your favorite tunes, but you can't use our app. Sorry, not sorry!
+            </span>
+            <Separator></Separator>
               <span className="terms-title">
                 User Conduct
               </span>
@@ -258,28 +259,24 @@ function Register() {
                 Contact us at support@triplefmusic.com. We love hearing from you!
               </span>
               <Separator></Separator>
-              <span>
+              <span style={{textAlign: "center", fontSize: '10px',display: "block"  }}>
                 By clicking "I Agree," you promise to abide by these terms and maybe,
                 just maybe, discover your new favorite song.
               </span>
-              <span>
-                Rock on,
-                The TripleF Music Team
+              <Separator></Separator>
+              <span style={{ display: "block", textAlign: "center", fontSize: '17px'}}>
+              Rock on,
+              <br />
+              The TripleF Music Team
               </span>
-
-            </div>
-              
-
-              
-              
-              </ScrollView>
-              </ThemeProvider>
-              </div>
-            
-            <div className="terms-modal-buttons">
-              <Button onClick={closeModal}>Close</Button>
-            </div>
-          </WindowContent>
+ 
+ 
+          </div> 
+        </ScrollView>
+        <div className="terms-modal-buttons">
+            <Button onClick={closeModal}>Close</Button>
+          </div> 
+      </WindowContent>
         </Window>
       </div>
     </div>
@@ -294,3 +291,12 @@ function Register() {
 }
 
 export default Register;
+
+/**
+ * 
+ *         
+            <div>
+                         
+              </div>
+              </ScrollView>
+ */
