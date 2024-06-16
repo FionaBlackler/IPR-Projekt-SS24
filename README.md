@@ -11,7 +11,7 @@ Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwe
 NACH DEM CLONEN DES REPOS:<br>
 Im Frontend (cd TripdleFMusic/Frontend) und Backend (cd TripleFMusic/Backend) bitte erstmal einen npm install machen.<br>
 Im Frontend muss vite separat mit npm install vite installiert werden.<br>
-Im Backend muss nodemon extra installiert werden mit npm install -g nodemon und npm install nodemon --save-dev.<br>
+Im Backend muss nodemon extra installiert werden mit npm install nodemon und npm install nodemon --save-dev.<br>
 <br>
 Anwendung starten:<br>
 1. Backend starten --> cd TripleFMusic/Backend --> nodemon server.js<br>
