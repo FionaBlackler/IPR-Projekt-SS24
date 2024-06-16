@@ -21,13 +21,6 @@ import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
-// Example playlists
-const initialPlaylists = [
-  { name: "Playlist 1" },
-  { name: "Playlist 2" },
-  { name: "Playlist 3" },
-];
-
 function AddSong() {
   const navigate = useNavigate();
 
@@ -39,6 +32,9 @@ function AddSong() {
   const [notes, setNotes] = useState("");
   const [playlists, setPlaylists] = useState([]);
   const [allPlaylistsChecked, setAllPlaylistsChecked] = useState(false);
+  const [allGenresChecked, setAllGenresChecked] = useState(false);
+  const [mp3FilePath, setMp3FilePath] = useState("");
+  const [jpgFilePath, setJpgFilePath] = useState("");
 
   const handlePlaylistChange = (playlist) => {
     setSelectedPlaylists((prevSelected) =>
@@ -46,6 +42,25 @@ function AddSong() {
         ? prevSelected.filter((item) => item !== playlist)
         : [...prevSelected, playlist]
     );
+  };
+
+  const handleAllGenresChange = () => {
+    if (allGenresChecked) {
+      setSelectedGenres([]);
+    } else {
+      setSelectedGenres([
+        "Girl Punk",
+        "Rock",
+        "Pop",
+        "Blues",
+        "Country",
+        "Rap",
+        "Reggae",
+        "EDM",
+        "R&B",
+      ]);
+    }
+    setAllGenresChecked(!allGenresChecked);
   };
 
   const handleGenreChange = (genre) => {
@@ -277,24 +292,8 @@ function AddSong() {
                       <Checkbox
                         name="allGenres"
                         label="All"
-                        checked={selectedGenres.length === 0}
-                        onChange={() =>
-                          setSelectedGenres(
-                            selectedGenres.length === 0
-                              ? [
-                                  "Girl Punk",
-                                  "Rock",
-                                  "Pop",
-                                  "Blues",
-                                  "Country",
-                                  "Rap",
-                                  "Reggae",
-                                  "EDM",
-                                  "R&B",
-                                ]
-                              : []
-                          )
-                        }
+                        checked={allGenresChecked}
+                        onChange={handleAllGenresChange}
                       />
                     </div>
                     <div className="other-genres">
