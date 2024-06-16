@@ -259,10 +259,11 @@ function MusicGallery() {
           </a>
         </div>
       </div>
+      <div className="space" />
       <ThemeProvider theme={original}>
         <Draggable
           handle=".music-gallery-window-header"
-          defaultPosition={{ x: "80%", y: "400px" }}
+          defaultPosition={{ x: 100, y: 50 }}
         >
           <div className="draggable-window">
             <Window className="music-gallery-window">
@@ -294,7 +295,7 @@ function MusicGallery() {
                       >
                         Add Song
                       </Button>
-                      <Button onClick={openModal}>Add MIXTAPE</Button>
+                      <Button onClick={openModal}>Add Mixtape</Button>
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
                     <div className="playlist-menu">
@@ -335,7 +336,7 @@ function MusicGallery() {
                         />
                       </div>
                     ) : (
-                      <p>Select a playlist to view its content</p>
+                      <p>Select a Mixtape.</p>
                     )}
                   </div>
                 </div>
@@ -375,7 +376,7 @@ function MusicGallery() {
               <div className="add-playlist-modal">
                 <Window className="add-playlist-modal-window">
                   <WindowHeader className="add-playlist-window-header">
-                    <span>Add New MIXTAPE</span>
+                    <span>Add New Mixtape</span>
                     <Button onClick={closeModal}>
                       <span className="music-gallery-close-icon" />
                     </Button>
@@ -407,11 +408,11 @@ function MusicGallery() {
           >
             {selectedPlaylists.length === 1 ? (
               <Button onClick={() => deletePlaylist(contextMenu.playlistId)}>
-                Delete Playlist
+                Delete
               </Button>
             ) : (
               <Button onClick={deletePlaylists}>
-                Delete Selected Playlists
+                Delete
               </Button>
             )}
           </div>

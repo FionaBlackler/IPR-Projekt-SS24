@@ -19,6 +19,10 @@
   align-items: center;
 }
 
+.space{
+  flex: 7.5; 
+}
+
 .draggable-window {
   position: fixed;
   top: 0;
