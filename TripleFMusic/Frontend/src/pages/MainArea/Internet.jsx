@@ -3,7 +3,7 @@ import './Internet.css';
 import Draggable from 'react-draggable';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
-import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator } from 'react95';
+import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator, TextInput } from 'react95';
 
 import aboutIcon from '../Images/icons/recycle2.png';
 import galleryIcon from '../Images/icons/gallery4.png';
@@ -16,7 +16,7 @@ const Internet = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClose = () => {
-    navigate("/welcome/home");
+    // Implement your close logic here
   };
 
   const handleRetry = () => {
@@ -66,15 +66,26 @@ const Internet = () => {
               </Toolbar>
               <div className="separator-horizontal" />
               <WindowContent className="internet-window-content">
-                <span className='internet-text'>Unfortunately no internet connection could be established</span>
-                <Separator></Separator>
-                <div className="internet-button">
-                  <Button className="button-retry" onClick={handleRetry}>
-                    ↻
-                  </Button>
-                  <Button className="button-game" onClick={openModal}>
-                    Let's play a game
-                  </Button>
+                <div className="flex-container">
+                  <Separator style={{ margin: "10px 0" }}>
+                    <span>Adresse:</span>
+                    <TextInput
+                      className="textinput"
+                      placeholder='type address here...'
+                    />
+                  </Separator>
+                </div>
+
+                <div className="internet-message-container">
+                  <span className='internet-text'>Unfortunately no internet connection could be established</span>
+                  <div className="internet-button-container">
+                    <Button className="button-retry" onClick={handleRetry}>
+                      ↻ Retry
+                    </Button>
+                    <Button className="button-game" onClick={openModal}>
+                      Let's play a game
+                    </Button>
+                  </div>
                 </div>
               </WindowContent>
             </Window>

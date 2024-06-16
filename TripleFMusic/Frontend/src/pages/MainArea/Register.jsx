@@ -159,7 +159,7 @@ function Register() {
           </WindowHeader>
          
           <WindowContent>
-        <ScrollView className="notes-scroll" style={{ width: "555px" }}>
+        <ScrollView className="scroller" style={{ width: "555px" }}>
           <div>
             <span style={{textAlign: "center", fontSize: '17px',display: "block", fontWeight: "bolder" }}> 
              Welcome to TripleF Music!

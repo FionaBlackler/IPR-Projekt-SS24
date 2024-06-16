@@ -145,7 +145,7 @@
     transform: translateY(-50%);
   }
 }
-.notes-scroll{
+.scroller{
   width:50%;
   height: 18rem;
 }

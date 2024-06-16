@@ -1,155 +1,18 @@
-.icons-body {
-    display: flex;
-    height:58.8rem
-  }
+.internet-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px; /* Adjust margin as needed */
+}
 
-  .icons-menu {
-    flex: 1; /* Adjust the value to control the width ratio */
-    /*background-color: lightblue; /* Just for visibility */
-    }
-    
-  
- 
-  
-  .icon {
-    display: flex;
-    flex-direction: column; /* Align items as a column */
-    justify-content: center; /* Optional: Center vertically within the parent */
-    align-items: center;
-  }
-  
-  .buffer {
-    height: 2rem;
-  }
-  
-  .space {
-    height: 2rem;
-  }
-  
-  .draggable-window-internet {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .internet-window {
-    padding: 2rem;
-    width: 80%;
-    height: 85%;
-    margin-left: 3rem;
-    margin-top: 1rem;
-  }
-  
-  .internetwindow-title {
-    display: flex;
-    justify-content: space-between;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .internet-window-content {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .address-bar {
-    flex: 1; /* Füllt den verfügbaren Platz im Fenster */
-    display: flex;
-    align-items: center;
-  }
-  
-  .address-input {
-    flex-grow: 1; /* Das Eingabefeld füllt den verfügbaren Platz aus */
-  }
-  
-  .separator-horizontal {
-    border-top: 2px solid #ccc; /* Etwas dickere Linie */
-    margin: 0.5rem 0;
-  }
-  
-  .text-internet {
-    display: flex;
-    justify-content: center; /* Horizontal zentriert */
-    align-items: center; /* Vertikal zentriert */
-  }
-  .internet-window-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    box-shadow: none;
-    border-radius: 0;
-    cursor: move;
-  }
+.internet-button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px; /* Adjust margin as needed */
+}
 
-  .internet-close-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-left: -1px;
-    margin-top: -1px;
-    transform: rotateZ(45deg);
-    position: relative;
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      background: black;
-    }
-    &:before {
-      height: 100%;
-      width: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
-      height: 3px;
-      width: 100%;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-  .close-icon{
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-left: -1px;
-    margin-top: -1px;
-    transform: rotateZ(45deg);
-    position: relative;
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      background: black;
-    }
-    &:before {
-      height: 100%;
-      width: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
-      height: 3px;
-      width: 100%;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-  }
-  .modal-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    box-shadow: none;
-    border-radius: 0;
-    cursor: move;
-  }
-  .internet-text{
-    text-align:center;
-  }
+.internet-text {
+  margin-bottom: 10px; /* Optional: Add spacing between text and buttons */
+}
