@@ -1,9 +1,3 @@
-/**
- * Renders the Music Gallery page.
- *
- * @returns {JSX.Element} The Music Gallery component.
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
@@ -417,9 +411,7 @@ function MusicGallery() {
                 Delete
               </Button>
             ) : (
-              <Button onClick={deletePlaylists}>
-                Delete
-              </Button>
+              <Button onClick={deletePlaylists}>Delete</Button>
             )}
           </div>
         )}
