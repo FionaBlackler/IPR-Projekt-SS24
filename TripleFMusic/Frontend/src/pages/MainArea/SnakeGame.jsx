@@ -1,144 +1,109 @@
 // SnakeGame.jsx
+import React, { useEffect, useRef, useState } from 'react';
+import { Button } from 'react95';
 
-import React, { useState, useEffect, useRef } from 'react';
-import './SnakeGame.css';
+const SnakeGame = ({ closeModal }) => {
+  const canvasRef = useRef(null);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0);
 
-const SnakeGame = ({ onClose }) => {
-  const [snakeDots, setSnakeDots] = useState([
-    [0, 0],
-    [2, 0]
-  ]);
-  const [foodDot, setFoodDot] = useState([5, 5]);
-  const [direction, setDirection] = useState('RIGHT');
-  const [speed, setSpeed] = useState(100);
-  const [gameOver, setGameOver] = useState(false);
+  const grid = 15;
+  const canvasSize = 300;
 
-  const gameRef = useRef();
+  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
+  const resetGame = () => {
+    snake = { x: 150, y: 150, dx: grid, dy: 0, cells: [], maxCells: 4 };
+    apple = { x: getRandomInt(0, 19) * grid, y: getRandomInt(0, 19) * grid };
+    setIsGameOver(false);
+    setScore(0);
+    requestAnimationFrame(loop);
+  };
 
   useEffect(() => {
-    const context = gameRef.current.getContext('2d');
-    const interval = setInterval(() => {
-      moveSnake();
-    }, speed);
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    let count = 0;
+    let snake = { x: 150, y: 150, dx: grid, dy: 0, cells: [], maxCells: 4 };
+    let apple = { x: getRandomInt(0, 19) * grid, y: getRandomInt(0, 19) * grid };
 
-    document.onkeydown = onKeyDown;
+    const loop = () => {
+      if (isGameOver) return;
 
-    return () => clearInterval(interval);
-  }, []);
+      requestAnimationFrame(loop);
 
-  useEffect(() => {
-    checkIfOutOfBorders();
-    checkIfCollapsed();
-    checkIfEat();
-    if (gameOver) {
-      onClose();
-    }
-  }, [snakeDots]);
+      if (++count < 10) return;
+      count = 0;
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-  const onKeyDown = (e) => {
-    e = e || window.event;
-    switch (e.keyCode) {
-      case 38:
-        setDirection('UP');
-        break;
-      case 40:
-        setDirection('DOWN');
-        break;
-      case 37:
-        setDirection('LEFT');
-        break;
-      case 39:
-        setDirection('RIGHT');
-        break;
-      default:
-        break;
-    }
-  };
+      snake.x += snake.dx;
+      snake.y += snake.dy;
 
-  const moveSnake = () => {
-    let dots = [...snakeDots];
-    let head = dots[dots.length - 1];
+      if (snake.x < 0 || snake.x >= canvas.width || snake.y < 0 || snake.y >= canvas.height) {
+        setIsGameOver(true);
+        return;
+      }
 
-    switch (direction) {
-      case 'RIGHT':
-        head = [head[0] + 2, head[1]];
-        break;
-      case 'LEFT':
-        head = [head[0] - 2, head[1]];
-        break;
-      case 'DOWN':
-        head = [head[0], head[1] + 2];
-        break;
-      case 'UP':
-        head = [head[0], head[1] - 2];
-        break;
-      default:
-        break;
-    }
+      snake.cells.unshift({ x: snake.x, y: snake.y });
 
-    dots.push(head);
-    dots.shift();
-    setSnakeDots(dots);
-  };
+      if (snake.cells.length > snake.maxCells) {
+        snake.cells.pop();
+      }
 
-  const checkIfOutOfBorders = () => {
-    let head = snakeDots[snakeDots.length - 1];
-    if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
-      gameOverFunction();
-    }
-  };
+      context.fillStyle = 'red';
+      context.fillRect(apple.x, apple.y, grid - 1, grid - 1);
 
-  const checkIfCollapsed = () => {
-    let snake = [...snakeDots];
-    let head = snake[snake.length - 1];
-    snake.pop();
-    snake.forEach(dot => {
-      if (head[0] === dot[0] && head[1] === dot[1]) {
-        gameOverFunction();
+      context.fillStyle = 'green';
+      snake.cells.forEach((cell, index) => {
+        context.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+        if (cell.x === apple.x && cell.y === apple.y) {
+          snake.maxCells++;
+          setScore(prevScore => prevScore + 1);
+          apple.x = getRandomInt(0, 19) * grid;
+          apple.y = getRandomInt(0, 19) * grid;
+        }
+
+        for (let i = index + 1; i < snake.cells.length; i++) {
+          if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+            setIsGameOver(true);
+            return;
+          }
+        }
+      });
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.which === 37 && snake.dx === 0) {
+        snake.dx = -grid;
+        snake.dy = 0;
+      } else if (e.which === 38 && snake.dy === 0) {
+        snake.dy = -grid;
+        snake.dx = 0;
+      } else if (e.which === 39 && snake.dx === 0) {
+        snake.dx = grid;
+        snake.dy = 0;
+      } else if (e.which === 40 && snake.dy === 0) {
+        snake.dy = grid;
+        snake.dx = 0;
       }
     });
-  };
 
-  const checkIfEat = () => {
-    let head = snakeDots[snakeDots.length - 1];
-    if (head[0] === foodDot[0] && head[1] === foodDot[1]) {
-      setFoodDot([
-        Math.floor(Math.random() * 50) * 2,
-        Math.floor(Math.random() * 50) * 2
-      ]);
-      enlargeSnake();
-      increaseSpeed();
-    }
-  };
+    requestAnimationFrame(loop);
 
-  const enlargeSnake = () => {
-    let newSnake = [...snakeDots];
-    newSnake.unshift([]);
-    setSnakeDots(newSnake);
-  };
-
-  const increaseSpeed = () => {
-    if (speed > 10) {
-      setSpeed(speed - 10);
-    }
-  };
-
-  const gameOverFunction = () => {
-    setGameOver(true);
-  };
+    return () => {
+      document.removeEventListener('keydown', () => {});
+    };
+  }, [isGameOver]);
 
   return (
-    <div className="snake-game">
-      <canvas
-        ref={gameRef}
-        width="100%"
-        height="100%"
-        className="game-area"
-      />
-      {gameOver && (
-        <div className="game-over">
-          <h2>Game Over</h2>
-          <button onClick={onClose}>Close</button>
+    <div style={{ textAlign: 'center', position: 'relative' }}>
+      <canvas ref={canvasRef} width={canvasSize} height={canvasSize} style={{ border: '1px solid white', backgroundColor: 'black' }} />
+      {isGameOver && (
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white' }}>
+          <h2>Game Over!</h2>
+          <p>Score: {score}</p>
+          <Button onClick={resetGame}>Restart</Button>
         </div>
       )}
     </div>

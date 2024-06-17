@@ -1,35 +1,49 @@
 /* SnakeGame.css */
 
-.snake-game {
-  position: relative;
-  width: 100%;
+.snake-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
 }
 
-.game-area {
-  background-color: black;
+.snake-game-board {
+  display: grid;
+  grid-template-columns: repeat(20, 20px);
+  grid-template-rows: repeat(20, 20px);
+  border: 1px solid #000;
+  background-color: #c0c0c0;
 }
 
-.game-over {
+.snake-game-row {
+  display: flex;
+}
+
+.snake-game-cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+  background-color: #c0c0c0;
+}
+
+.snake {
+  background-color: #000;
+}
+
+.food {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.game-over-modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #000;
   text-align: center;
-  color: white;
-  font-size: 24px;
-}
-
-.game-over button {
-  margin-top: 20px;
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.game-over button:hover {
-  background-color: #45a049;
 }

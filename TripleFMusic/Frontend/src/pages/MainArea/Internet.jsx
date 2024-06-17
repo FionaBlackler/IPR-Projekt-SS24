@@ -1,10 +1,11 @@
+// Internet.jsx
 import React, { useState } from 'react';
 import './Internet.css';
 import Draggable from 'react-draggable';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
-import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator, TextInput, MenuList, MenuListItem } from 'react95';
-import SnakeGame from './SnakeGame'; // Import the SnakeGame component
+import { Button, Window, WindowHeader, WindowContent, Toolbar, Separator, TextInput } from 'react95';
+import SnakeGame from './SnakeGame';
 import { useNavigate } from "react-router-dom";
 
 const Internet = () => {
@@ -18,10 +19,6 @@ const Internet = () => {
   const handleRetry = () => {
     // Handle retry action
   };
-  const handleClick= () => {
-
-  }
-
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -33,10 +30,6 @@ const Internet = () => {
 
   return (
     <div className="internet-body">
-      <div className="icons-menu">
-        {/* Your icon menu here */}
-      </div>
-      <div className="space" />
       <ThemeProvider theme={original}>
         <div className="draggable-window-internet">
           <Draggable handle=".internetwindow-title">
@@ -57,8 +50,8 @@ const Internet = () => {
                 <Button variant="menu" size="sm">
                   View
                 </Button>
-                <Button variant="menu" size="sm" onClick={handleClick}>
-                   Favorites
+                <Button variant="menu" size="sm">
+                  Favorites
                 </Button>
                 <Button variant="menu" size="sm">
                   Help
@@ -73,54 +66,39 @@ const Internet = () => {
                     placeholder='type address here...'
                   />
                   <Button className="button-retry" onClick={handleRetry}>
-                      ↻ 
+                    ↻ 
                   </Button>
                 </div>
                 <Separator></Separator>
-
                 <div className="internet-message-container">
                   <span className='internet-text'>Unfortunately no internet connection could be established</span>
                   <div className="internet-button-container">
                     <Button className="button-game" onClick={openModal}>
-                    Snake Me Up! 
+                      Snake Me Up! 
                     </Button>
                   </div>
                 </div>
+                {isModalOpen && (
+                  <div className="snakeBackground">
+                    <div className="snake-modal">
+                      <Window className="snake-modal-window" style={{ width: '320px', height: '370px' }}>
+                        <WindowHeader className="snake-window-header">
+                          <span>Snake Game</span>
+                          <Button onClick={closeModal}>
+                            <span className="internet-close-icon" />
+                          </Button>
+                        </WindowHeader>
+                        <WindowContent>
+                          <SnakeGame />
+                        </WindowContent>
+                      </Window>
+                    </div>
+                  </div>
+                )}
               </WindowContent>
             </Window>
           </Draggable>
         </div>
-
-        {isModalOpen && (
-  <>
-    <div className="snakeBackground">
-      <div className="snake-modal">
-        <Window className="snake-modal-window">
-          <WindowHeader className="snake-window-header">
-            <span>Terms and Conditions</span>
-            <Button onClick={closeModal}>
-              <span className="internet-close-icon" />
-            </Button>
-          </WindowHeader>
-         
-          <WindowContent>
-          <div>
-            /**Hier logik */
-            
-            
-           
- 
-          </div> 
-
-      </WindowContent>
-        </Window>
-      </div>
-    </div>
-  </>
-)}
-
-
-
       </ThemeProvider>
     </div>
   );
