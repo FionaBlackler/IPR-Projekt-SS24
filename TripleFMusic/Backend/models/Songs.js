@@ -12,6 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    mp3:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    cover:{
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   });
 
   Song.associate = (models) => {

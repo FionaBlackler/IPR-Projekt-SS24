@@ -8,7 +8,7 @@ import {
 } from "react95";
 import "./Home.css";
 import { ThemeProvider } from "styled-components";
-import rose from "react95/dist/themes/rose"; //Thema der UI-Elemente
+
 import aboutIcon from "../Images/icons/recycle2.png";
 import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
