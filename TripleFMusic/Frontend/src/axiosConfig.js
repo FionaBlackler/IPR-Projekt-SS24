@@ -1,4 +1,8 @@
-// src/axiosConfig.js
+/**
+ * Axios instance for making HTTP requests.
+ * @type {import("axios").AxiosInstance}
+ */
+
 import axios from "axios";
 
 const instance = axios.create({

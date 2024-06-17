@@ -1,3 +1,5 @@
+// src/pages/Header/Header.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
@@ -16,6 +18,7 @@ import {
 
 function Header() {
   const navigate = useNavigate(); // Initialize useNavigate
+  console.log("useNavigate:", navigate);
 
   const [open, setOpen] = useState(false);
 
@@ -26,8 +29,8 @@ function Header() {
           <Toolbar style={{ justifyContent: "space-between", position: "relative" }}>
             <Button
               onClick={() => setOpen(!open)}
-              active={open}
-              style={{ fontWeight: 'bold', marginLeft: "2rem"}}
+              active={open ? "true" : undefined} // Changed here
+              style={{ fontWeight: 'bold', marginLeft: "2rem" }}
             >
               <img
                 src={logo}
@@ -42,23 +45,19 @@ function Header() {
                 style={{
                   position: 'absolute',
                   left: '0',
-                  bottom: '60%', // Menü öffnet sich nach oben
-                  width: '185px', // Ändern Sie die Breite des Menüs
-                  
-                  transform: 'translateY(-10px)' // Verschieben Sie das Menü vertikal
+                  bottom: '60%', // Menu opens upwards
+                  width: '185px',
+                  transform: 'translateY(-10px)' // Vertically shift the menu
                 }}
                 onClick={() => setOpen(false)}
               >
-                
                 <span role='img' aria-label='👨‍💻' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  👨‍💻  welcome Funda! 
+                  👨‍💻  welcome Funda!
                 </span>
-                 
-                
                 <Separator />
                 <MenuListItem onClick={() => navigate("/")}>
                   <span role='img' aria-label='🔙' style={{ justifyContent: 'center' }}>
-                     🔙 
+                    🔙
                   </span>
                   Logout
                 </MenuListItem>

@@ -1,4 +1,8 @@
-// main.jsx
+/**
+ * Main entry point of the application.
+ * Renders the React application and sets up the routing.
+ */
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
@@ -20,6 +24,10 @@ import Internet from "./pages/MainArea/Internet.jsx";
 import SnakeGame from "./pages/MainArea/SnakeGame.jsx";
 import ForgotPassword from "./pages/MainArea/ForgotPassword.jsx";
 
+/**
+ * Creates the router and sets up the routes for the application.
+ * @type {BrowserRouter}
+ */
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
@@ -40,6 +48,7 @@ const router = createBrowserRouter(
   )
 );
 
+// Renders the React application
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />

@@ -5,7 +5,6 @@
 
 .icons-menu {
   flex:1;
-/*background-color: lightblue; /* Just for visibility */
 }
 
 .buffer{
@@ -14,8 +13,8 @@
 
 .icon{
   display: flex;
-  flex-direction: column; /* Align items as a column */
-  justify-content: center; /* Optional: Center vertically within the parent */
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
