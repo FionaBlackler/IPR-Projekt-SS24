@@ -1,33 +1,44 @@
 module.exports = (sequelize, DataTypes) => {
-  const Song = sequelize.define("Song", {
-    title: {
+  const Songs = sequelize.define('Songs', {
+    mp3FilePath: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    artist: {
+    jpgFilePath: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    genre: {
+    songTitle: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    mp3:{
+    artist:{
       type: DataTypes.STRING,
       allowNull: false,
     },
-    cover:{
-      type: DataTypes.STRING,
-      allowNull: true
-    }
+    selectedPlaylists: {
+      type: DataTypes.JSON, // array of strings
+      allowNull: false,
+    },
+    selectedGenres: {
+      type: DataTypes.JSON, // array of strings
+      allowNull: false,
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   });
 
-  Song.associate = (models) => {
-    Song.belongsTo(models.Playlist, {
+  Songs.associate = (models) => {
+    Songs.belongsTo(models.Playlist, {
       foreignKey: 'PlaylistId',
       onDelete: 'CASCADE'
     });
   };
 
-  return Song;
+  module.exports = Songs;
+
+
+  return Songs;
 };
