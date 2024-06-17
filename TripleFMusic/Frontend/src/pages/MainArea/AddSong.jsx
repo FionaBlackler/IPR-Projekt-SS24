@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./AddSong.css";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
@@ -27,6 +27,7 @@ function AddSong() {
   const [mp3File, setMp3File] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [songTitle, setSongTitle] = useState("");
+  const [artist, setArtist] = useState("");
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [notes, setNotes] = useState("");
@@ -35,6 +36,32 @@ function AddSong() {
   const [allGenresChecked, setAllGenresChecked] = useState(false);
   const [mp3FilePath, setMp3FilePath] = useState("");
   const [jpgFilePath, setJpgFilePath] = useState("");
+
+  const mp3InputRef = useRef(null);
+
+  const handleMp3Upload = (e) => {
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      setMp3FilePath(files[0].name);
+    }
+  };
+
+  const triggerMp3Upload = () => {
+    mp3InputRef.current.click();
+  };
+
+  const jpgInputRef = useRef(null);
+
+  const handleJpgUpload = (e) => {
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      setJpgFilePath(files[0].name);
+    }
+  };
+
+  const triggerJpgUpload = () => {
+    jpgInputRef.current.click();
+  };
 
   const handlePlaylistChange = (playlist) => {
     setSelectedPlaylists((prevSelected) =>
@@ -71,14 +98,6 @@ function AddSong() {
     );
   };
 
-  const handleMp3Upload = (event) => {
-    setMp3File(event.target.files[0]);
-  };
-
-  const handleCoverUpload = (event) => {
-    setCoverImage(event.target.files[0]);
-  };
-
   const handleAllPlaylistsChange = () => {
     if (allPlaylistsChecked) {
       setSelectedPlaylists([]);
@@ -86,6 +105,33 @@ function AddSong() {
       setSelectedPlaylists(playlists.map((playlist) => playlist.name));
     }
     setAllPlaylistsChecked(!allPlaylistsChecked);
+  };
+
+  const handleSave = () => {
+    const formData = new FormData();
+    formData.append("mp3FilePath", mp3FilePath); // Add file paths instead of files, so the database doesn't slow down
+    formData.append("jpgFilePath", jpgFilePath);
+    formData.append("songTitle", songTitle);
+    formData.append("artist", artist);
+    formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
+    formData.append("selectedGenres", JSON.stringify(selectedGenres));
+    formData.append("notes", notes);
+
+    fetch("http://localhost:8080/api/songs", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Song saved successfully!");
+          navigate("/welcome/home");
+        } else {
+          throw new Error("Failed to save song");
+        }
+      })
+      .catch((error) => {
+        console.error("Error saving song:", error);
+      });
   };
 
   useEffect(() => {
@@ -198,9 +244,14 @@ function AddSong() {
                 <WindowContent className="add-song-window-content">
                   <div style={{ display: "flex", gap: "13rem" }}>
                     <div style={{ display: "flex" }}>
-                      <Button primary className="mp3-button">
+                      <Button
+                        primary
+                        className="mp3-button"
+                        onClick={triggerMp3Upload}
+                      >
                         Upload mp3 file
                         <input
+                          ref={mp3InputRef}
                           type="file"
                           accept=".mp3"
                           onChange={handleMp3Upload}
@@ -212,17 +263,22 @@ function AddSong() {
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
-                        {mp3File ? mp3File.name : "No file uploaded"}
+                        {mp3FilePath ? mp3FilePath : "No file uploaded"}
                       </p>
                     </div>
 
                     <div style={{ display: "flex" }}>
-                      <Button primary className="cover-button">
+                      <Button
+                        primary
+                        className="cover-button"
+                        onClick={triggerJpgUpload}
+                      >
                         Upload song cover
                         <input
+                          ref={jpgInputRef}
                           type="file"
-                          accept="image/*"
-                          onChange={handleCoverUpload}
+                          accept=".jpg"
+                          onChange={handleJpgUpload}
                           style={{
                             position: "absolute",
                             opacity: 0,
@@ -231,20 +287,32 @@ function AddSong() {
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
-                        {coverImage ? coverImage.name : "No file uploaded"}
+                        {jpgFilePath
+                          ? jpgFilePath.name
+                          : "No .jpg-file uploaded"}
                       </p>
                     </div>
                   </div>
 
                   <Separator />
 
-                  <div className="song-title">
+                  <div
+                    className="song-title"
+                    style={{ display: "flex", gap: "3rem" }}
+                  >
                     <TextInput
                       className="input-field-title"
                       placeholder="Add song title"
                       fullWidth
                       value={songTitle}
                       onChange={(e) => setSongTitle(e.target.value)}
+                    />
+                    <TextInput
+                      className="input-field-artist"
+                      placeholder="Add artist name"
+                      fullWidth
+                      value={artist}
+                      onChange={(e) => setArtist(e.target.value)}
                     />
                   </div>
 
@@ -332,7 +400,7 @@ function AddSong() {
                       />
                     </ScrollView>
                     <div className="save-cancel">
-                      <Button onClick={() => console.log("Save")}>Save</Button>
+                      <Button onClick={handleSave}>Save</Button>
                       <Button
                         onClick={() => {
                           navigate("/welcome/home");
