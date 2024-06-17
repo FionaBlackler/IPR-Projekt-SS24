@@ -18,6 +18,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import styled from 'styled-components';
+import axios from "axios";
 
 function Register() {
   const [firstname, setFirstName] = useState("");
@@ -26,7 +27,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [termsAndConditions, settermsAndConditions] = useState(false);
   const [username, setUsername] = useState("");
-
+  const [error, setError] = useState(null); // State für Fehlermeldung
+  
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -42,10 +44,30 @@ function Register() {
     settermsAndConditions(false);
   };
 
-  const handleRegister = () => {
-    navigate("/login");
-  };
+  
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post("/api/register", {
+        firstname,
+        lastname,
+        email,
+        password,
+        username,
+      });
 
+      if (response.status === 201) {
+        // Erfolgreiche Registrierung
+        navigate("/login"); // Weiterleitung zur Login-Seite
+      } else {
+        // Fehler bei der Registrierung
+        setError(response.data.message || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      setError("Something went wrong");
+    }
+  };
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {

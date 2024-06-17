@@ -1,21 +1,37 @@
+// models/Users.js
 
-//Fundas Eigentum 
 module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define("Users", {
-      username: {
-        type: DataTypes.TEXT('tiny'),
-        allowNull: false,
+  const User = sequelize.define("User", {
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
-  
-    return Users;
-  };
-  
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    playlists: {
+      type: DataTypes.JSON,
+      allowNull: true,
+    },
+  });
+
+  return User;
+};

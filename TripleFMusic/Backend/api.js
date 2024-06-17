@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Playlist, Song } = require('./models');
+const { Playlist, Song, User } = require('./models');
+const authController = require('./models/authController');
 
 // Route to create a new playlist
 router.post('/playlists', async (req, res) => {
@@ -68,6 +69,28 @@ router.post('/songs', async (req, res) => {
     res.status(201).json(newSong);
   } catch (error) {
     res.status(500).json({ message: 'Error creating song', error });
+  }
+});
+
+// Route für die Benutzerregistrierung
+router.post('/register', async (req, res) => {
+  try {
+    const { firstname, lastname, email, password, username } = req.body;
+
+    // Hier den Benutzer in der Datenbank erstellen
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      password, // Achtung: Passwort sollte gehasht werden, nicht im Klartext gespeichert werden
+      username,
+    });
+
+    // Erfolgreiche Registrierung
+    res.status(200).json({ message: 'Registration successful' });
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ message: 'Registration failed' });
   }
 });
 
