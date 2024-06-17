@@ -1,15 +1,17 @@
+// MusicGallery.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
 import Draggable from "react-draggable";
 import { ThemeProvider } from "styled-components";
+import styled from "styled-components";
 import {
   Window,
   WindowHeader,
   WindowContent,
-  Button,
+  Button as BaseButton,
   Separator,
-  Frame,
+  Frame as BaseFrame,
   TextInput,
 } from "react95";
 import axios from "axios";
@@ -20,6 +22,15 @@ import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
+
+// Styled-components with transient props
+const Button = styled(BaseButton)`
+  /* Custom styles here */
+`;
+
+const Frame = styled(BaseFrame)`
+  /* Custom styles here */
+`;
 
 function MusicGallery() {
   const navigate = useNavigate();

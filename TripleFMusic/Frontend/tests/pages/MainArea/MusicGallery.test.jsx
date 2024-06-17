@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MusicGallery from '../../../src/pages/MainArea/MusicGallery';
 import axios from 'axios';
@@ -17,12 +17,14 @@ const mock = new MockAdapter(axios);
 mock.onGet('http://localhost:8080/api/playlists').reply(200, []);
 
 describe('MusicGallery Component', () => {
-  test('renders MusicGallery component', () => {
-    render(
-      <Router>
-        <MusicGallery />
-      </Router>
-    );
+  test('renders MusicGallery component', async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <MusicGallery />
+        </Router>
+      );
+    });
 
     // Check if certain elements are present
     const aboutIcon = screen.getByAltText('About');
@@ -40,12 +42,14 @@ describe('MusicGallery Component', () => {
     expect(addButton).toBeInTheDocument();
   });
 
-  test('navigates to correct route on icon click', () => {
-    render(
-      <Router>
-        <MusicGallery />
-      </Router>
-    );
+  test('navigates to correct route on icon click', async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <MusicGallery />
+        </Router>
+      );
+    });
 
     // Simulate icon clicks to test navigation
     fireEvent.click(screen.getByAltText('About'));
@@ -64,12 +68,14 @@ describe('MusicGallery Component', () => {
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/welcome/internet');
   });
 
-  test('opens and closes add mixtape modal', () => {
-    render(
-      <Router>
-        <MusicGallery />
-      </Router>
-    );
+  test('opens and closes add mixtape modal', async () => {
+    await act(async () => {
+      render(
+        <Router>
+          <MusicGallery />
+        </Router>
+      );
+    });
 
     // Open the modal
     fireEvent.click(screen.getByText('Add Mixtape'));
