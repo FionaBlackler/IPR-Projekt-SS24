@@ -13,6 +13,7 @@ import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
+
 const Internet = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -121,7 +122,7 @@ const Internet = () => {
         <div className="internet-body">
           <ThemeProvider theme={original}>
             <div className="draggable-window-internet">
-              <Draggable handle=".internetwindow-title">
+              <Draggable defaultPosition={{x:250 ,y:30}}>
                 <Window className="internet-window">
                   <WindowHeader className="internet-window-header">
                     <span className="internetwindow-title">Microsoft Internet Explorer - [No Document]</span>
@@ -161,6 +162,8 @@ const Internet = () => {
                         ↻ 
                       </Button>
                     </div>
+                    
+
 
                     <Separator />
 
@@ -189,6 +192,7 @@ const Internet = () => {
                           </Window>
                         </div>
                       </div>
+                     
                     )}
                   </WindowContent>
                 </Window>
