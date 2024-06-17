@@ -166,3 +166,6 @@
   padding: 5px;
   cursor: move;
 }
+.space{
+  flex: 7.5; 
+}
