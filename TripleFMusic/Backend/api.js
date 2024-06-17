@@ -72,21 +72,18 @@ router.post('/songs', async (req, res) => {
   }
 });
 
-// Route für die Benutzerregistrierung
 router.post('/register', async (req, res) => {
+  console.log('POST /register called with body:', req.body);
   try {
     const { firstname, lastname, email, password, username } = req.body;
-
-    // Hier den Benutzer in der Datenbank erstellen
     const newUser = await User.create({
       firstname,
       lastname,
       email,
-      password, // Achtung: Passwort sollte gehasht werden, nicht im Klartext gespeichert werden
+      password, // Password should be hashed
       username,
     });
-
-    // Erfolgreiche Registrierung
+    console.log('User registered:', newUser);
     res.status(200).json({ message: 'Registration successful' });
   } catch (error) {
     console.error('Error registering user:', error);

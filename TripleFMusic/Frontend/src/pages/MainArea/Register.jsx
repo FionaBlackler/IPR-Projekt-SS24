@@ -46,20 +46,21 @@ function Register() {
 
   
   const handleRegister = async () => {
+    console.log('Register button clicked');
     try {
-      const response = await axios.post("/api/register", {
+      const response = await axios.post("http://localhost:8080/api/register", {
         firstname,
         lastname,
         email,
         password,
         username,
       });
-
+      console.log('Registration response:', response);
       if (response.status === 201) {
-        // Erfolgreiche Registrierung
-        navigate("/login"); // Weiterleitung zur Login-Seite
+        console.log('Registration successful');
+        navigate("/login");
       } else {
-        // Fehler bei der Registrierung
+        console.error('Registration failed:', response.data.message);
         setError(response.data.message || "Something went wrong");
       }
     } catch (error) {
@@ -67,6 +68,7 @@ function Register() {
       setError("Something went wrong");
     }
   };
+  
   
   const [isModalOpen, setIsModalOpen] = useState(false);
 
