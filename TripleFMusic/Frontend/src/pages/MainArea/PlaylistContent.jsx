@@ -1,3 +1,11 @@
+/**
+ * PlaylistContent component displays the content of a playlist.
+ * @param {Object} props - The component props.
+ * @param {Object} props.playlist - The playlist object.
+ * @param {Function} props.onSongClick - The function to handle song click event.
+ * @returns {JSX.Element} The PlaylistContent component.
+ */
+
 import React from "react";
 import { 
   Table, 
