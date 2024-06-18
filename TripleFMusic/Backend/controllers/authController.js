@@ -1,8 +1,10 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const { PasswordResetToken, User } = db;
 const nodemailer = require('nodemailer');
+const { sendPasswordResetEmail } = require('../services/emailService');
+const { PasswordResetToken, User } = db; // Korrekte Deklaration
+
 
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
@@ -88,3 +90,27 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ message: 'Error resetting password' });
   }
 };
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Token generieren und in der Datenbank speichern
+    const token = generateResetToken();
+    await PasswordResetToken.create({ token, email });
+
+    // E-Mail-Link generieren und E-Mail senden
+    const resetLink = `http://yourfrontendurl/reset/${token}`;
+    await sendPasswordResetEmail(email, resetLink);
+
+    res.status(200).json({ message: 'Reset token generated and email sent successfully' });
+
+  } catch (error) {
+    console.error('Error in forgotPassword:', error);
+    res.status(500).json({ message: 'Error requesting password reset' });
+  }
+};
+
+function generateResetToken() {
+  return require('crypto').randomBytes(20).toString('hex');
+}

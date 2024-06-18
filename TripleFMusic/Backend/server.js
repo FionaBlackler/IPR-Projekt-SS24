@@ -4,6 +4,8 @@ const cors = require("cors"); // Import the cors middleware
 const db = require("./models");
 const apiRoutes = require("./api");
 
+require('dotenv').config();
+
 const app = express();
 
 // CORS configuration to allow only specific origin
