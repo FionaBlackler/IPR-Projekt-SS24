@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Playlist, Song, User } = require('./models');
-const authController = require('./models/authController');
+const authController = require('./controllers/authController');
 
 // Route to create a new playlist
 router.post('/playlists', async (req, res) => {
@@ -90,5 +90,12 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Registration failed' });
   }
 });
+
+// Passwort vergessen Route
+router.post('/forgot_password', authController.forgotPassword);
+
+// Passwort zurücksetzen Route
+router.post('/reset_password', authController.resetPassword);
+
 
 module.exports = router;
