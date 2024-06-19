@@ -20,6 +20,14 @@ import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
+import axios from "axios";
+
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.slice(0, maxLength) + "...";
+};
 
 function AddSong() {
   const navigate = useNavigate();
@@ -38,10 +46,12 @@ function AddSong() {
   const [jpgFilePath, setJpgFilePath] = useState("");
 
   const mp3InputRef = useRef(null);
+  const jpgInputRef = useRef(null);
 
   const handleMp3Upload = (e) => {
     const { files } = e.target;
     if (files && files.length > 0) {
+      setMp3File(files[0]);
       setMp3FilePath(files[0].name);
     }
   };
@@ -50,11 +60,10 @@ function AddSong() {
     mp3InputRef.current.click();
   };
 
-  const jpgInputRef = useRef(null);
-
   const handleJpgUpload = (e) => {
     const { files } = e.target;
     if (files && files.length > 0) {
+      setCoverImage(files[0]);
       setJpgFilePath(files[0].name);
     }
   };
@@ -107,31 +116,48 @@ function AddSong() {
     setAllPlaylistsChecked(!allPlaylistsChecked);
   };
 
-  const handleSave = () => {
-    const formData = new FormData();
-    formData.append("mp3FilePath", mp3FilePath); // Add file paths instead of files, so the database doesn't slow down
-    formData.append("jpgFilePath", jpgFilePath);
-    formData.append("songTitle", songTitle);
-    formData.append("artist", artist);
-    formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
-    formData.append("selectedGenres", JSON.stringify(selectedGenres));
-    formData.append("notes", notes);
+  const addNewSong = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("mp3File", mp3File);
+      formData.append("coverImage", coverImage);
+      formData.append("songTitle", songTitle);
+      formData.append("artist", artist);
+      formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
+      formData.append("selectedGenres", JSON.stringify(selectedGenres));
+      formData.append("notes", notes);
 
-    fetch("http://localhost:8080/api/songs", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Song saved successfully!");
-          navigate("/welcome/home");
-        } else {
-          throw new Error("Failed to save song");
+      const response = await axios.post(
+        "http://localhost:8080/api/songs",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      })
-      .catch((error) => {
-        console.error("Error saving song:", error);
-      });
+      );
+
+      if (response.status === 200) {
+        console.log("Song saved successfully!");
+        navigate("/welcome/home");
+      } else {
+        throw new Error("Failed to save song");
+      }
+    } catch (error) {
+      console.error("Error saving song:", error);
+
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert("An error occurred: Invalid song data.");
+        } else {
+          alert(`An error occurred: ${error.response.data.message}`);
+        }
+      } else {
+        alert(
+          "An error occurred while saving the song. Please check the console for details."
+        );
+      }
+    }
   };
 
   useEffect(() => {
@@ -263,7 +289,9 @@ function AddSong() {
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
-                        {mp3FilePath ? mp3FilePath : "No file uploaded"}
+                        {mp3FilePath
+                          ? truncateText(mp3FilePath, 17)
+                          : "No file uploaded"}
                       </p>
                     </div>
 
@@ -288,7 +316,7 @@ function AddSong() {
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
                         {jpgFilePath
-                          ? jpgFilePath.name
+                          ? truncateText(jpgFilePath, 17)
                           : "No .jpg-file uploaded"}
                       </p>
                     </div>
@@ -400,7 +428,7 @@ function AddSong() {
                       />
                     </ScrollView>
                     <div className="save-cancel">
-                      <Button onClick={handleSave}>Save</Button>
+                      <Button onClick={addNewSong}>Save</Button>
                       <Button
                         onClick={() => {
                           navigate("/welcome/home");

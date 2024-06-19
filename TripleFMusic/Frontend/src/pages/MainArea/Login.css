@@ -90,3 +90,78 @@ body {
     border-radius: 0;
     cursor: move;
   }
+
+  .forgotPasswordBackground{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .forgotPassword-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .forgotPassword-modal-window {
+    width: 500px; /* Adjusted width to make the modal smaller */
+    height: 210px; /* Adjusted height to fit the content */
+    max-height: 70vh; /* Ensure it doesn't go beyond viewport height */
+    overflow-y:auto; /* Add vertical scrolling if content overflows */
+  }
+
+  .forgotPassword-window-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    cursor: move;
+  }
+
+
+  .forgotPassword-close-icon{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+  margin-top: -1px;
+  transform: rotateZ(45deg);
+  position: relative;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    background: black;
+  }
+  &:before {
+    height: 100%;
+    width: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &:after {
+    height: 3px;
+    width: 100%;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  }
+  .text-field-forgotPassword {
+    margin-top: 10px;
+    margin-bottom: 20px; /* Abstand zwischen Textfeld und Separator */
+  }
+  
+  .inquiry-button {
+    margin-left: 38.7%;
+    margin-top: 10px; /* Abstand zwischen Separator und Button */
+  }
