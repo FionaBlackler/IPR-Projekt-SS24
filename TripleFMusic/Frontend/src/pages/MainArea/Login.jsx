@@ -63,9 +63,6 @@ function Login() {
     setIsModalOpen(false);
   };
 
-  const handleForgotPassword = () => {
-
-  }
 
   
  
@@ -197,15 +194,15 @@ function Login() {
                 <span className="forgotPassword-close-icon" />
                 </Button>
               </WindowHeader>
-              <TextInput
+              <WindowContent>
+              <TextInput className="text-field-forgotPassword"
                 value={email}
                 placeholder="Enter your email"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <Separator />
-              <Button onClick={handleInquiry}>Send Inquiry</Button>
+              <Button className="inquiry-button" onClick={handleInquiry}>Send Inquiry</Button>
               {message && <p>{message}</p>}
-              <WindowContent>
               </WindowContent>
             </Window>
           </div>
