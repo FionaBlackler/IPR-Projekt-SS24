@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import "./Login.css";
 
 import { ThemeProvider } from "styled-components";
@@ -13,6 +14,7 @@ import {
   Checkbox,
   TextInput,
   AppBar,
+  Separator,
   Toolbar
 } from "react95";
 
@@ -39,6 +41,28 @@ function Login() {
   const handleClose = () => {
     navigate("/");
   };
+
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleInquiry = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage('Error requesting password reset');
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   
  
@@ -128,7 +152,7 @@ function Login() {
 
                     <span
                       className="forgot-password"
-                      onClick={() => navigate("/forgotPassword")}
+                      onClick={openModal}
                     >
                       forgot password?
                     </span>
@@ -157,6 +181,38 @@ function Login() {
               </div>
             </div>
           </Window>
+
+          
+          {isModalOpen && (
+          <>
+          <div className="forgotPasswordBackground ">
+          <div className="forgotPassword-modal">
+            <Window className="forgotPassword-modal-window">
+              <WindowHeader className="forgotPassword-window-header">
+                <span>Forgot Password</span>
+                <Button onClick={closeModal}>
+                <span className="forgotPassword-close-icon" />
+                </Button>
+              </WindowHeader>
+              <WindowContent>
+              <TextInput className="text-field-forgotPassword"
+                value={email}
+                placeholder="Enter your email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Separator />
+              <Button className="inquiry-button" onClick={handleInquiry}>Send Inquiry</Button>
+              {message && <p>{message}</p>}
+              </WindowContent>
+            </Window>
+          </div>
+          </div>
+          </>
+          
+          )}
+
+
+
         </div>
       </ThemeProvider>
     </>

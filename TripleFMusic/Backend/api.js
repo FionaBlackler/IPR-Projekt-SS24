@@ -1,20 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Playlist, User, Songs } = require('./models');
-const authController = require('./models/authController');
-
-// Route to create a new song
-router.post("/songs", async (req, res) => {
-  try {
-    console.log(`[${new Date().toISOString()}] POST /songs called with body:`, req.body);
-    const song = req.body;
-    await Songs.create(song);
-    res.json(song);
-  } catch (error) {
-    console.error(`[${new Date().toISOString()}] Error creating new song:`, error);
-    res.status(500).json({ message: 'Error creating new song', error });
-  }
-});
+const { Playlist, Song, User } = require('./models');
+const authController = require('./controllers/authController');
 
 // Route to create a new playlist
 router.post('/playlists', async (req, res) => {
@@ -81,5 +68,12 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Registration failed' });
   }
 });
+
+// Passwort vergessen Route
+router.post('/forgot_password', authController.forgotPassword);
+
+// Passwort zurücksetzen Route
+router.post('/reset_password', authController.resetPassword);
+
 
 module.exports = router;
