@@ -1,11 +1,3 @@
-/**
- * PlaylistContent component displays the content of a playlist.
- * @param {Object} props - The component props.
- * @param {Object} props.playlist - The playlist object.
- * @param {Function} props.onSongClick - The function to handle song click event.
- * @returns {JSX.Element} The PlaylistContent component.
- */
-
 import React from "react";
 import { 
   Table, 
@@ -18,29 +10,29 @@ import { ThemeProvider } from "styled-components";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
 
-const PlaylistContent = ({ playlist, onSongClick }) => {
-  console.log("Rendering PlaylistContent", { playlist });
+const PlaylistContent = ({ playlist, onSongClick, songs }) => {
+  console.log("Rendering PlaylistContent", { playlist, songs });
 
   return (
     <ThemeProvider theme={original}>
-      <ScrollView classname="playlist-content-scrollview">
+      <ScrollView className="playlist-content-scrollview">
         <div className="playlist-content-container">
           <Table className="playlist-table">
             <TableBody>
-              {playlist && playlist.songs && playlist.songs.length > 0 ? (
-                playlist.songs.map((song, index) => (
+              {songs && songs.length > 0 ? (
+                songs.map((song, index) => (
                   <TableRow key={index} onClick={() => onSongClick(song)}>
                     <TableDataCell className="playlist-table-cell">
                       {index + 1}
                     </TableDataCell>
                     <TableDataCell className="playlist-table-cell">
-                      {song.title}
+                      {song.songTitle}
                     </TableDataCell>
                     <TableDataCell className="playlist-table-cell">
                       {song.artist}
                     </TableDataCell>
                     <TableDataCell className="playlist-table-cell">
-                      {song.genre}
+                      {song.selectedGenres.join(', ')}
                     </TableDataCell>
                   </TableRow>
                 ))

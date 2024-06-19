@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    artist:{
+    artist: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -36,9 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE'
     });
   };
-
-  module.exports = Songs;
-
 
   return Songs;
 };

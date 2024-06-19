@@ -44,20 +44,11 @@ fs.readdirSync(__dirname)
     }
   });
 
-console.log("Loaded models:", Object.keys(db));
-
-if (db.Playlist && db.Song) {
-  console.log("Associating Playlist and Song models");
-  db.Playlist.hasMany(db.Song, {
-    foreignKey: "PlaylistId",
-    onDelete: "CASCADE",
-  });
-  db.Song.belongsTo(db.Playlist, {
-    foreignKey: "PlaylistId",
-  });
-} else {
-  console.error("Error: Playlist or Song model is undefined");
-}
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
