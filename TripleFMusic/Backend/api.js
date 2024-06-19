@@ -1,7 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const { Playlist, Song, User } = require('./models');
+const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
+
+//Route to create a new song
+router.post('/songs', async (req, res) => {
+  const { mp3FilePath, jpgFilePath, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
+
+  try {
+    const newSong = await Songs.create({
+      mp3FilePath,
+      jpgFilePath,
+      songTitle,
+      artist,
+      selectedPlaylists,
+      selectedGenres,
+      notes
+    });
+    res.status(201).json(newSong);
+  } catch (error) {
+    console.error('Error saving song:', error);
+    res.status(500).json({ error: 'An error occurred while saving the song.' });
+  }
+});
+
+
 
 // Route to create a new playlist
 router.post('/playlists', async (req, res) => {

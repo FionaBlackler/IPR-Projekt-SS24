@@ -121,10 +121,11 @@ function AddSong() {
     console.log("Save button clicked");
 
     try {
-      const response = await axios.post("http://localhost:8080/api/register", {
+      const response = await axios.post("http://localhost:8080/api/songs", {
         mp3FilePath,
         jpgFilePath,
         songTitle,
+        artist,
         selectedPlaylists,
         selectedGenres,
         notes,
