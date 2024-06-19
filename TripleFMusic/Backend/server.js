@@ -1,22 +1,27 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors"); // Import the cors middleware
+const cors = require("cors");
 const db = require("./models");
 const apiRoutes = require("./api");
 
 const app = express();
 
-// CORS configuration to allow only specific origin
 const corsOptions = {
   origin: "http://localhost:5173",
-  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+  optionsSuccessStatus: 200,
 };
+
+// Middleware to log requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
 // Use CORS middleware with options
 app.use(cors(corsOptions));
 
 // Middleware to parse JSON requests
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Use the API routes, prefixed with /api
 app.use("/api", apiRoutes);
@@ -26,12 +31,9 @@ db.sequelize
   .sync()
   .then(() => {
     app.listen(8080, () => {
-      console.log("Server running on port 8080");
+      console.log(`[${new Date().toISOString()}] Server running on port 8080`);
     });
   })
   .catch((err) => {
-    console.error("Failed to sync database:", err);
+    console.error(`[${new Date().toISOString()}] Failed to sync database:`, err);
   });
-
-
-  
