@@ -44,6 +44,7 @@ function AddSong() {
   const [allGenresChecked, setAllGenresChecked] = useState(false);
   const [mp3FilePath, setMp3FilePath] = useState("");
   const [jpgFilePath, setJpgFilePath] = useState("");
+  const [error, setError] = useState(null); // State für Fehlermeldung
 
   const mp3InputRef = useRef(null);
   const jpgInputRef = useRef(null);
@@ -117,46 +118,28 @@ function AddSong() {
   };
 
   const addNewSong = async () => {
+    console.log("Save button clicked");
+
     try {
-      const formData = new FormData();
-      formData.append("mp3File", mp3File);
-      formData.append("coverImage", coverImage);
-      formData.append("songTitle", songTitle);
-      formData.append("artist", artist);
-      formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
-      formData.append("selectedGenres", JSON.stringify(selectedGenres));
-      formData.append("notes", notes);
-
-      const response = await axios.post(
-        "http://localhost:8080/api/songs",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        console.log("Song saved successfully!");
-        navigate("/welcome/home");
+      const response = await axios.post("http://localhost:8080/api/register", {
+        mp3FilePath,
+        jpgFilePath,
+        songTitle,
+        selectedPlaylists,
+        selectedGenres,
+        notes,
+      });
+      console.log("Save response:", response);
+      if (response.status === 201) {
+        console.log("Save successful");
+        navigate("/welcome/addsong");
       } else {
-        throw new Error("Failed to save song");
+        console.error("Save failed:", response.data.message);
+        setError(response.data.message || "Something went wrong");
       }
-    } catch (error) {
+    } catch {
       console.error("Error saving song:", error);
-
-      if (error.response) {
-        if (error.response.status === 400) {
-          alert("An error occurred: Invalid song data.");
-        } else {
-          alert(`An error occurred: ${error.response.data.message}`);
-        }
-      } else {
-        alert(
-          "An error occurred while saving the song. Please check the console for details."
-        );
-      }
+      setError("Something went wrong");
     }
   };
 
