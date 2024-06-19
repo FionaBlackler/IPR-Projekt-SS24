@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1718662944842" clover="3.2.0">
-  <project timestamp="1718662944842" name="All files">
+<coverage generated="1718828594999" clover="3.2.0">
+  <project timestamp="1718828594999" name="All files">
     <metrics statements="93" coveredstatements="43" conditionals="37" coveredconditionals="8" methods="33" coveredmethods="12" elements="163" coveredelements="63" complexity="0" loc="93" ncloc="93" packages="1" files="2" classes="2"/>
     <file name="MusicGallery.jsx" path="C:\Users\fiona\OneDrive\Dokumente\HFT\IPR-Projekt-SS24\TripleFMusic\Frontend\src\pages\MainArea\MusicGallery.jsx">
       <metrics statements="89" coveredstatements="42" conditionals="32" coveredconditionals="8" methods="30" coveredmethods="12"/>
