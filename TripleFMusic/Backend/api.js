@@ -5,7 +5,11 @@ const authController = require('./controllers/authController');
 
 //Route to create a new song
 router.post('/songs', async (req, res) => {
-  const { mp3FilePath, jpgFilePath, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
+  const { mp3File, jpgFile, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
+
+  console.log("mp3Fiel: " + mp3File)
+  console.log("jpgFiel: " + jpgFile)
+  
 
   try {
     const newSong = await Songs.create({

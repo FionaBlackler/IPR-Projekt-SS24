@@ -52,6 +52,8 @@ function AddSong() {
 
   const handleMp3Upload = (e) => {
     const { files } = e.target;
+    console.log("files: " + JSON.stringify(files));
+
     if (files && files.length > 0) {
       const file = files[0];
       setMp3File(file);
@@ -132,15 +134,21 @@ function AddSong() {
     console.log("Save button clicked");
 
     try {
-      const response = await axios.post("http://localhost:8080/api/songs", {
-        mp3FilePath,
-        jpgFilePath,
-        songTitle,
-        artist,
-        selectedPlaylists,
-        selectedGenres,
-        notes,
-      });
+      console.log("mp3File:" + JSON.stringify(mp3File));
+
+      const formData = new FormData();
+      formData.append("songTitle", songTitle);
+      formData.append("artist", artist);
+      formData.append("selectedPlaylist", selectedPlaylists);
+      formData.append("selectedGenres", selectedGenres);
+      formData.append("notes", notes);
+      formData.append("mp3File", mp3File);
+      formData.append("jpgFile", jpgFile);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/songs",
+        formData
+      );
       console.log("Save response:", response);
       if (response.status === 201) {
         console.log("Save successful");
