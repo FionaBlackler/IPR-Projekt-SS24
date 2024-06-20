@@ -1,9 +1,16 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
-const { sendPasswordResetEmail } = require('../services/emailService');
 
-// Registrierungsfunktion
+// Konfiguration von nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', // oder ein anderer E-Mail-Service
+  auth: {
+    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
+    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
+  },
+});
+
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
   console.error('authController.register called with:', req.body); // Use console.error for logging
