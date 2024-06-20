@@ -92,6 +92,19 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// Route to fetch songs for a specific playlist
+router.get('/playlists/:id/songs', async (req, res) => {
+  const playlistId = req.params.id;  // Ensure playlistId is defined here
+  try {
+    const songs = await Songs.findAll({ where: { PlaylistId: playlistId } });
+    res.status(200).json(songs);
+  } catch (error) {
+    console.error(`Error fetching songs for playlist ${playlistId}:`, error);
+    res.status(500).json({ message: 'Error fetching songs', error });
+  }
+});
+
+
 // Passwort vergessen Route
 router.post('/forgot_password', authController.forgotPassword);
 

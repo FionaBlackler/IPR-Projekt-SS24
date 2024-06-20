@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Playlist = sequelize.define("Playlist", {
+  const Playlist = sequelize.define('Playlist', {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Playlist.associate = (models) => {
-    Playlist.hasMany(models.Song, {
-      onDelete: "CASCADE",
+    Playlist.hasMany(models.Songs, {
+      foreignKey: 'PlaylistId',
+      onDelete: 'CASCADE',
     });
   };
 

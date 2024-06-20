@@ -1,4 +1,3 @@
-// MusicGallery.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
@@ -47,6 +46,7 @@ function MusicGallery() {
     playlistId: null,
   });
   const [currentSong, setCurrentSong] = useState(null);
+  const [songs, setSongs] = useState([]);
 
   useEffect(() => {
     async function fetchPlaylists() {
@@ -63,6 +63,15 @@ function MusicGallery() {
     }
     fetchPlaylists();
   }, []);
+
+  const fetchSongsForPlaylist = async (playlistId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/playlists/${playlistId}/songs`);
+      setSongs(response.data);
+    } catch (error) {
+      console.error("Error fetching songs for playlist", error);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -94,6 +103,7 @@ function MusicGallery() {
       }
     } else {
       setSelectedPlaylists([playlist]);
+      fetchSongsForPlaylist(playlist.id);
     }
   };
 
@@ -344,6 +354,7 @@ function MusicGallery() {
                         <PlaylistContent
                           playlist={selectedPlaylists[0]}
                           onSongClick={setCurrentSong}
+                          songs={songs}
                         />
                       </div>
                     ) : (
@@ -360,7 +371,7 @@ function MusicGallery() {
                     />
                     <div className="player-song-info">
                       <div className="player-song-title">
-                        {currentSong ? currentSong.title : "Song Title"}
+                        {currentSong ? currentSong.songTitle : "Song Title"}
                       </div>
                       <div className="player-song-artist">
                         {currentSong ? currentSong.artist : "Artist Name"}
