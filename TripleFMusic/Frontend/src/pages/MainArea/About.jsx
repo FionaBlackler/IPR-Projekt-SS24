@@ -20,7 +20,7 @@ function About() {
     <ThemeProvider theme={original}>
       <Draggable handle=".about-window-header">
         <div className="draggable-aboutWindow">
-          <Window className="about-window">
+          <Window className="about-window" style={{overflowY: 'hidden'}}>
             <WindowHeader className="about-window-header">
               <span>About TripleF Music</span>
               <Button onClick={handleClose}>
@@ -28,7 +28,7 @@ function About() {
               </Button>
             </WindowHeader>
             <WindowContent className="about-window-content">
-              <ScrollView>
+              <ScrollView style={{height: 300}}>
                 <div className="about-wrapper">
                   <div className="about">
                     <Panel variant="well" className="about-section">
