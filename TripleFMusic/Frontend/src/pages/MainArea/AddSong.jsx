@@ -105,7 +105,7 @@ function AddSong() {
         "Rap",
         "Reggae",
         "EDM",
-        "R&B",
+        "Classic",
       ]);
     }
     setAllGenresChecked(!allGenresChecked);
@@ -397,7 +397,7 @@ function AddSong() {
                         "Rap",
                         "Reggae",
                         "EDM",
-                        "R&B",
+                        "Classic",
                       ].map((genre, index) => (
                         <Checkbox
                           key={index}

@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Songs = sequelize.define('Songs', {
     mp3FilePath: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     jpgFilePath: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     songTitle: {
@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     selectedPlaylists: {
-      type: DataTypes.JSON, // array of strings
+      type: DataTypes.JSON, 
       allowNull: false,
     },
     selectedGenres: {
-      type: DataTypes.JSON, // array of strings
+      type: DataTypes.JSON,
       allowNull: false,
     },
     notes: {
