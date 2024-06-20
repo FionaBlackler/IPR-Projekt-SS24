@@ -1,16 +1,9 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
+const { sendPasswordResetEmail } = require('../services/emailService');
 
-// Konfiguration von nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // oder ein anderer E-Mail-Service
-  auth: {
-    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
-    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
-  },
-});
-
+// Registrierungsfunktion
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
   console.error('authController.register called with:', req.body); // Use console.error for logging
@@ -18,7 +11,7 @@ exports.register = async (req, res) => {
     console.error('Hashing password...'); // Use console.error
     const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
     console.error('Password hashed:', hashedPassword); // Use console.error
-    
+
     // Logging before creation
     console.error('Creating new user with hashed password...'); // Use console.error
     const newUser = await User.create({
@@ -28,7 +21,7 @@ exports.register = async (req, res) => {
       password: hashedPassword, // Gespeichertes, gehashtes Passwort
       username,
     });
-    
+
     // Logging after creation
     console.error('User created:', newUser); // Use console.error
     res.status(201).json({ message: 'User created successfully', user: newUser });
@@ -63,7 +56,7 @@ exports.forgotPassword = async (req, res) => {
 
     // E-Mail mit Reset-Link senden
     const resetLink = `http://your-app-domain/reset-password?token=${token}&email=${email}`;
-    
+
     // Name des Benutzers und E-Mail an die Funktion übergeben
     await sendPasswordResetEmail(user.email, user.firstname, resetLink);
 
