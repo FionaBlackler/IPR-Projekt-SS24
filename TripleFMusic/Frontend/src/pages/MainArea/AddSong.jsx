@@ -33,6 +33,7 @@ function AddSong() {
   const navigate = useNavigate();
 
   const [mp3File, setMp3File] = useState(null);
+  const [jpgFile, setJpgFile] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [songTitle, setSongTitle] = useState("");
   const [artist, setArtist] = useState("");
@@ -52,8 +53,13 @@ function AddSong() {
   const handleMp3Upload = (e) => {
     const { files } = e.target;
     if (files && files.length > 0) {
-      setMp3File(files[0]);
-      setMp3FilePath(files[0].name);
+      const file = files[0];
+      setMp3File(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setMp3FilePath(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -64,8 +70,13 @@ function AddSong() {
   const handleJpgUpload = (e) => {
     const { files } = e.target;
     if (files && files.length > 0) {
-      setCoverImage(files[0]);
-      setJpgFilePath(files[0].name);
+      const file = files[0];
+      setJpgFile(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setJpgFilePath(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
