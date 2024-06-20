@@ -37,6 +37,7 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:8080/api/login', { username, password });
       console.log('Login successful:', response.data);
+      navigate('/welcome/home');
       // Weiterleitungslogik oder Status setzen
     } catch (error) {
       console.error('Login failed:', error);
@@ -48,8 +49,8 @@ function Login() {
       } else {
         console.error('Error setting up request:', error.message);
       }
-    } 
-    navigate('/welcome/home');
+
+    }
   };
   
 

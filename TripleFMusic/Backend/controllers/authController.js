@@ -11,13 +11,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Controller für die Registrierung
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
-  console.log('authController.register called with:', req.body);
+  console.error('authController.register called with:', req.body); // Use console.error for logging
   try {
+    console.error('Hashing password...'); // Use console.error
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-    console.log('Password hashed:', hashedPassword);
+    console.error('Password hashed:', hashedPassword); // Use console.error
+    
+    // Logging before creation
+    console.error('Creating new user with hashed password...'); // Use console.error
     const newUser = await User.create({
       firstname,
       lastname,
@@ -25,7 +28,9 @@ exports.register = async (req, res) => {
       password: hashedPassword, // Store the hashed password
       username,
     });
-    console.log('User created:', newUser);
+    
+    // Logging after creation
+    console.error('User created:', newUser); // Use console.error
     res.status(201).json({ message: 'User created successfully', user: newUser });
   } catch (error) {
     console.error('Error in authController.register:', error);
