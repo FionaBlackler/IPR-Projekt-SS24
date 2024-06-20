@@ -35,174 +35,149 @@ const Internet = () => {
   };
 
   return (
-    <div>
-      <div className="home-body">
-        <div className="icons-menu">
-          <div style={{ height: "3rem" }} />
-
-          <div>
-            <a
-              onClick={() => {
-                navigate("/welcome/about");
-              }}
-              className="icon"
-            >
-              <img src={aboutIcon} alt="About" style={{ marginRight: 4 }} />
-              <span>About</span>
-            </a>
-          </div>
-
-          <div className="buffer"></div>
-
-          <div>
-            <a
-              onClick={() => {
-                navigate("/welcome/home");
-              }}
-              className="icon"
-            >
-              <img src={homeIcon} alt="home" style={{ marginRight: 4 }} />
-              <span>Home</span>
-            </a>
-          </div>
-
-          <div className="buffer"></div>
-
-          <div>
-            <a
-              onClick={() => {
-                navigate("/welcome/musicgallery");
-              }}
-              className="icon"
-            >
-              <img
-                src={galleryIcon}
-                alt="Music Gallery"
-                style={{ marginRight: 4 }}
-              />
-              <span>Music Gallery</span>
-            </a>
-          </div>
-
-          <div className="buffer"></div>
-
-          <div>
-            <a
-              onClick={() => {
-                navigate("/welcome/addsong");
-              }}
-              className="icon"
-            >
-              <img src={addSongIcon} alt="addsong" style={{ marginRight: 4 }} />
-              <span>Upload new song</span>
-            </a>
-          </div>
-
-          <div className="buffer"></div>
-
-          <div>
-            <a
-              onClick={() => {
-                navigate("/welcome/internet");
-              }}
-              className="icon"
-            >
-              <img
-                src={internetexplorerIcon}
-                alt="internetexplorer"
-                style={{ marginRight: 4 }}
-              />
-              <span>Internet Explorer</span>
-            </a>
-          </div>
+    <div className="internet-body">
+      <div className="icons-menu">
+        <div style={{ height: "3rem" }} />
+        
+        <div>
+          <a onClick={() => {navigate("/welcome/about");}}className="icon">
+          <img src={aboutIcon} alt="About" style={{ marginRight: 4 }} />
+            <span>About</span>
+          </a>
         </div>
-
-        <div className="space" />
-      
-        <div className="internet-body">
-          <ThemeProvider theme={original}>
-            <div className="draggable-window-internet">
-              <Draggable defaultPosition={{x:250 ,y:30}}>
-                <Window className="internet-window">
-                  <WindowHeader className="internet-window-header">
-                    <span className="internetwindow-title">Microsoft Internet Explorer - [No Document]</span>
-                    <Button onClick={handleClose}>
-                      <span className="internet-close-icon" />
-                    </Button>
-                  </WindowHeader>
-                  
-                  <Toolbar>
-                    <Button variant="menu" size="sm">
-                      File
-                    </Button>
-                    <Button variant="menu" size="sm">
-                      Edit
-                    </Button>
-                    <Button variant="menu" size="sm">
-                      View
-                    </Button>
-                    <Button variant="menu" size="sm">
-                      Favorites
-                    </Button>
-                    <Button variant="menu" size="sm">
-                      Help
-                    </Button>
-                  </Toolbar>
-
-                  <div className="separator-horizontal" />
-
-                  <WindowContent className="internet-window-content">
-                    <div className="address-input-container">
-                      <span>Address:</span>
-                      <TextInput
-                        className="textinput"
-                        placeholder='Type address here...'
-                      />
-                      <Button className="button-retry" onClick={handleRetry}>
-                        ↻ 
-                      </Button>
-                    </div>
-                    
-
-
-                    <Separator />
-
-                    <div className="internet-message-container">
-                      <span className='internet-text'>Unfortunately no internet connection could be established.</span>
-                      <div className="internet-button-container">
-                        <Button className="button-game" onClick={openModal}>
-                          Play Snake!
-                        </Button>
-                      </div>
-                    </div>
-
-                    {isModalOpen && (
-                      <div className="snakeBackground">
-                        <div className="snake-modal">
-                          <Window className="snake-modal-window" style={{ width: '320px', height: '370px' }}>
-                            <WindowHeader className="snake-window-header">
-                              <span>Snake Game</span>
-                              <Button onClick={closeModal}>
-                                <span className="internet-close-icon" />
-                              </Button>
-                            </WindowHeader>
-                            <WindowContent>
-                              <SnakeGame />
-                            </WindowContent>
-                          </Window>
-                        </div>
-                      </div>
-                     
-                    )}
-                  </WindowContent>
-                </Window>
-              </Draggable>
-            </div>
-          </ThemeProvider>
+  
+        <div className="buffer"></div>
+  
+        <div>
+          <a onClick={() => {navigate("/welcome/home");}} className="icon">
+          <img src={homeIcon} alt="home" style={{ marginRight: 4 }} />
+            <span>Home</span>
+          </a>
+        </div>
+  
+        <div className="buffer"></div>
+  
+        <div>
+          <a onClick={() => {navigate("/welcome/musicgallery");}} className="icon">
+            <img src={galleryIcon} alt="Music Gallery" style={{ marginRight: 4 }}/>
+              <span>Music Gallery</span>
+          </a>
+        </div>
+  
+        <div className="buffer"></div>
+  
+        <div>
+          <a onClick={() => {navigate("/welcome/addsong");}} className="icon">
+            <img src={addSongIcon} alt="addsong" style={{ marginRight: 4 }} />
+              <span>Upload new song</span>
+          </a>
+        </div>
+  
+        <div className="buffer"></div>
+  
+        <div>
+          <a onClick={() => {navigate("/welcome/internet");}} className="icon">
+            <img src={internetexplorerIcon} alt="internetexplorer" style={{ marginRight: 4 }}/>
+              <span>Internet Explorer</span>
+          </a>
         </div>
       </div>
-    </div>
-  );
+
+      <div className="space" />
+        
+      <ThemeProvider theme={original}>
+        <Draggable 
+          handle=".internet-window-header" 
+          defaultPosition={{ x: 100, y: 50 }}
+        >
+        <div className="draggable-window-internet">
+          <Window className="internet-window">
+            <WindowHeader className="internet-window-header">
+              <span>Microsoft Internet Explorer - [No Document]</span>
+              <Button onClick={handleClose}>
+                <span className="internet-close-icon" />
+              </Button>
+            </WindowHeader>
+            <Toolbar>
+              <Button variant="menu" size="sm">
+                File
+              </Button>
+              <Button variant="menu" size="sm">
+                Edit
+              </Button>
+              <Button variant="menu" size="sm">
+                View
+              </Button>
+              <Button disabled variant="menu" size="sm">
+                Favorites
+              </Button>
+              <Button variant="menu" size="sm">
+                Help
+              </Button>
+            </Toolbar>
+            <div className="separator-horizontal" />
+            
+    
+            <WindowContent className="internet-container">
+                <div className="address-input-container">
+                  <span>Address:</span>
+                  <TextInput
+                    className="textinput"
+                    placeholder='Type address here...'
+                  />
+                  <Button className="button-retry" onClick={handleRetry}>
+                    ↻ 
+                  </Button>
+                </div>
+
+                <Separator />
+
+                <div className="internet-message-container">
+                  <span className='internet-text'>Unfortunately no internet connection could be established.</span>
+                    <div className="internet-button-container">
+                      <Button className="button-game" onClick={openModal}>
+                        Snake me up!
+                      </Button>
+                    </div>
+                </div>
+            </WindowContent>
+            
+            
+          </Window>
+        </div>
+        </Draggable>
+  
+        {isModalOpen && (
+        <>
+          <div className="modal-background" />
+            <Draggable handle=".add-playlist-window-header">
+              <div className="add-playlist-modal">
+                <Window className="add-playlist-modal-window">
+                  <WindowHeader className="add-playlist-window-header">
+                    <span>Snake</span>
+                    <Button onClick={closeModal}>
+                    <span className="music-gallery-close-icon" />
+                    </Button>
+                  </WindowHeader>
+                  <WindowContent>
+                  <div className="add-playlist-input-container">
+
+
+
+
+                       
+                        
+                      
+                  </div>
+                  </WindowContent>
+                </Window>
+              </div>
+            </Draggable>
+          </>
+        )}
+  
+      </ThemeProvider>
+    </div> );
 };
 
 export default Internet;
