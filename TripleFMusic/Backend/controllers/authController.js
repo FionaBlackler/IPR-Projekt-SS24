@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
 const nodemailer = require('nodemailer');
+const {sendPasswordResetEmail} =require('../services/emailService');
 
 // Konfiguration von nodemailer
 const transporter = nodemailer.createTransport({
@@ -63,7 +64,7 @@ exports.forgotPassword = async (req, res) => {
     await PasswordResetToken.create({ token, email });
 
     // E-Mail mit Reset-Link senden
-    const resetLink = `http://your-app-domain/reset-password?token=${token}&email=${email}`;
+    const resetLink = `http://localhost:5137/login`;
 
     // Name des Benutzers und E-Mail an die Funktion übergeben
     await sendPasswordResetEmail(user.email, user.firstname, resetLink);
