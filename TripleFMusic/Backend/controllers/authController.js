@@ -1,28 +1,20 @@
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
-
-// Konfiguration von nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // oder ein anderer E-Mail-Service
-  auth: {
-    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
-    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
-  },
-});
+const { sendPasswordResetEmail } = require('../services/emailService');
 
 // Controller für die Registrierung
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
   console.log('authController.register called with:', req.body);
   try {
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
     console.log('Password hashed:', hashedPassword);
     const newUser = await User.create({
       firstname,
       lastname,
       email,
-      password: hashedPassword, // Store the hashed password
+      password: hashedPassword, // Gespeichertes, gehashtes Passwort
       username,
     });
     console.log('User created:', newUser);
@@ -39,14 +31,13 @@ exports.register = async (req, res) => {
 
 // Funktion zum Generieren eines Reset-Tokens
 function generateResetToken() {
-  // Implementieren Sie hier die Logik zur Generierung eines Tokens (z.B. mit crypto oder uuid)
   return crypto.randomBytes(20).toString('hex'); // Beispiel: Zufälliger Token
 }
 
 // Controller für das Anfordern eines Passwort-Resets
 exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
   try {
+    const { email } = req.body;
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
@@ -59,14 +50,9 @@ exports.forgotPassword = async (req, res) => {
 
     // E-Mail mit Reset-Link senden
     const resetLink = `http://your-app-domain/reset-password?token=${token}&email=${email}`;
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Password Reset Request',
-      text: `You have requested a password reset. Please click on the following link to reset your password: ${resetLink}`,
-    };
-
-    await transporter.sendMail(mailOptions);
+    
+    // Name des Benutzers und E-Mail an die Funktion übergeben
+    await sendPasswordResetEmail(user.email, user.firstname, resetLink);
 
     res.status(200).json({ message: 'Reset token generated and sent successfully' });
 
