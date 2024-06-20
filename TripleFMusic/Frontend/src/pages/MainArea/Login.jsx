@@ -54,9 +54,9 @@ function Login() {
     
 
 
-    }
+   };
 
-  };
+  
   
 
   const handleForgotPassword = async () => {
@@ -211,5 +211,6 @@ function Login() {
     </>
   );
 }
+
 
 export default Login;

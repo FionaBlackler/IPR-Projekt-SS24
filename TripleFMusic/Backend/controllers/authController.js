@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
+const nodemailer = require('nodemailer');
 
 // Konfiguration von nodemailer
 const transporter = nodemailer.createTransport({
