@@ -1,25 +1,38 @@
-const db = require('../models');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const { User, PasswordResetToken } = require('../models');
 const nodemailer = require('nodemailer');
-const { sendPasswordResetEmail } = require('../services/emailService');
-const { PasswordResetToken, User } = db; // Korrekte Deklaration
+const {sendPasswordResetEmail} =require('../services/emailService');
 
+// Konfiguration von nodemailer
+const transporter = nodemailer.createTransport({
+  service: 'Gmail', // oder ein anderer E-Mail-Service
+  auth: {
+    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
+    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
+  },
+});
 
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
-  console.log('authController.register called with:', req.body);
+  console.error('authController.register called with:', req.body); // Use console.error for logging
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log('Password hashed');
+    console.error('Hashing password...'); // Use console.error
+    const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
+    console.error('Password hashed:', hashedPassword); // Use console.error
+
+    // Logging before creation
+    console.error('Creating new user with hashed password...'); // Use console.error
     const newUser = await User.create({
       firstname,
       lastname,
       email,
-      password: hashedPassword,
+      password: hashedPassword, // Gespeichertes, gehashtes Passwort
       username,
     });
-    console.log('User created:', newUser);
+
+    // Logging after creation
+    console.error('User created:', newUser); // Use console.error
     res.status(201).json({ message: 'User created successfully', user: newUser });
   } catch (error) {
     console.error('Error in authController.register:', error);
@@ -31,29 +44,30 @@ exports.register = async (req, res) => {
   }
 };
 
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // oder ein anderer E-Mail-Service
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+// Funktion zum Generieren eines Reset-Tokens
+function generateResetToken() {
+  return crypto.randomBytes(20).toString('hex'); // Beispiel: Zufälliger Token
+}
 
+// Controller für das Anfordern eines Passwort-Resets
 exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
-
   try {
+    const { email } = req.body;
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Generate reset token and save it
+    // Token generieren und speichern
     const token = generateResetToken();
     await PasswordResetToken.create({ token, email });
 
-    // Send email with reset link (implement this functionality)
+    // E-Mail mit Reset-Link senden
+    const resetLink = `http://localhost:5137/login`;
+
+    // Name des Benutzers und E-Mail an die Funktion übergeben
+    await sendPasswordResetEmail(user.email, user.firstname, resetLink);
 
     res.status(200).json({ message: 'Reset token generated and sent successfully' });
 
@@ -63,14 +77,9 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-function generateResetToken() {
-  // Implement token generation logic here (e.g., using crypto or uuid)
-  return 'generated_token'; // Replace with actual token generation code
-}
-
+// Controller für das Zurücksetzen des Passworts
 exports.resetPassword = async (req, res) => {
   const { token, email, newPassword } = req.body;
-
   try {
     const resetToken = await PasswordResetToken.findOne({ where: { token, email } });
 
@@ -90,27 +99,3 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ message: 'Error resetting password' });
   }
 };
-
-exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    // Token generieren und in der Datenbank speichern
-    const token = generateResetToken();
-    await PasswordResetToken.create({ token, email });
-
-    // E-Mail-Link generieren und E-Mail senden
-    const resetLink = `http://yourfrontendurl/reset/${token}`;
-    await sendPasswordResetEmail(email, resetLink);
-
-    res.status(200).json({ message: 'Reset token generated and email sent successfully' });
-
-  } catch (error) {
-    console.error('Error in forgotPassword:', error);
-    res.status(500).json({ message: 'Error requesting password reset' });
-  }
-};
-
-function generateResetToken() {
-  return require('crypto').randomBytes(20).toString('hex');
-}

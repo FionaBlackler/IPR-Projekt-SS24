@@ -14,8 +14,8 @@ import {
   Checkbox,
   TextInput,
   AppBar,
-  Separator,
-  Toolbar
+  Toolbar,
+  Separator
 } from "react95";
 
 import original from "react95/dist/themes/original";
@@ -27,34 +27,50 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-
-  const handleLogin = () => {
-    // Hier prüfung Anmeldedaten mit der Datenbank
-    if (username === "funda" && password === "funda") {
-      setIsLoggedIn(true);
-      navigate("/welcome/home");
-    } else {
-      alert("Login failed. Please check your access data.");
-    }
-  };
-
-  const handleClose = () => {
-    navigate("/");
-  };
-
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleInquiry = async () => {
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
+      const response = await axios.post('http://localhost:8080/api/login', { username, password });
+      console.log('Login successful:', response.data);
+      navigate('/welcome/home');
+      // Weiterleitungslogik oder Status setzen
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Detaillierte Fehlerbehandlung hier
+      if (error.response) {
+        console.error('Server responded with:', error.response.status, error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up request:', error.message);
+      }
+
+    } 
+    
+
+
+   };
+
+  
+  
+
+  const handleForgotPassword = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/forgot_password', {
+        email
+      });
       setMessage(response.data.message);
     } catch (error) {
+      console.error('Error requesting password reset:', error);
       setMessage('Error requesting password reset');
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -62,16 +78,6 @@ function Login() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-
-  
- 
-  
-  /*
-  const handleSignUp = () => {
-    //Hier Registrieren
-  */
-  const navigate = useNavigate();
 
   return (
     <>
@@ -101,60 +107,49 @@ function Login() {
           </AppBar>
         </div>
 
-        <a>
-          <section className="home-container">
-            <ComputerCanvas />
-          </section>
-        </a>
+        <section className="home-container">
+          <ComputerCanvas />
+        </section>
 
         <div className="login-container">
-          <Window className="funda" >
+          <Window className="funda">
             <div className="login-window">
               <div className="title-bar-login">
-                <div>
-                  <WindowHeader className="login-window-header">
-                    <span>
-                    TripleF Music-Sign in 
-                    </span>
-                    
-                    <Button onClick={handleClose}>
-                      <span className="login-close-icon" />
+                <WindowHeader className="login-window-header">
+                  <span>TripleF Music - Sign in</span>
+                  <Button onClick={() => navigate("/")}>
+                    <span className="login-close-icon" />
                   </Button>
-
-                  </WindowHeader>
-                  
-                </div>
+                </WindowHeader>
               </div>
               <div className="content">
                 <WindowContent>
                   <div className="input-container">
                     <TextInput
                       value={username}
-                      placeholder="username"
+                      placeholder="Username"
                       onChange={(e) => setUsername(e.target.value)}
                     />
                     <br />
                     <TextInput
                       type="password"
                       value={password}
-                      placeholder="password"
+                      placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <br />
-
                   <div className="checkbox-container">
                     <Checkbox
-                      label="remember me"
+                      label="Remember me"
                       checked={rememberMe}
                       onChange={() => setRememberMe(!rememberMe)}
                     />
-
                     <span
                       className="forgot-password"
                       onClick={openModal}
                     >
-                      forgot password?
+                      Forgot password?
                     </span>
                   </div>
                 </WindowContent>
@@ -166,57 +161,56 @@ function Login() {
                     </Button>
                     <Button
                       primary
-                      onClick={() => {
-                        navigate("/register");
-                      }}
+                      onClick={() => navigate("/register")}
                     >
                       Sign up
                     </Button>
                   </ThemeProvider>
                 </div>
+
                 {showForgotPassword && (
-                  <p>Contact support for help triplefmusic@support.de</p>
+                  <p>Contact support for help at triplefmusic@support.de</p>
                 )}
-                {isLoggedIn && <p>logged in</p>}
+                {isLoggedIn && <p>Logged in</p>}
               </div>
             </div>
           </Window>
 
-          
           {isModalOpen && (
-          <>
-          <div className="forgotPasswordBackground ">
-          <div className="forgotPassword-modal">
-            <Window className="forgotPassword-modal-window">
-              <WindowHeader className="forgotPassword-window-header">
-                <span>Forgot Password</span>
-                <Button onClick={closeModal}>
-                <span className="forgotPassword-close-icon" />
-                </Button>
-              </WindowHeader>
-              <WindowContent>
-              <TextInput className="text-field-forgotPassword"
-                value={email}
-                placeholder="Enter your email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Separator />
-              <Button className="inquiry-button" onClick={handleInquiry}>Send Inquiry</Button>
-              {message && <p>{message}</p>}
-              </WindowContent>
-            </Window>
-          </div>
-          </div>
-          </>
-          
+            <div className="forgotPasswordBackground">
+              <div className="forgotPassword-modal">
+                <Window className="forgotPassword-modal-window">
+                  <WindowHeader className="forgotPassword-window-header">
+                    <span>Forgot Password</span>
+                    <Button onClick={closeModal}>
+                      <span className="forgotPassword-close-icon" />
+                    </Button>
+                  </WindowHeader>
+                  <WindowContent>
+                    <TextInput
+                      className="text-field-forgotPassword"
+                      value={email}
+                      placeholder="Enter your email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Separator />
+                    <Button
+                      className="inquiry-button"
+                      onClick={handleForgotPassword}
+                    >
+                      Send Inquiry
+                    </Button>
+                    {message && <p>{message}</p>}
+                  </WindowContent>
+                </Window>
+              </div>
+            </div>
           )}
-
-
-
         </div>
       </ThemeProvider>
     </>
   );
 }
+
 
 export default Login;
