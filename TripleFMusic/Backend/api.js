@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt'); 
+const jwt = require('jsonwebtoken');
 const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
 
@@ -111,5 +113,47 @@ router.post('/forgot_password', authController.forgotPassword);
 // Passwort zurücksetzen Route
 router.post('/reset_password', authController.resetPassword);
 
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    console.log(`Login attempt for username: ${username}`);
+    
+    const user = await User.findOne({
+      where: { username },
+      attributes: ['id', 'firstname', 'lastname', 'username', 'email', 'password', 'createdAt', 'updatedAt']
+    });
+
+    if (!user) {
+      console.log(`User not found: ${username}`);
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log(`Stored hashed password: ${user.password}`);
+    console.log(`Entered password: ${password}`);
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    console.log(`Password comparison result: ${isPasswordValid}`);
+    console.log(`Type of stored password: ${typeof user.password}`);
+    console.log(`Type of entered password: ${typeof password}`);
+
+    if (!isPasswordValid) {
+      console.log(`Invalid password for user: ${username}`);
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Generate JWT Token (example)
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    console.log(`Login successful for user: ${username}`);
+    res.status(200).json({ message: 'Login successful', user, token });
+  } catch (error) {
+    console.error('Error in login:', error);
+    res.status(500).json({ message: 'Error logging in', error });
+  }
+});
+
+module.exports = router;
 
 module.exports = router;

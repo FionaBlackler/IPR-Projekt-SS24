@@ -1,35 +1,29 @@
-// models/Users.js
+// Backend/models/user.js
+
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
+  const User = sequelize.define('User', {
     firstname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     lastname: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
+      allowNull: false
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
-    playlists: {
-      type: DataTypes.JSON,
-      allowNull: true,
-    },
+    username: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false
+    }
   });
 
   return User;
