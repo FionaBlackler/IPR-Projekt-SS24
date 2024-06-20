@@ -75,25 +75,6 @@ router.delete('/playlists/:id', async (req, res) => {
   }
 });
 
-router.post('/register', async (req, res) => {
-  console.log(`[${new Date().toISOString()}] POST /register called with body:`, req.body);
-  try {
-    const { firstname, lastname, email, password, username } = req.body;
-    const newUser = await User.create({
-      firstname,
-      lastname,
-      email,
-      password, // Password should be hashed
-      username,
-    });
-    console.log(`[${new Date().toISOString()}] User registered:`, newUser);
-    res.status(200).json({ message: 'Registration successful' });
-  } catch (error) {
-    console.error(`[${new Date().toISOString()}] Error registering user:`, error);
-    res.status(500).json({ message: 'Registration failed' });
-  }
-});
-
 // Route to fetch songs for a specific playlist
 router.get('/playlists/:id/songs', async (req, res) => {
   const playlistId = req.params.id;  // Ensure playlistId is defined here
@@ -112,6 +93,8 @@ router.post('/forgot_password', authController.forgotPassword);
 
 // Passwort zurücksetzen Route
 router.post('/reset_password', authController.resetPassword);
+
+router.post('/register', authController.register);
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
