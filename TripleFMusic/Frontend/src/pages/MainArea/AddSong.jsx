@@ -56,6 +56,7 @@ function AddSong() {
 
     if (files && files.length > 0) {
       const file = files[0];
+      console.log(file);
       setMp3File(file);
       const reader = new FileReader();
       reader.onload = () => {
@@ -134,7 +135,7 @@ function AddSong() {
     console.log("Save button clicked");
 
     try {
-      console.log("mp3File:" + JSON.stringify(mp3File));
+      console.log("mp3File:" + mp3File);
 
       const formData = new FormData();
       formData.append("songTitle", songTitle);
