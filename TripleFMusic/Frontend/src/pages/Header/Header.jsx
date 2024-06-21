@@ -52,7 +52,7 @@ function Header() {
                 onClick={() => setOpen(false)}
               >
                 <span role='img' aria-label='👨‍💻' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  👨‍💻  welcome Funda!
+                  👨‍💻  Welcome Funda!
                 </span>
                 <Separator />
                 <MenuListItem onClick={() => navigate("/")}>

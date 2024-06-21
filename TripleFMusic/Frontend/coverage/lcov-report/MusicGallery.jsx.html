@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">46.15% </span>
+                <span class="strong">44.89% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>42/91</span>
+                <span class='fraction'>44/98</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">38.7% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/30</span>
+                <span class='fraction'>12/31</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.19% </span>
+                <span class="strong">45.83% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>42/89</span>
+                <span class='fraction'>44/96</span>
             </div>
         
             
@@ -497,8 +497,18 @@
 <a name='L432'></a><a href='#L432'>432</a>
 <a name='L433'></a><a href='#L433'>433</a>
 <a name='L434'></a><a href='#L434'>434</a>
-<a name='L435'></a><a href='#L435'>435</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L435'></a><a href='#L435'>435</a>
+<a name='L436'></a><a href='#L436'>436</a>
+<a name='L437'></a><a href='#L437'>437</a>
+<a name='L438'></a><a href='#L438'>438</a>
+<a name='L439'></a><a href='#L439'>439</a>
+<a name='L440'></a><a href='#L440'>440</a>
+<a name='L441'></a><a href='#L441'>441</a>
+<a name='L442'></a><a href='#L442'>442</a>
+<a name='L443'></a><a href='#L443'>443</a>
+<a name='L444'></a><a href='#L444'>444</a>
+<a name='L445'></a><a href='#L445'>445</a>
+<a name='L446'></a><a href='#L446'>446</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -546,6 +556,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -564,6 +575,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -592,6 +612,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -917,6 +938,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -931,8 +953,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// MusicGallery.jsx
-import React, { useState, useEffect, useRef } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PlaylistContent from "./PlaylistContent";
 import Draggable from "react-draggable";
@@ -980,6 +1001,7 @@ function MusicGallery() {
     playlistId: null,
   });
   const [currentSong, setCurrentSong] = useState(null);
+  const [songs, setSongs] = useState([]);
 &nbsp;
   useEffect(() =&gt; {
     async function fetchPlaylists() {
@@ -996,6 +1018,15 @@ function MusicGallery() {
     }
     fetchPlaylists();
   }, []);
+&nbsp;
+  const fetchSongsForPlaylist = <span class="fstat-no" title="function not covered" >as</span>ync (playlistId) =&gt; {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const response = <span class="cstat-no" title="statement not covered" >await axios.get(`http://localhost:8080/api/playlists/${playlistId}/songs`);</span>
+<span class="cstat-no" title="statement not covered" >      setSongs(response.data);</span>
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      console.error("Error fetching songs for playlist", error);</span>
+    }
+  };
 &nbsp;
   useEffect(() =&gt; {
     const handleClickOutside = <span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
@@ -1027,6 +1058,7 @@ function MusicGallery() {
       }
     } else {
 <span class="cstat-no" title="statement not covered" >      setSelectedPlaylists([playlist]);</span>
+<span class="cstat-no" title="statement not covered" >      fetchSongsForPlaylist(playlist.id);</span>
     }
   };
 &nbsp;
@@ -1277,6 +1309,7 @@ function MusicGallery() {
                         &lt;PlaylistContent
                           playlist={selectedPlaylists[0]}
                           onSongClick={setCurrentSong}
+                          songs={songs}
                         /&gt;
                       &lt;/div&gt;
                     ) : (
@@ -1293,7 +1326,7 @@ function MusicGallery() {
                     /&gt;
                     &lt;div className="player-song-info"&gt;
                       &lt;div className="player-song-title"&gt;
-                        {currentSong ? <span class="branch-0 cbranch-no" title="branch not covered" >currentSong.title </span>: "Song Title"}
+                        {currentSong ? <span class="branch-0 cbranch-no" title="branch not covered" >currentSong.songTitle </span>: "Song Title"}
                       &lt;/div&gt;
                       &lt;div className="player-song-artist"&gt;
                         {currentSong ? <span class="branch-0 cbranch-no" title="branch not covered" >currentSong.artist </span>: "Artist Name"}
@@ -1372,7 +1405,7 @@ export default MusicGallery;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-17T22:22:24.817Z
+                at 2024-06-20T16:55:46.419Z
             </div>
         <script src="prettify.js"></script>
         <script>

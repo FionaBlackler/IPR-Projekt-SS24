@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -117,23 +117,7 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,15 +171,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * PlaylistContent component displays the content of a playlist.
- * @param {Object} props - The component props.
- * @param {Object} props.playlist - The playlist object.
- * @param {Function} props.onSongClick - The function to handle song click event.
- * @returns {JSX.Element} The PlaylistContent component.
- */
-&nbsp;
-import React from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
 import { 
   Table, 
   TableBody, 
@@ -207,29 +183,29 @@ import { ThemeProvider } from "styled-components";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
 &nbsp;
-const PlaylistContent = <span class="fstat-no" title="function not covered" >({</span> playlist, onSongClick }) =&gt; {
-<span class="cstat-no" title="statement not covered" >  console.log("Rendering PlaylistContent", { playlist });</span>
+const PlaylistContent = <span class="fstat-no" title="function not covered" >({</span> playlist, onSongClick, songs }) =&gt; {
+<span class="cstat-no" title="statement not covered" >  console.log("Rendering PlaylistContent", { playlist, songs });</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;ThemeProvider theme={original}&gt;
-      &lt;ScrollView classname="playlist-content-scrollview"&gt;
+      &lt;ScrollView className="playlist-content-scrollview"&gt;
         &lt;div className="playlist-content-container"&gt;
           &lt;Table className="playlist-table"&gt;
             &lt;TableBody&gt;
-              {playlist &amp;&amp; playlist.songs &amp;&amp; playlist.songs.length &gt; 0 ? (
-                playlist.songs.map(<span class="fstat-no" title="function not covered" >(s</span>ong, index) =&gt; (
+              {songs &amp;&amp; songs.length &gt; 0 ? (
+                songs.map(<span class="fstat-no" title="function not covered" >(s</span>ong, index) =&gt; (
 <span class="cstat-no" title="statement not covered" >                  &lt;TableRow key={index} onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >onSongClick(song)}</span>&gt;</span>
                     &lt;TableDataCell className="playlist-table-cell"&gt;
                       {index + 1}
                     &lt;/TableDataCell&gt;
                     &lt;TableDataCell className="playlist-table-cell"&gt;
-                      {song.title}
+                      {song.songTitle}
                     &lt;/TableDataCell&gt;
                     &lt;TableDataCell className="playlist-table-cell"&gt;
                       {song.artist}
                     &lt;/TableDataCell&gt;
                     &lt;TableDataCell className="playlist-table-cell"&gt;
-                      {song.genre}
+                      {song.selectedGenres.join(', ')}
                     &lt;/TableDataCell&gt;
                   &lt;/TableRow&gt;
                 ))
@@ -256,7 +232,7 @@ export default PlaylistContent;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-17T22:22:24.817Z
+                at 2024-06-20T16:55:46.419Z
             </div>
         <script src="prettify.js"></script>
         <script>
