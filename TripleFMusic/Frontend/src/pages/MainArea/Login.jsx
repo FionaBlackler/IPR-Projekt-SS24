@@ -117,7 +117,7 @@ function Login() {
         </section>
 
         <div className="login-container">
-          <Window className="funda">
+          <Window>
             <div className="login-window">
               <div className="title-bar-login">
                 <WindowHeader className="login-window-header">
