@@ -129,7 +129,7 @@ router.post('/login', async (req, res) => {
       console.log(`Invalid password for user: ${username}`);
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const tokenExpiry = rememberMe ? '7d' : '20s'; // 7 Tage für Remember Me, 1 Stunde sonst
+    const tokenExpiry = rememberMe ? '7d' : '10s'; // 7 Tage für Remember Me, 1 Tag sonst
 
     // Generate JWT Token (example)
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });

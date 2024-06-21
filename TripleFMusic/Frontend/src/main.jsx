@@ -1,8 +1,3 @@
-/**
- * Main entry point of the application.
- * Renders the React application and sets up the routing.
- */
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
@@ -10,6 +5,8 @@ import {
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
+  Outlet,
 } from "react-router-dom";
 import Layout from "./layout.jsx";
 import Home from "./pages/MainArea/Home.jsx";
@@ -23,34 +20,45 @@ import Register from "./pages/MainArea/Register.jsx";
 import Internet from "./pages/MainArea/Internet.jsx";
 import SnakeGame from "./pages/MainArea/SnakeGame.jsx";
 import ForgotPassword from "./pages/MainArea/ForgotPassword.jsx";
+import { AuthProvider } from "./authContext";
+import PrivateRoute from "./PrivateRoute";
 
-/**
- * Creates the router and sets up the routes for the application.
- * @type {BrowserRouter}
- */
+const ProtectedLayout = () => {
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route path="" element={<Welcome />} />
+      <Route index element={<Welcome />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="password" element={<ForgotPassword />} />
-      <Route path="welcome" element={<Layout />}>
-        <Route path="home" element={<Home />} />
-        <Route path="musicgallery" element={<MusicGallery />} />
-        <Route path="song" element={<Song />} />
-        <Route path="addsong" element={<AddSong />} />
-        <Route path="about" element={<About />} />
-        <Route path="internet" element={<Internet />} />
-        <Route path="snake" element={<SnakeGame />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="welcome" element={<ProtectedLayout />}>
+          <Route path="home" element={<Home />} />
+          <Route path="musicgallery" element={<MusicGallery />} />
+          <Route path="song" element={<Song />} />
+          <Route path="addsong" element={<AddSong />} />
+          <Route path="about" element={<About />} />
+          <Route path="internet" element={<Internet />} />
+          <Route path="snake" element={<SnakeGame />} />
+        </Route>
       </Route>
+      {/* Fallback Route for undefined paths */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Route>
   )
 );
 
-// Renders the React application
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
