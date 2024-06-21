@@ -14,6 +14,7 @@ Im Frontend muss vite separat mit npm install vite installiert werden.<br>
 Im Backend muss nodemon extra installiert werden mit npm install nodemon und npm install nodemon --save-dev.<br>
 <br>
 Anwendung starten:<br>
+
 1. Backend starten --> cd TripleFMusic/Backend --> nodemon server.js<br>
 2. Frontend starten --> cd TripleFMusic/Frontend --> npm run dev<br>
 
@@ -30,11 +31,20 @@ Verwendete Bibliotheken:<br>
 
 User-Stories:<br>
 
-✔ An-/Abmelden (ohne Authentifizierung) <br>
+Login:
+
+✔ An-/Abmelden <br>
 ✔ Konto registrieren<br>
 ✔ Passwort vergessen<br>
-✔ Zur Musikgalerie gehen
-- Neuen Song hinzufügen
+✔ Remember me (Für 7 Tage)<br>
+
+- "Welcome <username>"
+- User löschen
+
+Music Gallery:
+✔ Vorhandene Playlists anzeigen <br>
+✔ Songs innerhalb einer Playlist anzeigen <br>
+
 - Song löschen
 - Mehrere Songs gleichzeitig löschen
 - Song abspielen/pausieren
@@ -42,12 +52,20 @@ User-Stories:<br>
 - Songdetails anzeigen
 - Songdetails bearbeiten
 - Song erneut abspielen/überspringen<br>
-✔ Neue Playlist hinzufügen (und in Playlist Menu angezeigt auch nach einem reload)<br>
-✔ Playlist löschen <br>
-✔ Mehrere Playlists gleichzeitig löschen
+  ✔ Neue Playlist hinzufügen<br>
+  ✔ Playlist löschen <br>
+  ✔ Mehrere Playlists gleichzeitig löschen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
 - Nach Playlist suchen
 - Nach einzelnen Songs suchen
 - Nach Song im Mixtape suchen<br>
+
+Add Song:
+✔ Vorhandene Playlists anzeigen <br>
+✔ mp3/jpg file vom File Explorer auswählen <br>
+
+- Song speichern
+
+Sonstiges:
 ✔ Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
