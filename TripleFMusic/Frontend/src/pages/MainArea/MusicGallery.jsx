@@ -34,7 +34,6 @@ const Frame = styled(BaseFrame)`
 function MusicGallery() {
   const navigate = useNavigate();
   const contextMenuRef = useRef(null);
-
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,26 +48,28 @@ function MusicGallery() {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    async function fetchPlaylists() {
+    const fetchPlaylists = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/playlists");
-        if (Array.isArray(response.data)) {
-          setPlaylists(response.data);
-        } else {
-          console.error("Fetched data is not an array", response.data);
-        }
+        setPlaylists(response.data);
+        console.log("Fetched playlists:", response.data); // Debugging log
       } catch (error) {
+        alert("Error fetching playlists");
         console.error("Error fetching playlists", error);
       }
-    }
+    };
+
     fetchPlaylists();
   }, []);
 
   const fetchSongsForPlaylist = async (playlistId) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/playlists/${playlistId}/songs`);
+      const response = await axios.get(
+        `http://localhost:8080/api/playlists/${playlistId}/songs`
+      );
       setSongs(response.data);
     } catch (error) {
+      alert("Error fetching songs for playlist");
       console.error("Error fetching songs for playlist", error);
     }
   };
@@ -171,8 +172,10 @@ function MusicGallery() {
       );
       setContextMenu({ ...contextMenu, visible: false });
       setSelectedPlaylists([]);
+      console.log("Deleted playlists: ", selectedPlaylists); // Debugging log
     } catch (error) {
       console.error("Error deleting playlists", error);
+      alert("Error deleting playlists");
     }
   };
 
@@ -180,10 +183,10 @@ function MusicGallery() {
     try {
       await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
-      setContextMenu({ ...contextMenu, visible: false });
-      setSelectedPlaylists([]);
+      console.log("Deleted playlist with ID:", playlistId); // Debugging log
     } catch (error) {
       console.error("Error deleting playlist", error);
+      alert("Error deleting playlist");
     }
   };
 
@@ -319,7 +322,7 @@ function MusicGallery() {
                       <Button onClick={openModal}>Add Mixtape</Button>
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
-                    <div className="playlist-menu">
+                    <div className="playlist-menu" data-testid="playlist-menu">
                       {playlists.map((playlist) => (
                         <div
                           key={playlist.id}
@@ -328,10 +331,12 @@ function MusicGallery() {
                               ? "selected"
                               : ""
                           }`}
+                          data-testid={`playlist-item-${playlist.id}`}
                         >
                           <a
                             className="playlist-link"
                             href="#"
+                            data-testid={`playlist-link-${playlist.id}`}
                             onClick={(e) => {
                               e.preventDefault();
                               selectPlaylist(playlist, e);
