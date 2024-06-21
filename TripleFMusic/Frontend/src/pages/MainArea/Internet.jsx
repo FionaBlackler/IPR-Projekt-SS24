@@ -13,7 +13,6 @@ import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
-
 const Internet = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -149,26 +148,18 @@ const Internet = () => {
   
         {isModalOpen && (
         <>
-          <div className="modal-background" />
-            <Draggable handle=".add-playlist-window-header">
-              <div className="add-playlist-modal">
-                <Window className="add-playlist-modal-window">
-                  <WindowHeader className="add-playlist-window-header">
-                    <span>Snake</span>
+          <div className="game-background" />
+            <Draggable handle=".game-window-header">
+              <div className="game-modal">
+                <Window className="game-modal-window">
+                  <WindowHeader className="game-window-header">
+                    <span>Play with Snaki</span>
                     <Button onClick={closeModal}>
-                    <span className="music-gallery-close-icon" />
+                    <span className="internet-close-icon" />
                     </Button>
                   </WindowHeader>
                   <WindowContent>
-                  <div className="add-playlist-input-container">
-
-
-
-
-                       
-                        
-                      
-                  </div>
+                    <SnakeGame />
                   </WindowContent>
                 </Window>
               </div>

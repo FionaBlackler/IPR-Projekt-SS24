@@ -1,49 +1,52 @@
-/* SnakeGame.css */
-
-.snake-game-container {
+.snake-game {
+  width: 360px;
+  height: 286px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  flex-direction: column;
 }
 
-.snake-game-board {
-  display: grid;
-  grid-template-columns: repeat(20, 20px);
-  grid-template-rows: repeat(20, 20px);
-  border: 1px solid #000;
-  background-color: #c0c0c0;
+.game-area {
+  position: relative;
+  width: 360px; /* 18 Zellen * 20px pro Zelle */
+  height: 286px; /* 18 Zellen * 20px pro Zelle */
+  background-color: #000;
+  border: 5px solid #000;
 }
 
-.snake-game-row {
-  display: flex;
-}
 
-.snake-game-cell {
+
+.snake-segment, .food {
+  position: absolute;
   width: 20px;
   height: 20px;
-  border: 1px solid #fff;
-  background-color: #c0c0c0;
-}
-
-.snake {
-  background-color: #000;
+  background-color: #0f0;
 }
 
 .food {
-  width: 100%;
-  height: 100%;
   background-color: red;
-  border-radius: 50%;
 }
 
-.game-over-modal {
+.game-over {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border: 1px solid #000;
   text-align: center;
+  color: wheat; /* Schriftfarbe auf Schwarz setzen */
+}
+
+.game-over p {
+  font-size: 24px;
+  margin-bottom: 2px;
+  color: white;
+  text-align: center; /* Zentriert den Text horizontal */
+}
+
+.game-over button {
+  padding: 10px 20px;
+  margin: 1rem;
+  font-size: 16px;
+  cursor: pointer;
 }
