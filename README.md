@@ -30,9 +30,9 @@ Verwendete Bibliotheken:<br>
 
 User-Stories:<br>
 
-- An-/Abmelden (mit Authentifizierung)
-- Konto registrieren
-- Passwort vergessen<br>
+✔ An-/Abmelden (ohne Authentifizierung)
+✔ Konto registrieren
+✔ Passwort vergessen<br>
 ✔ Zur Musikgalerie gehen
 - Neuen Song hinzufügen
 - Song löschen
@@ -50,4 +50,4 @@ User-Stories:<br>
 - Nach Playlist suchen
 - Nach einzelnen Songs suchen
 - Nach Song im Mixtape suchen
-- Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
+✔ Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
