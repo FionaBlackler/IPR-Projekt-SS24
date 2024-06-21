@@ -34,7 +34,6 @@ function AddSong() {
 
   const [mp3File, setMp3File] = useState(null);
   const [jpgFile, setJpgFile] = useState(null);
-  const [coverImage, setCoverImage] = useState(null);
   const [songTitle, setSongTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
@@ -45,18 +44,16 @@ function AddSong() {
   const [allGenresChecked, setAllGenresChecked] = useState(false);
   const [mp3FilePath, setMp3FilePath] = useState("");
   const [jpgFilePath, setJpgFilePath] = useState("");
-  const [error, setError] = useState(null); // State für Fehlermeldung
+  const [error, setError] = useState(null);
 
   const mp3InputRef = useRef(null);
   const jpgInputRef = useRef(null);
 
   const handleMp3Upload = (e) => {
     const { files } = e.target;
-    console.log("files: " + JSON.stringify(files));
 
     if (files && files.length > 0) {
       const file = files[0];
-      console.log(file);
       setMp3File(file);
       const reader = new FileReader();
       reader.onload = () => {
@@ -72,6 +69,7 @@ function AddSong() {
 
   const handleJpgUpload = (e) => {
     const { files } = e.target;
+
     if (files && files.length > 0) {
       const file = files[0];
       setJpgFile(file);
@@ -132,25 +130,23 @@ function AddSong() {
   };
 
   const addNewSong = async () => {
-    console.log("Save button clicked");
-
     try {
-      console.log("mp3File:" + mp3File);
-
       const formData = new FormData();
       formData.append("songTitle", songTitle);
       formData.append("artist", artist);
-      formData.append("selectedPlaylist", selectedPlaylists);
-      formData.append("selectedGenres", selectedGenres);
+      formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
+      formData.append("selectedGenres", JSON.stringify(selectedGenres));
       formData.append("notes", notes);
-      formData.append("mp3File", mp3File);
-      formData.append("jpgFile", jpgFile);
+      formData.append("mp3File", mp3File); // Append the mp3 file object
+      formData.append("jpgFile", jpgFile); // Append the jpg file object
 
       const response = await axios.post(
         "http://localhost:8080/api/songs",
         formData
       );
+
       console.log("Save response:", response);
+
       if (response.status === 201) {
         console.log("Save successful");
         navigate("/welcome/addsong");
@@ -158,7 +154,7 @@ function AddSong() {
         console.error("Save failed:", response.data.message);
         setError(response.data.message || "Something went wrong");
       }
-    } catch {
+    } catch (error) {
       console.error("Error saving song:", error);
       setError("Something went wrong");
     }

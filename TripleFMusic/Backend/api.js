@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
+const multer = require('multer');
+const storage = multer.
 
 //Route to create a new song
 router.post('/songs', async (req, res) => {
