@@ -35,13 +35,22 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/login', { username, password });
+      const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
+      const { token } = response.data;
+      
+  
+      // Store the token in local storage or session storage
+      if (rememberMe) {
+        localStorage.setItem('token', token);
+        console.log('Token stored in localStorage:', token);
+      } else {
+        sessionStorage.setItem('token', token);
+        console.log('Token stored in sessionStorage:', token);
+      }
       console.log('Login successful:', response.data);
       navigate('/welcome/home');
-      // Weiterleitungslogik oder Status setzen
     } catch (error) {
       console.error('Login failed:', error);
-      // Detaillierte Fehlerbehandlung hier
       if (error.response) {
         console.error('Server responded with:', error.response.status, error.response.data);
       } else if (error.request) {
@@ -49,13 +58,9 @@ function Login() {
       } else {
         console.error('Error setting up request:', error.message);
       }
-
-    } 
-    
-
-
-   };
-
+    }
+  };
+  
   
   
 

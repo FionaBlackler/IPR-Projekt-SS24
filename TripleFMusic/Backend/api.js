@@ -101,7 +101,7 @@ router.post('/reset_password', authController.resetPassword);
 router.post('/register', authController.register);
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, rememberMe } = req.body;
 
   try {
     console.log(`Login attempt for username: ${username}`);
@@ -129,9 +129,10 @@ router.post('/login', async (req, res) => {
       console.log(`Invalid password for user: ${username}`);
       return res.status(401).json({ message: 'Invalid password' });
     }
+    const tokenExpiry = rememberMe ? '7d' : '20s'; // 7 Tage für Remember Me, 1 Stunde sonst
 
     // Generate JWT Token (example)
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
 
     console.log(`Login successful for user: ${username}`);
     res.status(200).json({ message: 'Login successful', user, token });

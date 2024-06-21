@@ -14,7 +14,6 @@ import {
 } from "react95";
 
 import { useNavigate } from "react-router-dom";
-import "./ForgotPassword.css";
 import styled from 'styled-components';
 import axios from "axios";
 
