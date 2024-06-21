@@ -38,6 +38,9 @@ Login:
 ✔ Passwort vergessen<br>
 ✔ Remember me (Für 7 Tage)<br>
 
+- "Welcome <username>"
+- User löschen
+
 Music Gallery:
 ✔ Vorhandene Playlists anzeigen <br>
 ✔ Songs innerhalb einer Playlist anzeigen <br>
