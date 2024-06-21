@@ -105,7 +105,7 @@ function About() {
       </div>
       <div className="space" />
       <ThemeProvider theme={original}>
-      <Draggable handle=".about-window-header" defaultPosition={{ x: 175, y: 0 }}>
+      <Draggable handle=".about-window-header" defaultPosition={{ x: 420, y: 0 }}>
             <div className="draggable-aboutWindow">
               <Window className="about-window" style={{ overflowY: 'hidden' }}>
                 <WindowHeader className="about-window-header">

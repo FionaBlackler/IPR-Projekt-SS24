@@ -35,20 +35,16 @@
 .draggable-aboutWindow {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 88%;
   height: 100%;
   display: flex;
 }
 
 .about-window {
-  width: 650px; /* Feste Breite */
-  height: 630px; /* Feste Höhe */
-  margin: 60px auto;
-  border: 2px solid #000;
-  box-shadow: none;
-  border-radius: 0;
-  background-color: #ffffff;
-  overflow-y: auto; /* Keine Scrollbalken hier */
+  padding: 2rem, 2rem, 2rem;
+  width:70%;
+  height: 85%;
+  margin-top: 1rem; /* Keine Scrollbalken hier */
 }
 
 .about-close-icon {
