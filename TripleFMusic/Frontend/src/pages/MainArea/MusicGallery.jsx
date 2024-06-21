@@ -22,7 +22,6 @@ import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 
-// Styled-components with transient props
 const Button = styled(BaseButton)`
   /* Custom styles here */
 `;
@@ -52,7 +51,7 @@ function MusicGallery() {
       try {
         const response = await axios.get("http://localhost:8080/api/playlists");
         setPlaylists(response.data);
-        console.log("Fetched playlists:", response.data); // Debugging log
+        console.log("Fetched playlists:", response.data); 
       } catch (error) {
         alert("Error fetching playlists");
         console.error("Error fetching playlists", error);
@@ -108,19 +107,6 @@ function MusicGallery() {
     }
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setNewPlaylistName("");
-  };
-
-  const handleNewPlaylistNameChange = (e) => {
-    setNewPlaylistName(e.target.value);
-  };
-
   const addNewPlaylist = async () => {
     try {
       const response = await axios.post("http://localhost:8080/api/playlists", {
@@ -145,19 +131,6 @@ function MusicGallery() {
     }
   };
 
-  const handleRightClick = (e, playlist) => {
-    e.preventDefault();
-    if (!selectedPlaylists.includes(playlist)) {
-      setSelectedPlaylists([playlist]);
-    }
-    setContextMenu({
-      visible: true,
-      x: e.pageX,
-      y: e.pageY,
-      playlistId: playlist.id,
-    });
-  };
-
   const deletePlaylists = async () => {
     try {
       await Promise.all(
@@ -172,7 +145,7 @@ function MusicGallery() {
       );
       setContextMenu({ ...contextMenu, visible: false });
       setSelectedPlaylists([]);
-      console.log("Deleted playlists: ", selectedPlaylists); // Debugging log
+      console.log("Deleted playlists: ", selectedPlaylists);
     } catch (error) {
       console.error("Error deleting playlists", error);
       alert("Error deleting playlists");
@@ -183,11 +156,37 @@ function MusicGallery() {
     try {
       await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
-      console.log("Deleted playlist with ID:", playlistId); // Debugging log
+      console.log("Deleted playlist with ID:", playlistId);
     } catch (error) {
       console.error("Error deleting playlist", error);
       alert("Error deleting playlist");
     }
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewPlaylistName("");
+  };
+
+  const handleNewPlaylistNameChange = (e) => {
+    setNewPlaylistName(e.target.value);
+  };
+
+  const handleRightClick = (e, playlist) => {
+    e.preventDefault();
+    if (!selectedPlaylists.includes(playlist)) {
+      setSelectedPlaylists([playlist]);
+    }
+    setContextMenu({
+      visible: true,
+      x: e.pageX,
+      y: e.pageY,
+      playlistId: playlist.id,
+    });
   };
 
   const closeContextMenu = () => {
