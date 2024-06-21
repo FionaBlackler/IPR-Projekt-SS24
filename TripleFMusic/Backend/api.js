@@ -11,8 +11,8 @@ const storage = multer.
 router.post('/songs', async (req, res) => {
   const { mp3File, jpgFile, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
 
-  console.log("mp3Fiel: " + mp3File)
-  console.log("jpgFiel: " + jpgFile)
+  console.log("mp3File: " + mp3File)
+  console.log("jpgFile: " + jpgFile)
   
   console.log(req.files);
 
