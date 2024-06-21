@@ -22,6 +22,7 @@ import Welcome from "./pages/MainArea/Welcome.jsx";
 import Register from "./pages/MainArea/Register.jsx";
 import Internet from "./pages/MainArea/Internet.jsx";
 import SnakeGame from "./pages/MainArea/SnakeGame.jsx";
+import ForgotPassword from "./pages/MainArea/ForgotPassword.jsx";
 
 /**
  * Creates the router and sets up the routes for the application.
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
       <Route path="" element={<Welcome />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+      <Route path="password" element={<ForgotPassword />} />
       <Route path="welcome" element={<Layout />}>
         <Route path="home" element={<Home />} />
         <Route path="musicgallery" element={<MusicGallery />} />

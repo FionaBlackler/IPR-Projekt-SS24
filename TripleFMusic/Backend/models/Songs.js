@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Songs = sequelize.define('Songs', {
-    mp3FilePath: {
+    mp3File: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    jpgFilePath: {
+    jpgFile: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
