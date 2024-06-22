@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
 import { ThemeProvider } from "styled-components";
-import original from "react95/dist/themes/original"; // Thema der UI-Elemente
+import original from "react95/dist/themes/original";
 import {
   AppBar,
   Toolbar,
@@ -14,21 +14,21 @@ import {
   Window,
   WindowHeader,
   WindowContent,
-  ScrollView,
-  Anchor,
+  Checkbox,
   GroupBox,
   NumberInput,
   Tab,
   TabBody,
+  TextInput,
   Tabs,
-
-} from "react95"; // sicherstellen, dass alle benötigten Komponenten importiert sind
+} from "react95";
 import { useAuth } from "../../authContext";
 import Draggable from "react-draggable";
 
 function Header() {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const { logout } = useAuth(); // Destructure logout from useAuth
+  const [sure, setSure] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,34 +41,30 @@ function Header() {
     setIsModalOpen(false);
   };
 
-  const headerRef = useRef(null); // Ref für den gesamten Header-Bereich erstellen
-  const menuRef = useRef(null); // Ref für das Menü erstellen
+  const headerRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
-    // Funktion zum Überprüfen des Klicks außerhalb des Menüs und des Headers
     const handleClickOutside = (event) => {
       if (
         headerRef.current &&
         !headerRef.current.contains(event.target) &&
+        menuRef.current &&
         !menuRef.current.contains(event.target)
       ) {
-        // Klick war außerhalb des Menüs und des Headers
-        setOpen(false); // Menü schließen
+        setOpen(false);
       }
     };
 
-    // Event-Listener hinzufügen
     document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean-up: Event-Listener entfernen
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [headerRef, menuRef]);
 
   const handleLogout = () => {
-    logout(); // Call the logout function
-    navigate("/"); // Redirect to the homepage
+    logout();
+    navigate("/");
   };
 
   const handleMenuClick = () => {
@@ -76,10 +72,26 @@ function Header() {
   };
 
   const handleWelcomeClick = (event) => {
-    event.stopPropagation(); // Klick auf "Welcome User" stoppen, um das Menü nicht zu schließen
+    event.stopPropagation();
   };
 
+  const [state, setState] = useState({
+    activeTab: 0,
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
 
+  const handleChange = (value) => {
+    setState({ ...state, activeTab: value });
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const { activeTab, oldPassword, newPassword, confirmPassword } = state;
 
   return (
     <div className="main-header" ref={headerRef}>
@@ -89,54 +101,50 @@ function Header() {
             <Button
               onClick={handleMenuClick}
               active={open ? "true" : undefined}
-              style={{ fontWeight: 'bold', marginLeft: "2rem" }}
+              style={{ fontWeight: "bold", marginLeft: "2rem" }}
             >
-              <img
-                src={logo}
-                alt='TripleF Music'
-                style={{ height: '20px', marginRight: 4 }}
-              />
+              <img src={logo} alt="TripleF Music" style={{ height: "20px", marginRight: 4 }} />
               TripleF Music
             </Button>
 
             {open && (
               <MenuList
-                ref={menuRef} // Ref dem Menü zuweisen
+                ref={menuRef}
                 style={{
-                  position: 'absolute',
-                  left: '0',
-                  bottom: '60%', // Menu opens upwards
-                  width: '185px',
-                  transform: 'translateY(-10px)', // Vertically shift the menu
-                  padding: '8px', // Innenabstand hinzugefügt
-                  zIndex: '10', // Z-Index für die Stapelreihenfolge hinzugefügt
+                  position: "absolute",
+                  left: "0",
+                  bottom: "60%",
+                  width: "185px",
+                  transform: "translateY(-10px)",
+                  padding: "8px",
+                  zIndex: "10",
                 }}
                 onClick={() => setOpen(false)}
               >
                 <div
-                  onClick={handleWelcomeClick} // Klick auf "Welcome User" abfangen
-                  style={{ textAlign: 'center', marginBottom: '9px', cursor: 'default' }} // Cursor auf default setzen, um anzuzeigen, dass nicht klickbar ist
+                  onClick={handleWelcomeClick}
+                  style={{ textAlign: "center", marginBottom: "9px", cursor: "default" }}
                 >
-                  <span role='img' aria-label='🤗' style={{ fontSize: '24px' }}>
+                  <span role="img" aria-label="🤗" style={{ fontSize: "24px" }}>
                     🤗
                   </span>
                   <br />
                   Welcome User!
                 </div>
-                
-                <Separator style={{ margin: '4px 0' }} /> {/* Abstand zum Separator hinzugefügt */}
-                
-                <MenuListItem onClick={openModal} style={{ display: 'flex', alignItems: 'center' }}>
-                  <span role='img' aria-label='⚙️'  style={{ marginRight: '8px', fontSize: '20px' }}>
+
+                <Separator style={{ margin: "4px 0" }} />
+
+                <MenuListItem onClick={openModal} style={{ display: "flex", alignItems: "center" }}>
+                  <span role="img" aria-label="⚙️" style={{ marginRight: "8px", fontSize: "20px" }}>
                     ⚙️
                   </span>
                   Settings
                 </MenuListItem>
-                
-                <Separator style={{ margin: '4px 0' }} /> {/* Abstand zum Separator hinzugefügt */}
-                
-                <MenuListItem onClick={handleLogout} style={{ display: 'flex', alignItems: 'center' }}>
-                  <span role='img' aria-label='👋' style={{ marginRight: '8px', fontSize: '20px' }}>
+
+                <Separator style={{ margin: "4px 0" }} />
+
+                <MenuListItem onClick={handleLogout} style={{ display: "flex", alignItems: "center" }}>
+                  <span role="img" aria-label="👋" style={{ marginRight: "8px", fontSize: "20px" }}>
                     👋
                   </span>
                   Logout
@@ -144,16 +152,14 @@ function Header() {
               </MenuList>
             )}
 
-            <p style={{ marginRight: "2rem" }}>
-              {new Date().getFullYear()} TripleF Music. All rights reserved.
-            </p>
+            <p style={{ marginRight: "2rem" }}>{new Date().getFullYear()} TripleF Music. All rights reserved.</p>
           </Toolbar>
         </AppBar>
 
         {isModalOpen && (
-          <div className="setting-modal">
+          <div className="setting-modal" style={{ height: 200 }}>
             <Draggable handle=".setting-window-header">
-              <Window style={{ height:600, width: 700, marginTop: 50 }}>
+              <Window style={{ height: 500, width: 700, marginTop: 50 }}>
                 <WindowHeader className="setting-window-header">
                   <span>Settings</span>
                   <Button onClick={closeModal}>
@@ -161,11 +167,93 @@ function Header() {
                   </Button>
                 </WindowHeader>
                 <WindowContent>
-                  <div className="setting-wrapper">
-                  
-          
+                  <div className="setting-wrapper" style={{ height: 400 }}>
+                    <Tabs value={activeTab} onChange={handleChange}>
+                      <Tab value={0}>Edit Profile</Tab>
+                      <Tab value={1}>Delete Profile</Tab>
+                      <Tab value={2}>Help/Support</Tab>
+                    </Tabs>
+                    <TabBody style={{ height: 380 }}>
+                      {activeTab === 0 && (
+                        <div style={{ padding: "20px" }}>
+                          <GroupBox label="Password Manager:">
+                            <div style={{ marginBottom: "10px" }}>
+                              <span style={{ display: "block", marginBottom: "5px" }}>Old Password:</span>
+                              <TextInput
+                                name="oldPassword"
+                                value={oldPassword}
+                                placeholder="Type old password here..."
+                                onChange={handlePasswordChange}
+                                fullWidth
+                                style={{ marginBottom: "10px" }}
+                              />
+                              <span style={{ display: "block", marginBottom: "5px" }}>New Password:</span>
+                              <TextInput
+                                name="newPassword"
+                                value={newPassword}
+                                placeholder="Type new password here..."
+                                onChange={handlePasswordChange}
+                                fullWidth
+                                style={{ marginBottom: "10px" }}
+                              />
+                              <span style={{ display: "block", marginBottom: "5px" }}>Confirm New Password:</span>
+                              <TextInput
+                                name="confirmPassword"
+                                value={confirmPassword}
+                                placeholder="Confirm new password here..."
+                                onChange={handlePasswordChange}
+                                fullWidth
+                                style={{ marginBottom: "10px" }}
+                              />
+                              <Button style={{ width: "100%", marginTop: "10px" }}>Change Password</Button>
+                            </div>
+                          </GroupBox>
+                        </div>
+                      )}
+                      {activeTab === 1 && (
+                        <div style={{ padding: "20px" }}>
+                          <GroupBox label="Delete Profile:">
+                            <div style={{ marginBottom: "10px" }}>
+                              <p>
+                                Oh no, what a tragedy! How will we ever discover new music without your impeccable taste
+                                leading the way? Your playlists were the pinnacle of musical genius, and now we'll have
+                                to fumble around in the dark without your guidance. Farewell, dear music maestro. The
+                                app just won't be the same without you. Good luck finding tunes elsewhere—if that's even
+                                possible!
+                              </p>
+                              <Checkbox
+                                label="Click if you are sure"
+                                checked={sure}
+                                onChange={() => setSure(!sure)}
+                              />
+                              <Button style={{ width: "100%", marginTop: "10px" }} disabled={!sure}>
+                                Delete Profile
+                              </Button>
+                            </div>
+                          </GroupBox>
+                        </div>
+                      )}
+                      {activeTab === 2 && (
+                        <div style={{ padding: "20px" }}>
+                          <GroupBox label="Contact support:">
+                            <div style={{ marginBottom: "10px" }}>
+                              <p>
+                                Oh, you need help? What a surprise! We're absolutely shocked that our perfectly flawless
+                                app might have confused you. But don't worry, our support team is here to save the day.
+                                Feel free to reach out—if you dare. We promise to respond with all the enthusiasm of a
+                                Monday morning.
+                              </p>
+                              <a href="mailto:info.triplefmusic@gmail.com">
+                                <Button style={{ width: "100%", marginTop: "10px" }}>
+                                  info.triplefmusic@gmail.com
+                                </Button>
+                              </a>
+                            </div>
+                          </GroupBox>
+                        </div>
+                      )}
+                    </TabBody>
                   </div>
-                  
                   <Separator />
                 </WindowContent>
               </Window>
@@ -176,6 +264,5 @@ function Header() {
     </div>
   );
 }
-
 
 export default Header;
