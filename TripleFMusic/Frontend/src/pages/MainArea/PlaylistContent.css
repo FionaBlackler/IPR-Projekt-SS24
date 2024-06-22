@@ -26,7 +26,11 @@
 }
 
 .playlist-table-row.selected {
-  background-color: #d3d3d3; /* Change to the desired highlight color */
+  background-color: #060084; /* Change to the desired highlight color */
+}
+
+.playlist-table-row.selected .playlist-table-cell {
+  color: #ffffff; /* Ensure individual cells also have white text */
 }
 
 .delete-song-context-menu {

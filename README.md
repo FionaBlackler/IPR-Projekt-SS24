@@ -41,15 +41,16 @@ Login:
 - "Welcome <username>"
 - User löschen
 
-Music Gallery:
+Music Gallery:<br>
+<br>
 ✔ Vorhandene Playlists anzeigen <br>
 ✔ Songs innerhalb einer Playlist anzeigen <br>
 ✔ Song löschen <br>
 ✔ Neue Playlist hinzufügen <br>
 ✔ Playlist löschen <br>
 ✔ Mehrere Playlists gleichzeitig löschen <br>
+✔ Mehrere Songs gleichzeitig löschen <br>
 
-- Mehrere Songs gleichzeitig löschen
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
 - Songdetails anzeigen
