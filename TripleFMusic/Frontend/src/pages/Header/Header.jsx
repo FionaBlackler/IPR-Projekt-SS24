@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
 import { ThemeProvider } from "styled-components";
@@ -31,6 +32,7 @@ function Header() {
 
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState('');
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -88,6 +90,33 @@ function Header() {
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
+  };
+
+  const handleChangePassword = async () => {
+    const { oldPassword, newPassword, confirmPassword } = state;
+
+    if (newPassword !== confirmPassword) {
+      setMessage('New passwords do not match');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const response = await axios.post('http://localhost:8080/api/change_password', {
+        oldPassword,
+        newPassword,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      setMessage(response.data.message);
+      setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      setMessage('Error changing password');
+    }
   };
 
   const { activeTab, oldPassword, newPassword, confirmPassword } = state;
@@ -204,7 +233,8 @@ function Header() {
                                 fullWidth
                                 style={{ marginBottom: "10px" }}
                               />
-                              <Button style={{ width: "100%", marginTop: "10px" }}>Change Password</Button>
+                              <Button onClick={handleChangePassword} style={{ width: "100%", marginTop: "10px" }}>Change Password</Button>
+                              {message && <p>{message}</p>}
                             </div>
                           </GroupBox>
                         </div>
