@@ -16,11 +16,10 @@ import {
   WindowContent,
   Checkbox,
   GroupBox,
-  NumberInput,
-  Tab,
-  TabBody,
   TextInput,
   Tabs,
+  Tab,
+  TabBody,
 } from "react95";
 import { useAuth } from "../../authContext";
 import Draggable from "react-draggable";
@@ -173,9 +172,9 @@ function Header() {
                       <Tab value={1}>Delete Profile</Tab>
                       <Tab value={2}>Help/Support</Tab>
                     </Tabs>
-                    <TabBody style={{ height: 380 }}>
+                    <TabBody style={{ height: 'calc(100% - 50px)', overflow: 'auto', padding: '10px' }}>
                       {activeTab === 0 && (
-                        <div style={{ padding: "20px" }}>
+                        <div>
                           <GroupBox label="Password Manager:">
                             <div style={{ marginBottom: "10px" }}>
                               <span style={{ display: "block", marginBottom: "5px" }}>Old Password:</span>
@@ -211,8 +210,8 @@ function Header() {
                         </div>
                       )}
                       {activeTab === 1 && (
-                        <div style={{ padding: "20px" }}>
-                          <GroupBox label="Delete Profile:">
+                        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                          <GroupBox label="Delete Profile:" style={{ flexGrow: 1 }}>
                             <div style={{ marginBottom: "10px" }}>
                               <p>
                                 Oh no, what a tragedy! How will we ever discover new music without your impeccable taste
@@ -221,21 +220,23 @@ function Header() {
                                 app just won't be the same without you. Good luck finding tunes elsewhere—if that's even
                                 possible!
                               </p>
-                              <Checkbox
-                                label="Click if you are sure"
-                                checked={sure}
-                                onChange={() => setSure(!sure)}
-                              />
-                              <Button style={{ width: "100%", marginTop: "10px" }} disabled={!sure}>
-                                Delete Profile
-                              </Button>
                             </div>
                           </GroupBox>
+                          <div style={{ marginTop: 'auto' }}>
+                            <Checkbox
+                              label="Click if you are sure"
+                              checked={sure}
+                              onChange={() => setSure(!sure)}
+                            />
+                            <Button style={{ width: "100%", marginTop: "10px" }} disabled={!sure}>
+                              Delete Profile
+                            </Button>
+                          </div>
                         </div>
                       )}
                       {activeTab === 2 && (
-                        <div style={{ padding: "20px" }}>
-                          <GroupBox label="Contact support:">
+                        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                          <GroupBox label="Contact support:" style={{ flexGrow: 1 }}>
                             <div style={{ marginBottom: "10px" }}>
                               <p>
                                 Oh, you need help? What a surprise! We're absolutely shocked that our perfectly flawless
@@ -243,13 +244,15 @@ function Header() {
                                 Feel free to reach out—if you dare. We promise to respond with all the enthusiasm of a
                                 Monday morning.
                               </p>
-                              <a href="mailto:info.triplefmusic@gmail.com">
-                                <Button style={{ width: "100%", marginTop: "10px" }}>
-                                  info.triplefmusic@gmail.com
-                                </Button>
-                              </a>
                             </div>
                           </GroupBox>
+                          <div style={{ marginTop: 'auto' }}>
+                            <a href="mailto:info.triplefmusic@gmail.com">
+                              <Button style={{ width: "100%", marginTop: "10px" }}>
+                                info.triplefmusic@gmail.com
+                              </Button>
+                            </a>
+                          </div>
                         </div>
                       )}
                     </TabBody>
