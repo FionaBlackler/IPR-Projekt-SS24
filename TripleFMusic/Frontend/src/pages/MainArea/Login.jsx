@@ -37,29 +37,34 @@ function Login() {
 
   const handleLogin = async () => {
     try {
+      console.log('handleLogin: Attempting to log in with', { username, password, rememberMe });
       const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
       const { token } = response.data;
+      console.log('handleLogin: Received token:', token);
       
       login(token, rememberMe);
+      console.log('handleLogin: Navigating to /welcome/home');
       navigate('/welcome/home');
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('handleLogin: Login failed:', error);
       if (error.response) {
-        console.error('Server responded with:', error.response.status, error.response.data);
+        console.error('handleLogin: Server responded with:', error.response.status, error.response.data);
       } else if (error.request) {
-        console.error('No response received:', error.request);
+        console.error('handleLogin: No response received:', error.request);
       } else {
-        console.error('Error setting up request:', error.message);
+        console.error('handleLogin: Error setting up request:', error.message);
       }
     }
   };
 
   const handleForgotPassword = async () => {
     try {
+      console.log('handleForgotPassword: Requesting password reset for email:', email);
       const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
       setMessage(response.data.message);
+      console.log('handleForgotPassword: Response message:', response.data.message);
     } catch (error) {
-      console.error('Error requesting password reset:', error);
+      console.error('handleForgotPassword: Error requesting password reset:', error);
       setMessage('Error requesting password reset');
     }
   };
@@ -142,48 +147,41 @@ function Login() {
                       Login
                     </Button>
                     <Button primary onClick={() => navigate("/register")}>
-                      Sign up
+                      Register
                     </Button>
                   </ThemeProvider>
                 </div>
 
-                {showForgotPassword && (
-                  <p>Contact support for help at triplefmusic@support.de</p>
+                {isModalOpen && (
+                  <Window className="forgot-password-window">
+                    <WindowHeader>
+                      <span>Reset Password</span>
+                      <Button onClick={() => setShowForgotPassword(false)}>
+                        <span className="forgot-password-close-icon" />
+                      </Button>
+                    </WindowHeader>
+                    <WindowContent>
+                      <div>
+                        <p>Enter your email to reset your password:</p>
+                        <TextInput
+                          value={email}
+                          placeholder="Email"
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      </div>
+                      <br />
+                      <ThemeProvider theme={original}>
+                        <Button primary onClick={handleForgotPassword}>
+                          Submit
+                        </Button>
+                      </ThemeProvider>
+                      {message && <p>{message}</p>}
+                    </WindowContent>
+                  </Window>
                 )}
               </div>
             </div>
           </Window>
-
-          {isModalOpen && (
-            <div className="forgotPasswordBackground">
-              <div className="forgotPassword-modal">
-                <Window className="forgotPassword-modal-window">
-                  <WindowHeader className="forgotPassword-window-header">
-                    <span>Forgot Password</span>
-                    <Button onClick={closeModal}>
-                      <span className="forgotPassword-close-icon" />
-                    </Button>
-                  </WindowHeader>
-                  <WindowContent>
-                    <TextInput
-                      className="text-field-forgotPassword"
-                      value={email}
-                      placeholder="Enter your email"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Separator />
-                    <Button
-                      className="inquiry-button"
-                      onClick={handleForgotPassword}
-                    >
-                      Send Inquiry
-                    </Button>
-                    {message && <p>{message}</p>}
-                  </WindowContent>
-                </Window>
-              </div>
-            </div>
-          )}
         </div>
       </ThemeProvider>
     </>
