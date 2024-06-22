@@ -93,6 +93,37 @@ router.get('/playlists/:id/songs', async (req, res) => {
   }
 });
 
+// Route to delete a song
+router.delete('/songs/:id', async (req, res) => {
+  try {
+    const songId = req.params.id;
+    const song = await Songs.findByPk(songId);
+    if (!song) {
+      return res.status(404).json({ message: 'Song not found' });
+    }
+    await song.destroy();
+    res.status(204).end();
+  } catch (error) {
+    console.error('Error deleting song:', error);
+    res.status(500).json({ message: 'Error deleting song', error });
+  }
+});
+
+// Route to delete multiple songs
+router.delete('/songs', async (req, res) => {
+  const { songIds } = req.body; // Expecting an array of song IDs in the request body
+  try {
+    await Songs.destroy({
+      where: {
+        id: songIds
+      }
+    });
+    res.status(204).end();
+  } catch (error) {
+    console.error(`Error deleting songs with IDs ${songIds}:`, error);
+    res.status(500).json({ message: 'Error deleting songs', error });
+  }
+});
 
 // Passwort vergessen Route
 router.post('/forgot_password', authController.forgotPassword);
@@ -131,7 +162,7 @@ router.post('/login', async (req, res) => {
       console.log(`Invalid password for user: ${username}`);
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const tokenExpiry = rememberMe ? '7d' : '10s'; // 7 Tage für Remember Me, 1 Tag sonst
+    const tokenExpiry = rememberMe ? '7d' : '1d'; // 7 Tage für Remember Me, 1 Tag sonst
 
     // Generate JWT Token
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
