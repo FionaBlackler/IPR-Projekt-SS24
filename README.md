@@ -29,15 +29,15 @@ npm install bcrypt // Für Mac
 Anwendung starten:
 
 1. Backend starten:
-   ~~~
-   cd TripleFMusic/Backend
-   nodemon server.js
-   ~~~
+~~~
+cd TripleFMusic/Backend
+nodemon server.js
+~~~
 3. Frontend starten:
-   ~~~
-   cd TripleFMusic/Frontend
-   npm run dev
-   ~~~
+~~~
+cd TripleFMusic/Frontend
+npm run dev
+~~~
 
 ## Projekt Informationen
 Verwendete Sprachen:
