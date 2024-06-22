@@ -30,6 +30,8 @@ function Login() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -43,6 +45,7 @@ function Login() {
       login(token, rememberMe);
       navigate('/welcome/home');
     } catch (error) {
+      alert('Login failed. Please check your credentials and try again.');
       console.error('Login failed:', error);
       if (error.response) {
         console.error('Server responded with:', error.response.status, error.response.data);
@@ -72,6 +75,9 @@ function Login() {
     setIsModalOpen(false);
   };
 
+  const toggleShowPassword = () => {
+  setShowPassword(!showPassword);
+};
   return (
     <>
       <ThemeProvider theme={original}>
@@ -117,12 +123,21 @@ function Login() {
                     />
                     <br />
                     <TextInput
-                      type="password"
-                      value={password}
+                      type={showPassword ? "text" : "password"}
+                      value={password}                      
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
+                  <br />
+                  <span 
+                    role="img" 
+                     aria-label="toggle password visibility" 
+                     style={{ fontSize: "24px", marginLeft: 500, cursor: "pointer" }}
+                     onClick={toggleShowPassword}>
+                    {showPassword ? "🙈" : "👁️"}
+                  </span>
+
                   <br />
                   <div className="checkbox-container">
                     <Checkbox
