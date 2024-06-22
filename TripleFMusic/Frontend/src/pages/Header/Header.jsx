@@ -11,14 +11,35 @@ import {
   MenuList,
   Separator,
   MenuListItem,
-} from "react95";
+  Window,
+  WindowHeader,
+  WindowContent,
+  ScrollView,
+  Anchor,
+  GroupBox,
+  NumberInput,
+  Tab,
+  TabBody,
+  Tabs,
+
+} from "react95"; // sicherstellen, dass alle benötigten Komponenten importiert sind
 import { useAuth } from "../../authContext";
+import Draggable from "react-draggable";
 
 function Header() {
   const navigate = useNavigate(); // Initialize useNavigate
   const { logout } = useAuth(); // Destructure logout from useAuth
 
   const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const headerRef = useRef(null); // Ref für den gesamten Header-Bereich erstellen
   const menuRef = useRef(null); // Ref für das Menü erstellen
@@ -57,6 +78,8 @@ function Header() {
   const handleWelcomeClick = (event) => {
     event.stopPropagation(); // Klick auf "Welcome User" stoppen, um das Menü nicht zu schließen
   };
+
+
 
   return (
     <div className="main-header" ref={headerRef}>
@@ -103,8 +126,8 @@ function Header() {
                 
                 <Separator style={{ margin: '4px 0' }} /> {/* Abstand zum Separator hinzugefügt */}
                 
-                <MenuListItem style={{ display: 'flex', alignItems: 'center' }}>
-                  <span role='img' aria-label='⚙️' style={{ marginRight: '8px', fontSize: '20px' }}>
+                <MenuListItem onClick={openModal} style={{ display: 'flex', alignItems: 'center' }}>
+                  <span role='img' aria-label='⚙️'  style={{ marginRight: '8px', fontSize: '20px' }}>
                     ⚙️
                   </span>
                   Settings
@@ -126,9 +149,33 @@ function Header() {
             </p>
           </Toolbar>
         </AppBar>
+
+        {isModalOpen && (
+          <div className="setting-modal">
+            <Draggable handle=".setting-window-header">
+              <Window style={{ height:600, width: 700, marginTop: 50 }}>
+                <WindowHeader className="setting-window-header">
+                  <span>Settings</span>
+                  <Button onClick={closeModal}>
+                    <span className="setting-close-icon" />
+                  </Button>
+                </WindowHeader>
+                <WindowContent>
+                  <div className="setting-wrapper">
+                  
+          
+                  </div>
+                  
+                  <Separator />
+                </WindowContent>
+              </Window>
+            </Draggable>
+          </div>
+        )}
       </ThemeProvider>
     </div>
   );
 }
+
 
 export default Header;
