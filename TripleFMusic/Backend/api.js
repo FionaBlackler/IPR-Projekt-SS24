@@ -204,10 +204,8 @@ router.post('/change_password', verifyToken, async (req, res) => {
   }
 });
 
-/*
-
-router.post('/change_password', verifyToken, async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
+// Route to delete the logged-in user's profile
+router.delete('/delete_profile', verifyToken, async (req, res) => {
   const userId = req.userId;
 
   try {
@@ -217,22 +215,14 @@ router.post('/change_password', verifyToken, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+    await user.destroy();
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Old password is incorrect' });
-    }
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-
-    await User.update({ password: hashedNewPassword }, { where: { id: userId } });
-
-    res.status(200).json({ message: 'Password changed successfully' });
+    res.status(200).json({ message: 'User profile deleted successfully' });
   } catch (error) {
-    console.error('Error changing password:', error);
-    res.status(500).json({ message: 'Error changing password', error });
+    console.error('Error deleting user profile:', error);
+    res.status(500).json({ message: 'Error deleting user profile', error });
   }
 });
-*/
+
 
 module.exports = router;

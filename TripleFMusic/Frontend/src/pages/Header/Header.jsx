@@ -119,6 +119,29 @@ function Header() {
     }
   };
 
+  const handleDeleteProfile = async () => {
+    if (!sure) {
+      setMessage('Please confirm that you want to delete your profile');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const response = await axios.delete('http://localhost:8080/api/delete_profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      setMessage(response.data.message);
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+      setMessage('Error deleting profile');
+    }
+  };
+
   const { activeTab, oldPassword, newPassword, confirmPassword } = state;
 
   return (
@@ -258,9 +281,10 @@ function Header() {
                               checked={sure}
                               onChange={() => setSure(!sure)}
                             />
-                            <Button style={{ width: "100%", marginTop: "10px" }} disabled={!sure}>
+                            <Button onClick={handleDeleteProfile} style={{ width: "100%", marginTop: "10px" }} disabled={!sure}>
                               Delete Profile
                             </Button>
+                            {message && <p>{message}</p>}
                           </div>
                         </div>
                       )}
