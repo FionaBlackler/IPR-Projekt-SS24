@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../Images/TripleF3_2.png";
-
 import { ThemeProvider } from "styled-components";
 import original from "react95/dist/themes/original"; // Thema der UI-Elemente
 import {
@@ -15,12 +14,20 @@ import {
   Separator,
   MenuListItem,
 } from "react95";
+import { useAuth } from "../../authContext"; 
 
 function Header() {
   const navigate = useNavigate(); // Initialize useNavigate
+  const { logout } = useAuth(); // Destructure logout from useAuth
+
   console.log("useNavigate:", navigate);
 
   const [open, setOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout(); // Call the logout function
+    navigate("/"); // Redirect to the homepage
+  };
 
   return (
     <div className="main-header">
@@ -55,7 +62,7 @@ function Header() {
                   👨‍💻  Welcome Funda!
                 </span>
                 <Separator />
-                <MenuListItem onClick={() => navigate("/")}>
+                <MenuListItem onClick={handleLogout}>
                   <span role='img' aria-label='🔙' style={{ justifyContent: 'center' }}>
                     🔙
                   </span>

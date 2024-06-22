@@ -19,7 +19,6 @@ import Welcome from "./pages/MainArea/Welcome.jsx";
 import Register from "./pages/MainArea/Register.jsx";
 import Internet from "./pages/MainArea/Internet.jsx";
 import SnakeGame from "./pages/MainArea/SnakeGame.jsx";
-import ForgotPassword from "./pages/MainArea/ForgotPassword.jsx";
 import { AuthProvider } from "./authContext";
 import PrivateRoute from "./PrivateRoute";
 
@@ -37,7 +36,6 @@ const router = createBrowserRouter(
       <Route index element={<Welcome />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      <Route path="password" element={<ForgotPassword />} />
       <Route element={<PrivateRoute />}>
         <Route path="welcome" element={<ProtectedLayout />}>
           <Route path="home" element={<Home />} />
