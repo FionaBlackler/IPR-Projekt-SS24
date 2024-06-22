@@ -70,6 +70,7 @@ Music Gallery:<br>
 ✔ Song löschen <br>
 ✔ Neue Playlist hinzufügen <br>
 ✔ Playlist löschen <br>
+(MERKE: FALLS WIR ES HINBEKOMMEN, DASS WIR SONGS IN VERSCHIEDENE PLAYLISTS BEKOMMENMUSS ICH ES ÄNDERN, DASS DIE SONGS NICHT AUS DER DATENBANK GELÖSCHT WERDEN WENN DIE PLAYLIST GELÖSCHT WIRD) <br>
 ✔ Mehrere Playlists gleichzeitig löschen <br>
 ✔ Mehrere Songs gleichzeitig löschen <br>
 
