@@ -133,7 +133,7 @@ router.post('/login', async (req, res) => {
     }
     const tokenExpiry = rememberMe ? '7d' : '10s'; // 7 Tage für Remember Me, 1 Tag sonst
 
-    // Generate JWT Token (example)
+    // Generate JWT Token
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
 
     console.log(`Login successful for user: ${username}`);
