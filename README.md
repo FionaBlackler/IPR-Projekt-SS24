@@ -8,31 +8,53 @@ Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blac
 <br>
 Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
-NACH DEM CLONEN DES REPOS:<br>
-Im Frontend (cd TripdleFMusic/Frontend) und Backend (cd TripleFMusic/Backend) bitte erstmal einen npm install machen.<br>
-Im Frontend muss vite separat mit npm install vite installiert werden.<br>
-Im Backend muss nodemon extra installiert werden mit npm install nodemon und npm install nodemon --save-dev.<br>
-<br>
-Anwendung starten:<br>
+## Nach dem clonen des Repos
+Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
+~~~
+npm install
+~~~
 
-1. Backend starten --> cd TripleFMusic/Backend --> nodemon server.js<br>
-2. Frontend starten --> cd TripleFMusic/Frontend --> npm run dev<br>
+Im Frontend:
+~~~
+npm install vite
+~~~
 
-Verwendete Sprachen:<br>
+Im Backend:
+~~~
+npm install -g nodemon
+npm install bcrypt@5.0.1 // Für Windows
+npm install bcrypt // Für Mac
+~~~
+
+Anwendung starten:
+
+1. Backend starten:
+~~~
+cd TripleFMusic/Backend
+nodemon server.js
+~~~
+3. Frontend starten:
+~~~
+cd TripleFMusic/Frontend
+npm run dev
+~~~
+
+## Projekt Informationen
+Verwendete Sprachen:
 
 - JavaScript
 - HTML
 - CSS
 
-Verwendete Bibliotheken:<br>
+Verwendete Bibliotheken:
 
 - React JS
 - React95 component library
 
-User-Stories:<br>
+## User-Stories
 
-Login:
-
+Login:<br>
+<br>
 ✔ An-/Abmelden <br>
 ✔ Konto registrieren<br>
 ✔ Passwort vergessen<br>
@@ -62,11 +84,13 @@ Music Gallery:<br>
 - Nach einzelnen Songs suchen
 - Nach Song im Mixtape suchen<br>
 
-Add Song:
+Add Song:<br>
+<br>
 ✔ Vorhandene Playlists anzeigen <br>
 ✔ mp3/jpg file vom File Explorer auswählen <br>
 
 - Song speichern
 
-Sonstiges:
+Sonstiges:<br>
+<br>
 ✔ Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
