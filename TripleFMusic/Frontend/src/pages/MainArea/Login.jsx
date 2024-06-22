@@ -20,12 +20,12 @@ import {
 
 import original from "react95/dist/themes/original";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../authContext';
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -33,21 +33,14 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const { login } = useAuth();
+
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
       const { token } = response.data;
       
-  
-      // Store the token in local storage or session storage
-      if (rememberMe) {
-        localStorage.setItem('token', token);
-        console.log('Token stored in localStorage:', token);
-      } else {
-        sessionStorage.setItem('token', token);
-        console.log('Token stored in sessionStorage:', token);
-      }
-      console.log('Login successful:', response.data);
+      login(token, rememberMe);
       navigate('/welcome/home');
     } catch (error) {
       console.error('Login failed:', error);
@@ -60,15 +53,10 @@ function Login() {
       }
     }
   };
-  
-  
-  
 
   const handleForgotPassword = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/forgot_password', {
-        email
-      });
+      const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
       setMessage(response.data.message);
     } catch (error) {
       console.error('Error requesting password reset:', error);
@@ -92,17 +80,9 @@ function Login() {
             <Toolbar style={{ justifyContent: "space-between" }}>
               <Button
                 disabled
-                style={{
-                  fontWeight: "bold",
-                  marginLeft: "2rem",
-                  color: "white",
-                }}
+                style={{ fontWeight: "bold", marginLeft: "2rem", color: "white" }}
               >
-                <img
-                  src={logo}
-                  alt="TripleF Music"
-                  style={{ height: "20px", marginRight: 4 }}
-                />
+                <img src={logo} alt="TripleF Music" style={{ height: "20px", marginRight: 4 }} />
                 Login
               </Button>
               <p style={{ marginRight: "2rem", color: "black" }}>
@@ -150,10 +130,7 @@ function Login() {
                       checked={rememberMe}
                       onChange={() => setRememberMe(!rememberMe)}
                     />
-                    <span
-                      className="forgot-password"
-                      onClick={openModal}
-                    >
+                    <span className="forgot-password" onClick={openModal}>
                       Forgot password?
                     </span>
                   </div>
@@ -164,10 +141,7 @@ function Login() {
                     <Button primary onClick={handleLogin}>
                       Login
                     </Button>
-                    <Button
-                      primary
-                      onClick={() => navigate("/register")}
-                    >
+                    <Button primary onClick={() => navigate("/register")}>
                       Sign up
                     </Button>
                   </ThemeProvider>
@@ -176,7 +150,6 @@ function Login() {
                 {showForgotPassword && (
                   <p>Contact support for help at triplefmusic@support.de</p>
                 )}
-                {isLoggedIn && <p>Logged in</p>}
               </div>
             </div>
           </Window>
@@ -216,6 +189,5 @@ function Login() {
     </>
   );
 }
-
 
 export default Login;

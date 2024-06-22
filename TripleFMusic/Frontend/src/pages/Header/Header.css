@@ -30,4 +30,64 @@
   }
   
 
+  .setting-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .setting-modal-window {
+    width: 490px; /* Adjusted width to make the modal smaller */
+    height: 450px; /* Adjusted height to fit the content */
+    max-height: 70vh;
+    overflow-y:auto; /* Add vertical scrolling if content overflows */
+  }
+  
+  .setting-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    cursor: move;
+  }
+  .setting-close-icon{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: -1px;
+    margin-top: -1px;
+    transform: rotateZ(45deg);
+    position: relative;
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      background: black;
+    }
+    &:before {
+      height: 100%;
+      width: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &:after {
+      height: 3px;
+      width: 100%;
+      left: 0px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .setting-wrapper{
+    overflow: auto;
+    height: 100%;
+  }
+  .setting{
+    
+  }
 /* Header.css */

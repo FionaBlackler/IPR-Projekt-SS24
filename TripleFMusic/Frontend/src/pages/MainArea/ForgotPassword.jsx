@@ -44,6 +44,8 @@ function ForgotPassword() {
     setIsModalOpen(false);
   };
 
+  console.log("ForgotPassword Component Rendered");
+
   return (
     <>
       <div className="header">

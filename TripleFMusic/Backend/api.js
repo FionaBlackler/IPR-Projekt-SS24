@@ -4,15 +4,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
-const multer = require('multer');
-const storage = multer.
+const verifyToken = require('./authMiddleware.js'); // Importieren der verifyToken-Middleware
+
 
 //Route to create a new song
 router.post('/songs', async (req, res) => {
   const { mp3File, jpgFile, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
 
-  console.log("mp3Fiel: " + mp3File)
-  console.log("jpgFiel: " + jpgFile)
+  console.log("mp3File: " + mp3File)
+  console.log("jpgFile: " + jpgFile)
   
   console.log(req.files);
 
@@ -94,6 +94,37 @@ router.get('/playlists/:id/songs', async (req, res) => {
   }
 });
 
+// Route to delete a song
+router.delete('/songs/:id', async (req, res) => {
+  try {
+    const songId = req.params.id;
+    const song = await Songs.findByPk(songId);
+    if (!song) {
+      return res.status(404).json({ message: 'Song not found' });
+    }
+    await song.destroy();
+    res.status(204).end();
+  } catch (error) {
+    console.error('Error deleting song:', error);
+    res.status(500).json({ message: 'Error deleting song', error });
+  }
+});
+
+// Route to delete multiple songs
+router.delete('/songs', async (req, res) => {
+  const { songIds } = req.body; // Expecting an array of song IDs in the request body
+  try {
+    await Songs.destroy({
+      where: {
+        id: songIds
+      }
+    });
+    res.status(204).end();
+  } catch (error) {
+    console.error(`Error deleting songs with IDs ${songIds}:`, error);
+    res.status(500).json({ message: 'Error deleting songs', error });
+  }
+});
 
 // Passwort vergessen Route
 router.post('/forgot_password', authController.forgotPassword);
@@ -132,9 +163,9 @@ router.post('/login', async (req, res) => {
       console.log(`Invalid password for user: ${username}`);
       return res.status(401).json({ message: 'Invalid password' });
     }
-    const tokenExpiry = rememberMe ? '7d' : '20s'; // 7 Tage für Remember Me, 1 Stunde sonst
+    const tokenExpiry = rememberMe ? '7d' : '1d'; // 7 Tage für Remember Me, 1 Tag sonst
 
-    // Generate JWT Token (example)
+    // Generate JWT Token
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: tokenExpiry });
 
     console.log(`Login successful for user: ${username}`);
@@ -145,6 +176,53 @@ router.post('/login', async (req, res) => {
   }
 });
 
-module.exports = router;
+router.post('/change_password', verifyToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const userId = req.userId;
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Old password is incorrect' });
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await User.update({ password: hashedNewPassword }, { where: { id: userId } });
+
+    res.status(200).json({ message: 'Password changed successfully' });
+  } catch (error) {
+    console.error('Error changing password:', error);
+    res.status(500).json({ message: 'Error changing password', error });
+  }
+});
+
+// Route to delete the logged-in user's profile
+router.delete('/delete_profile', verifyToken, async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    await user.destroy();
+
+    res.status(200).json({ message: 'User profile deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user profile:', error);
+    res.status(500).json({ message: 'Error deleting user profile', error });
+  }
+});
+
 
 module.exports = router;
