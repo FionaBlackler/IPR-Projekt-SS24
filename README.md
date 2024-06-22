@@ -38,7 +38,7 @@ Login:
 ✔ Passwort vergessen<br>
 ✔ Remember me (Für 7 Tage)<br>
 
-- "Welcome <username>"
+- "Welcome <username>"-Anzeige
 - User löschen
 
 Music Gallery:
