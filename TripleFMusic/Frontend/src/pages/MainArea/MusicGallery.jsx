@@ -51,7 +51,7 @@ function MusicGallery() {
       try {
         const response = await axios.get("http://localhost:8080/api/playlists");
         setPlaylists(response.data);
-        console.log("Fetched playlists:", response.data); 
+        console.log("Fetched playlists:", response.data);
       } catch (error) {
         alert("Error fetching playlists");
         console.error("Error fetching playlists", error);
@@ -160,6 +160,30 @@ function MusicGallery() {
     } catch (error) {
       console.error("Error deleting playlist", error);
       alert("Error deleting playlist");
+    }
+  };
+
+  const deleteSong = async (songId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/songs/${songId}`);
+      setSongs(songs.filter((song) => song.id !== songId));
+      console.log("Deleted song with ID:", songId);
+    } catch (error) {
+      console.error("Error deleting song", error);
+      alert("Error deleting song");
+    }
+  };
+
+  const deleteSongs = async (songIds) => {
+    try {
+      await axios.delete("http://localhost:8080/api/songs", {
+        data: { songIds },
+      });
+      setSongs(songs.filter((song) => !songIds.includes(song.id)));
+      console.log("Deleted songs with IDs:", songIds);
+    } catch (error) {
+      console.error("Error deleting songs", error);
+      alert("Error deleting songs");
     }
   };
 
@@ -359,6 +383,8 @@ function MusicGallery() {
                           playlist={selectedPlaylists[0]}
                           onSongClick={setCurrentSong}
                           songs={songs}
+                          deleteSong={deleteSong}
+                          deleteSongs={deleteSongs}
                         />
                       </div>
                     ) : (
@@ -429,7 +455,7 @@ function MusicGallery() {
         {contextMenu.visible && (
           <div
             ref={contextMenuRef}
-            className="add-playlist-context-menu"
+            className="delete-playlist-context-menu"
             style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
           >
             {selectedPlaylists.length === 1 ? (

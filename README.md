@@ -44,17 +44,17 @@ Login:
 Music Gallery:
 ✔ Vorhandene Playlists anzeigen <br>
 ✔ Songs innerhalb einer Playlist anzeigen <br>
+✔ Song löschen <br>
+✔ Neue Playlist hinzufügen <br>
+✔ Playlist löschen <br>
+✔ Mehrere Playlists gleichzeitig löschen <br>
 
-- Song löschen
 - Mehrere Songs gleichzeitig löschen
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
 - Songdetails anzeigen
 - Songdetails bearbeiten
-- Song erneut abspielen/überspringen<br>
-  ✔ Neue Playlist hinzufügen<br>
-  ✔ Playlist löschen <br>
-  ✔ Mehrere Playlists gleichzeitig löschen
+- Song erneut abspielen/überspringen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
 - Nach Playlist suchen

@@ -119,11 +119,19 @@
 }
 
 .playlist-item.selected {
-  background-color: #87ceeb;
+  background-color: #060084;
 }
 
 .playlist-link:hover {
-  color: #00aebd;
+  color: #060084;
+}
+
+.playlist-item.selected .playlist-link:hover {
+  color: #fff;
+}
+
+.playlist-item.selected .playlist-link {
+  color: #fff;
 }
 
 .playlist-content {
@@ -240,7 +248,7 @@
   justify-content: space-between;
 }
 
-.add-playlist-context-menu {
+.delete-playlist-context-menu {
   position: absolute;
   background: #ffffff;
   border: 1px solid #ccc;
