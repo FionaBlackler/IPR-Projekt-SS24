@@ -26,12 +26,11 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -60,10 +59,18 @@ function Login() {
   const handleForgotPassword = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
-      setMessage(response.data.message);
+      if (response.data.userExists) {
+        setIsModalOpen(false);  // Close the forgot password modal
+        setSuccess(true);       // Show the success message
+        setTimeout(() => {
+          setSuccess(false);    // Hide the success message
+          navigate("/login");   // Redirect to the login page
+        }, 3000); // 3 seconds delay
+      } else {
+        alert('No user found with the provided email.');
+      }
     } catch (error) {
-      console.error('Error requesting password reset:', error);
-      setMessage('Error requesting password reset');
+      alert('Error requesting password reset');
     }
   };
 
@@ -76,8 +83,9 @@ function Login() {
   };
 
   const toggleShowPassword = () => {
-  setShowPassword(!showPassword);
+    setShowPassword(!showPassword);
   };
+
   return (
     <>
       <ThemeProvider theme={original}>
@@ -132,9 +140,9 @@ function Login() {
                   <br />
                   <span 
                     role="img" 
-                     aria-label="toggle password visibility" 
-                     style={{ fontSize: "24px", marginLeft: 500, cursor: "pointer" }}
-                     onClick={toggleShowPassword}>
+                    aria-label="toggle password visibility" 
+                    style={{ fontSize: "24px", marginLeft: 500, cursor: "pointer" }}
+                    onClick={toggleShowPassword}>
                     {showPassword ? "🙈" : "👁️"}
                   </span>
 
@@ -161,10 +169,6 @@ function Login() {
                     </Button>
                   </ThemeProvider>
                 </div>
-
-                {showForgotPassword && (
-                  <p>Contact support for help at triplefmusic@support.de</p>
-                )}
               </div>
             </div>
           </Window>
@@ -193,7 +197,20 @@ function Login() {
                     >
                       Send Inquiry
                     </Button>
-                    {message && <p>{message}</p>}
+                  </WindowContent>
+                </Window>
+              </div>
+            </div>
+          )}
+
+          {success && (
+            <div className="success-background">
+              <div className="success-div">
+                <Window className="success-window">
+                  <WindowContent>
+                    <p className="success-text">
+                      Inquiry sent. Please check your email for further instructions.
+                    </p>
                   </WindowContent>
                 </Window>
               </div>

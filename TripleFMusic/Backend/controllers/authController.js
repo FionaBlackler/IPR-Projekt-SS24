@@ -56,7 +56,7 @@ exports.forgotPassword = async (req, res) => {
     const user = await User.findOne({ where: { email } });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ userExists: false, message: 'User not found' });
     }
 
     // Token generieren und speichern
@@ -64,12 +64,12 @@ exports.forgotPassword = async (req, res) => {
     await PasswordResetToken.create({ token, email });
 
     // E-Mail mit Reset-Link senden
-    const resetLink = `http://localhost:5137/login`;
+    const resetLink = `http://localhost:5137/reset_password?token=${token}&email=${email}`;
 
     // Name des Benutzers und E-Mail an die Funktion übergeben
     await sendPasswordResetEmail(user.email, user.firstname, resetLink);
 
-    res.status(200).json({ message: 'Reset token generated and sent successfully' });
+    res.status(200).json({ userExists: true, message: 'Reset token generated and sent successfully' });
 
   } catch (error) {
     console.error('Error in forgotPassword:', error);
