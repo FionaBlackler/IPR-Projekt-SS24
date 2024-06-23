@@ -233,123 +233,123 @@ function Register() {
                       </Button>
                     </WindowHeader>
                     <WindowContent>
-                      <ScrollView style={{ height: 355 }}>
+                      <ScrollView style={{ height: 355 , width:485}}>
                         <div className="terms-wrapper">
                           <div className="terms">
-                          <div className="terms">
-  <span className="terms-title">
-    Welcome to TripleF Music!
-  </span> 
-  <p className="terms-text">
-    Before you dive into our world of melodious wonders, 
-    we need you to read and agree to the following terms and conditions. But don't worry, 
-    we promise to keep it light and fun.
-  </p>
+                          
+                            <span className="terms-title">
+                              Welcome to TripleF Music!
+                            </span> 
+                            <p className="terms-text">
+                              Before you dive into our world of melodious wonders, 
+                              we need you to read and agree to the following terms and conditions. But don't worry, 
+                              we promise to keep it light and fun.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Acceptance of Terms</span>
-  <p className="terms-text">
-    By using our services, you agree to these terms. If you don't agree,
-    you can still hum your favorite tunes, but you can't use our app. Sorry, not sorry!
-  </p>
-  
-  <Separator></Separator>
+                            <span className="terms-title">Acceptance of Terms</span>
+                            <p className="terms-text">
+                              By using our services, you agree to these terms. If you don't agree,
+                              you can still hum your favorite tunes, but you can't use our app. Sorry, not sorry!
+                            </p>
+                            
+                            <Separator></Separator>
 
-  <span className="terms-title">User Conduct</span>
-  <p className="terms-text">
-    Be nice. No spamming, trolling, or using our platform to spread bad vibes.
-    We're all about good music and good times here.
-  </p>
+                            <span className="terms-title">User Conduct</span>
+                            <p className="terms-text">
+                              Be nice. No spamming, trolling, or using our platform to spread bad vibes.
+                              We're all about good music and good times here.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Account</span>
-  <p className="terms-text">
-    Keep your password a secret. Sharing your password is like sharing your toothbrush 
-    – just don't do it.
-  </p>
+                            <span className="terms-title">Account</span>
+                            <p className="terms-text">
+                              Keep your password a secret. Sharing your password is like sharing your toothbrush 
+                              – just don't do it.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Content Ownership</span>
-  <p className="terms-text">
-    Your music, your rules. You own the content you upload, but you give us permission 
-    to share your beats with the world. We promise not to take credit for your killer 
-    basslines.
-  </p>
+                            <span className="terms-title">Content Ownership</span>
+                            <p className="terms-text">
+                              Your music, your rules. You own the content you upload, but you give us permission 
+                              to share your beats with the world. We promise not to take credit for your killer 
+                              basslines.
+                            </p>
 
-  <Separator></Separator>
-  
-  <span className="terms-title">License to Use</span>
-  <p className="terms-text">
-    We grant you a non-transferable, non-exclusive license to use our app.
-    Basically, you can't sell our app on the black market.
-  </p>
+                            <Separator></Separator>
+                            
+                            <span className="terms-title">License to Use</span>
+                            <p className="terms-text">
+                              We grant you a non-transferable, non-exclusive license to use our app.
+                              Basically, you can't sell our app on the black market.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Termination</span>
-  <p className="terms-text">
-    If you break the rules, we might have to show you the door. 
-    But we'll do it gently, like a polite bouncer.
-  </p>
+                            <span className="terms-title">Termination</span>
+                            <p className="terms-text">
+                              If you break the rules, we might have to show you the door. 
+                              But we'll do it gently, like a polite bouncer.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Privacy</span>
-  <p className="terms-text">
-    We care about your privacy almost as much as we care about our playlists. 
-    Check out our Privacy Policy to see how we protect your data.
-  </p>
+                            <span className="terms-title">Privacy</span>
+                            <p className="terms-text">
+                              We care about your privacy almost as much as we care about our playlists. 
+                              Check out our Privacy Policy to see how we protect your data.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Limitation of Liability</span>
-  <p className="terms-text">
-    We strive to keep our app glitch-free, but if something goes wrong, 
-    please don't throw your phone. 
-    We're not responsible for any damages, including your shattered screen.
-  </p>
+                            <span className="terms-title">Limitation of Liability</span>
+                            <p className="terms-text">
+                              We strive to keep our app glitch-free, but if something goes wrong, 
+                              please don't throw your phone. 
+                              We're not responsible for any damages, including your shattered screen.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Governing Law</span>
-  <p className="terms-text">
-    These terms are governed by the laws of the Internet – just kidding.
-    They are governed by the laws of the jurisdiction where our headquarters are located.
-  </p>
+                            <span className="terms-title">Governing Law</span>
+                            <p className="terms-text">
+                              These terms are governed by the laws of the Internet – just kidding.
+                              They are governed by the laws of the jurisdiction where our headquarters are located.
+                            </p>
 
-  <Separator></Separator>
+                            <Separator></Separator>
 
-  <span className="terms-title">Changes to Terms</span>
-  <p className="terms-text">
-    We might update these terms occasionally. When we do, we'll send you a friendly heads-up.
-    No one likes surprises, except maybe in birthday parties.
-  </p>
+                            <span className="terms-title">Changes to Terms</span>
+                            <p className="terms-text">
+                              We might update these terms occasionally. When we do, we'll send you a friendly heads-up.
+                              No one likes surprises, except maybe in birthday parties.
+                            </p>
 
-  <Separator></Separator>
-  
-  <span className="terms-title">Contact Us</span>
-  <p className="terms-text">
-    Got questions? Need support? Want to share your latest playlist? 
-    Contact us at support@triplefmusic.com. We love hearing from you!
-  </p>
+                            <Separator></Separator>
+                            
+                            <span className="terms-title">Contact Us</span>
+                            <p className="terms-text">
+                              Got questions? Need support? Want to share your latest playlist? 
+                              Contact us at support@triplefmusic.com. We love hearing from you!
+                            </p>
 
-  <Separator></Separator>
-  
-  <p className="terms-note">
-    By clicking "I Agree," you promise to abide by these terms and maybe,
-    just maybe, discover your new favorite song.
-  </p>
-  <p className="terms-signoff">
-    Rock on,
-    <br />
-    The TripleF Music Team
-  </p>
-</div>
-
+                            <Separator></Separator>
+                            
+                            <p className="terms-note">
+                              By clicking "I Agree," you promise to abide by these terms and maybe,
+                              just maybe, discover your new favorite song.
+                            </p>
+                            <p className="terms-signoff">
+                              Rock on,
+                              <br />
+                              The TripleF Music Team
+                            </p>
                           </div>
+
+                          
                         </div>
                       </ScrollView>
 

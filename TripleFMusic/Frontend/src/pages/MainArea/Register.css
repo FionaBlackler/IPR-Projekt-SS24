@@ -94,6 +94,18 @@
   cursor: move;
 }
 
+.terms-wrapper{
+  overflow: auto;
+  height: 100%;
+}
+
+.terms{
+  height: inherit;
+  margin-right: 5%;
+  margin-left: 2%;
+  
+}
+
 .register-close-icon{
   display: inline-block;
   width: 16px;
@@ -127,27 +139,23 @@
 }
 
 .terms-title {
-  display: block;
+  text-align: center;
+  display:block;
   font-weight: bolder;
   margin-top: 1rem;
   font-size: 1.2rem;
 }
 
 .terms-text {
-  display: block;
+  display:block;
   margin-top: 0.5rem;
   font-size: 1rem;
   line-height: 1.5;
 }
 
-.terms-separator {
-  margin: 1rem 0;
-}
 
-.terms-wrapper{
-  overflow: auto;
-  height: 100%;
-}
+
+
 
 .confirmation-background {
   position: fixed;
