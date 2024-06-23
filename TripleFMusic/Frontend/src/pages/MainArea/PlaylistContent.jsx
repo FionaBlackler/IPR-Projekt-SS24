@@ -5,9 +5,15 @@ import {
   TableRow,
   TableDataCell,
   ScrollView,
+  Frame,
   Button,
+  Window,
+  WindowHeader,
+  WindowContent,
+  TextInput,
 } from "react95";
 import { ThemeProvider } from "styled-components";
+import Draggable from "react-draggable";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
 
@@ -36,6 +42,8 @@ const PlaylistContent = ({
     y: 0,
     songId: null,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const contextMenuRef = useRef(null);
 
   /**
@@ -132,6 +140,41 @@ const PlaylistContent = ({
     closeContextMenu();
   };
 
+  /**
+   * Opens the modal window.
+   */
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  /**
+   * Closes the modal window.
+   */
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsEditMode(false);
+  };
+
+  /**
+   * Toggles the edit mode.
+   */
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+  };
+
+  /**
+   * Handles the change of song details.
+   *
+   * @param {Object} event - The change event.
+   */
+  const handleInputChange = (event, field) => {
+    const value = event.target.value;
+    setSelectedSongs((prevSelectedSongs) => {
+      const updatedSong = { ...prevSelectedSongs[0], [field]: value };
+      return [updatedSong];
+    });
+  };
+
   return (
     <ThemeProvider theme={original}>
       <ScrollView className="playlist-content-scrollview">
@@ -161,6 +204,12 @@ const PlaylistContent = ({
                     <TableDataCell className="playlist-table-cell">
                       {song.selectedGenres.join(", ")}
                     </TableDataCell>
+                    <TableDataCell
+                      className="playlist-table-cell"
+                      onClick={openModal}
+                    >
+                      ...
+                    </TableDataCell>
                   </TableRow>
                 ))
               ) : (
@@ -187,12 +236,188 @@ const PlaylistContent = ({
             </Button>
           ) : (
             <Button
-              onClick={() => handleDeleteSongs(selectedSongs.map((song) => song.id))}
+              onClick={() =>
+                handleDeleteSongs(selectedSongs.map((song) => song.id))
+              }
             >
               Delete
             </Button>
           )}
         </div>
+      )}
+
+      {isModalOpen && (
+        <>
+          <div className="song-details-modal-background" />
+          <Draggable handle=".song-details-window-header">
+            <div className="song-details-modal">
+              <Window
+                className="song-details-modal-window"
+                style={{ overflowY: "hidden" }}
+              >
+                <WindowHeader className="song-details-window-header">
+                  <span>Song Details</span>
+                  <Button onClick={closeModal}>
+                    <span className="song-details-close-icon" />
+                  </Button>
+                </WindowHeader>
+                <WindowContent>
+                  <Frame
+                    variant="field"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "#ffffff",
+                      borderLeft: "0px solid #333333",
+                      borderTop: "0px solid #333333",
+                      boxShadow: "none",
+                      borderRadius: "0",
+                      marginBottom: "10px",
+                      maxHeight: "260px",
+                      overflowY: "hidden",
+                    }}
+                  >
+                    <ScrollView
+                      style={{
+                        height: "270px",
+                        overflow: isEditMode ? "hidden" : "auto",
+                      }}
+                    >
+                      {selectedSongs.length > 0 && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            margin: "10px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span style={{ width: "100px" }}>Song Title:</span>
+                            <span style={{ flex: 1, textAlign: "left" }}>
+                              {isEditMode ? (
+                                <TextInput
+                                  value={selectedSongs[0].songTitle}
+                                  onChange={(e) =>
+                                    handleInputChange(e, "songTitle")
+                                  }
+                                  fullWidth
+                                />
+                              ) : (
+                                selectedSongs[0].songTitle
+                              )}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span style={{ width: "100px" }}>Artist:</span>
+                            <span style={{ flex: 1, textAlign: "left" }}>
+                              {isEditMode ? (
+                                <TextInput
+                                  value={selectedSongs[0].artist}
+                                  onChange={(e) =>
+                                    handleInputChange(e, "artist")
+                                  }
+                                  fullWidth
+                                />
+                              ) : (
+                                selectedSongs[0].artist
+                              )}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span style={{ width: "100px" }}>Genres:</span>
+                            <span style={{ flex: 1, textAlign: "left" }}>
+                              {isEditMode ? (
+                                <TextInput
+                                  value={selectedSongs[0].selectedGenres.join(
+                                    ", "
+                                  )}
+                                  onChange={(e) =>
+                                    handleInputChange(e, "selectedGenres")
+                                  }
+                                  fullWidth
+                                />
+                              ) : (
+                                selectedSongs[0].selectedGenres.join(", ")
+                              )}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span style={{ width: "100px" }}>Playlist:</span>
+                            <span style={{ flex: 1, textAlign: "left" }}>
+                              {isEditMode ? (
+                                <TextInput
+                                  value={selectedSongs[0].selectedPlaylists}
+                                  onChange={(e) =>
+                                    handleInputChange(e, "selectedPlaylists")
+                                  }
+                                  fullWidth
+                                />
+                              ) : (
+                                selectedSongs[0].selectedPlaylists
+                              )}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: isEditMode ? "center" : "flex-start",
+                              marginBottom: "10px",
+                            }}
+                          >
+                            <span style={{ width: "100px" }}>Notes:</span>
+                            <span style={{ flex: 1, textAlign: "left" }}>
+                              {isEditMode ? (
+                                <TextInput
+                                  value={selectedSongs[0].notes}
+                                  onChange={(e) =>
+                                    handleInputChange(e, "notes")
+                                  }
+                                  fullWidth
+                                />
+                              ) : (
+                                selectedSongs[0].notes
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </ScrollView>
+                  </Frame>
+
+                  <div>
+                    <Button onClick={toggleEditMode}>
+                      {isEditMode ? "Save" : "Edit"}
+                    </Button>
+                  </div>
+                </WindowContent>
+              </Window>
+            </div>
+          </Draggable>
+        </>
       )}
     </ThemeProvider>
   );
