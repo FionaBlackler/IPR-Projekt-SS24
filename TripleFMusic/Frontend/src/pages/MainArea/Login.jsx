@@ -46,9 +46,9 @@ function Login() {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
-      const { token } = response.data;
+      const { token, user } = response.data;
       
-      login(token, rememberMe);
+      login(token, rememberMe, user);
       navigate('/welcome/home');
     } catch (error) {
       alert('Login failed. Please check your credentials and try again.');
