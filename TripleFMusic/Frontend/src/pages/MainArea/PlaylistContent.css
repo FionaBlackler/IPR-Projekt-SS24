@@ -26,11 +26,11 @@
 }
 
 .playlist-table-row.selected {
-  background-color: #060084; /* Change to the desired highlight color */
+  background-color: #060084; 
 }
 
 .playlist-table-row.selected .playlist-table-cell {
-  color: #ffffff; /* Ensure individual cells also have white text */
+  color: #ffffff; 
 }
 
 .delete-song-context-menu {
@@ -39,4 +39,64 @@
   border: 1px solid #ccc;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+}
+
+.song-details-modal {
+  position: fixed;
+  top: 30%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+.song-details-modal-window {
+  width: 600px;
+  height: 400px;
+}
+
+.song-details-window-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  cursor: move;
+}
+
+.song-details-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.song-details-close-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: -1px;
+  margin-top: -1px;
+  transform: rotateZ(45deg);
+  position: relative;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    background: black;
+  }
+  &:before {
+    height: 100%;
+    width: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &:after {
+    height: 3px;
+    width: 100%;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }

@@ -147,6 +147,10 @@ function MusicGallery() {
       await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
       console.log("Deleted playlist with ID:", playlistId);
+      if (selectedPlaylists.length === 1 && selectedPlaylists[0].id === playlistId) {
+        setSelectedPlaylists([]);
+        setSongs([]);
+      }
     } catch (error) {
       console.error("Error deleting playlist", error);
       alert("Error deleting playlist");
@@ -173,6 +177,7 @@ function MusicGallery() {
       );
       setContextMenu({ ...contextMenu, visible: false });
       setSelectedPlaylists([]);
+      setSongs([]);
       console.log("Deleted playlists: ", selectedPlaylists);
     } catch (error) {
       console.error("Error deleting playlists", error);
@@ -455,7 +460,7 @@ function MusicGallery() {
                         />
                       </div>
                     ) : (
-                      <p>Select a Mixtape.</p>
+                      <p> </p>
                     )}
                   </div>
                 </div>
