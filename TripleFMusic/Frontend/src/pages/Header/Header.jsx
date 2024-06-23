@@ -44,6 +44,8 @@ function Header() {
     confirmPassword: "",
   });
 
+  const [success, setSuccess] = useState(false);
+
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { activeTab, oldPassword, newPassword, confirmPassword } = state;
@@ -95,8 +97,12 @@ function Header() {
         },
       });
   
-      window.alert(response.data.message);
+      //window.alert(response.data.message);
       setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });
+      setSuccess(true);       // Show the success message
+        setTimeout(() => {
+          setSuccess(false);    // Hide the success message
+        }, 3000); // 3 seconds delay
     } catch (error) {
       console.error('Error changing password:', error);
       window.alert('Error changing password');
@@ -239,7 +245,7 @@ function Header() {
                   </Button>
                 </WindowHeader>
                 <WindowContent>
-                  <div className="setting-wrapper" style={{ height: 400 }}>
+                  <div className="setting-wrapper" style={{ height: 415 }}>
                     <Tabs value={activeTab} onChange={handleChange}>
                       <Tab value={0}>Edit Profile</Tab>
                       <Tab value={1}>Delete Profile</Tab>
@@ -342,12 +348,28 @@ function Header() {
                         </div>
                       )}
                     </TabBody>
+
+                    {success && (
+                      <div className="change-background">
+                        <div className="change-div">
+                          <Window className="change-window">
+                            <WindowContent>
+                              <p className="change-text">
+                                Password changed successfully! Please wait a moment...
+                              </p>
+                            </WindowContent>
+                          </Window>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <Separator />
                 </WindowContent>
               </Window>
             </Draggable>
           </div>
+
+          
         )}
       </ThemeProvider>
     </div>
