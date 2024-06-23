@@ -28,7 +28,7 @@ import Draggable from "react-draggable";
 
 
 function Header() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
 
   
@@ -201,7 +201,7 @@ function Header() {
                     🤗
                   </span>
                   <br />
-                  Welcome User!
+                  Welcome {user?.firstname || 'Guest'} {}!
                 </div>
 
                 <Separator style={{ margin: "4px 0" }} />
