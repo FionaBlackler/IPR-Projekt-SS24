@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Songs = sequelize.define('Songs', {
     mp3File: {
-      type: DataTypes.TEXT('long'),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     jpgFile: {
-      type: DataTypes.TEXT('long'),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     songTitle: {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     selectedPlaylists: {
-      type: DataTypes.JSON, 
+      type: DataTypes.JSON,
       allowNull: false,
     },
     selectedGenres: {
@@ -31,9 +31,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Songs.associate = (models) => {
-    Songs.belongsTo(models.Playlist, {
-      foreignKey: 'PlaylistId',
-      onDelete: 'CASCADE'
+    Songs.belongsToMany(models.Playlist, {
+      through: 'SongPlaylists',
+      foreignKey: 'songId',
+      otherKey: 'playlistId'
     });
   };
 

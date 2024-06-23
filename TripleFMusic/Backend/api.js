@@ -49,6 +49,16 @@ router.post('/songs', upload.fields([
       notes
     });
 
+    const playlists = JSON.parse(selectedPlaylists);
+    if (playlists && playlists.length > 0) {
+      const playlistRecords = await Playlist.findAll({
+        where: {
+          name: playlists
+        }
+      });
+      await newSong.setPlaylists(playlistRecords);
+    }
+
     console.log('New song created:', newSong);
     res.status(201).json(newSong);
   } catch (error) {

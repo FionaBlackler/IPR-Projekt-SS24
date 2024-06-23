@@ -95,11 +95,11 @@ function AddSong() {
     }
   };
 
-  const handlePlaylistChange = (playlist) => {
+  const handlePlaylistChange = (playlistId) => {
     setSelectedPlaylists((prevSelected) =>
-      prevSelected.includes(playlist)
-        ? prevSelected.filter((item) => item !== playlist)
-        : [...prevSelected, playlist]
+      prevSelected.includes(playlistId)
+        ? prevSelected.filter((id) => id !== playlistId)
+        : [...prevSelected, playlistId]
     );
   };
 
@@ -134,7 +134,7 @@ function AddSong() {
     if (allPlaylistsChecked) {
       setSelectedPlaylists([]);
     } else {
-      setSelectedPlaylists(playlists.map((playlist) => playlist.name));
+      setSelectedPlaylists(playlists.map((playlist) => playlist.id));
     }
     setAllPlaylistsChecked(!allPlaylistsChecked);
   };
@@ -347,12 +347,8 @@ function AddSong() {
                             <Checkbox
                               name={`playlist-${index}`}
                               label={playlist.name}
-                              checked={selectedPlaylists.includes(
-                                playlist.name
-                              )}
-                              onChange={() =>
-                                handlePlaylistChange(playlist.name)
-                              }
+                              checked={selectedPlaylists.includes(playlist.id)}
+                              onChange={() => handlePlaylistChange(playlist.id)}
                             />
                           </div>
                         ))}

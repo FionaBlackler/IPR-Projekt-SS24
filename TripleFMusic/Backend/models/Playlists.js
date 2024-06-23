@@ -3,14 +3,15 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true, // Ensure the name is unique
-    },
+      unique: true
+    }
   });
 
   Playlist.associate = (models) => {
-    Playlist.hasMany(models.Songs, {
-      foreignKey: 'PlaylistId',
-      onDelete: 'CASCADE',
+    Playlist.belongsToMany(models.Songs, {
+      through: 'SongPlaylists',
+      foreignKey: 'playlistId',
+      otherKey: 'songId'
     });
   };
 
