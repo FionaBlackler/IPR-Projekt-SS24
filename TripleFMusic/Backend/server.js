@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./models");
 const apiRoutes = require("./api");
+const path = require("path"); // Import path module for handling file paths
+
 
 const app = express();
 
@@ -12,6 +14,7 @@ const corsOptions = {
   origin: "http://localhost:5173",
   optionsSuccessStatus: 200,
 };
+
 
 const verifyToken = (req, res, next) => {
   const token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -40,8 +43,13 @@ app.use(cors(corsOptions));
 // Middleware to parse JSON requests
 app.use(express.json());
 
+
 // Use the API routes, prefixed with /api
 app.use("/api", apiRoutes);
+
+// Serve uploaded files statically
+app.use('/uploads/mp3files', express.static(path.join(__dirname, 'uploads/mp3files')));
+app.use('/uploads/jpgfiles', express.static(path.join(__dirname, 'uploads/jpgfiles')));
 
 // Sync the models and start the server
 db.sequelize

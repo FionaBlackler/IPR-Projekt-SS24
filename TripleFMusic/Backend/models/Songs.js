@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Songs = sequelize.define('Songs', {
     mp3File: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT('long'),
       allowNull: false,
     },
     jpgFile: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT('long'),
       allowNull: false,
     },
     songTitle: {

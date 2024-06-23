@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import "./AddSong.css";
-import Draggable from "react-draggable";
-import { ThemeProvider } from "styled-components";
-import def from "react95/dist/themes/original";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Window,
@@ -14,23 +12,25 @@ import {
   GroupBox,
   Checkbox,
 } from "react95";
-import { useNavigate } from "react-router-dom";
+import Draggable from "react-draggable";
+import { ThemeProvider } from "styled-components";
+import def from "react95/dist/themes/original";
+import "./AddSong.css";
 import aboutIcon from "../Images/icons/recycle2.png";
 import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
-import axios from "axios";
-
-const truncateText = (text, maxLength) => {
-  if (text.length <= maxLength) {
-    return text;
-  }
-  return text.slice(0, maxLength) + "...";
-};
 
 function AddSong() {
   const navigate = useNavigate();
+
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + "...";
+  };
 
   const [mp3File, setMp3File] = useState(null);
   const [jpgFile, setJpgFile] = useState(null);
@@ -44,23 +44,13 @@ function AddSong() {
   const [allGenresChecked, setAllGenresChecked] = useState(false);
   const [mp3FilePath, setMp3FilePath] = useState("");
   const [jpgFilePath, setJpgFilePath] = useState("");
-  const [error, setError] = useState(null);
-
   const mp3InputRef = useRef(null);
   const jpgInputRef = useRef(null);
 
   const handleMp3Upload = (e) => {
-    const { files } = e.target;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-      setMp3File(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setMp3FilePath(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = e.target.files[0];
+    setMp3File(file);
+    setMp3FilePath(file.name);
   };
 
   const triggerMp3Upload = () => {
@@ -68,21 +58,41 @@ function AddSong() {
   };
 
   const handleJpgUpload = (e) => {
-    const { files } = e.target;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-      setJpgFile(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setJpgFilePath(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = e.target.files[0];
+    setJpgFile(file);
+    setJpgFilePath(file.name);
   };
 
   const triggerJpgUpload = () => {
     jpgInputRef.current.click();
+  };
+
+  const addNewSong = async () => {
+    const formData = new FormData();
+    formData.append("mp3File", mp3File);
+    formData.append("jpgFile", jpgFile);
+    formData.append("songTitle", songTitle);
+    formData.append("artist", artist);
+    formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
+    formData.append("selectedGenres", JSON.stringify(selectedGenres));
+    formData.append("notes", notes);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/songs",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("Upload successful");
+      alert("Upload successful");
+    } catch (error) {
+      console.error("Upload failed", error);
+      alert("Upload failed");
+    }
   };
 
   const handlePlaylistChange = (playlist) => {
@@ -127,37 +137,6 @@ function AddSong() {
       setSelectedPlaylists(playlists.map((playlist) => playlist.name));
     }
     setAllPlaylistsChecked(!allPlaylistsChecked);
-  };
-
-  const addNewSong = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("songTitle", songTitle);
-      formData.append("artist", artist);
-      formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
-      formData.append("selectedGenres", JSON.stringify(selectedGenres));
-      formData.append("notes", notes);
-      formData.append("mp3File", mp3File); // Append the mp3 file object
-      formData.append("jpgFile", jpgFile); // Append the jpg file object
-
-      const response = await axios.post(
-        "http://localhost:8080/api/songs",
-        formData
-      );
-
-      console.log("Save response:", response);
-
-      if (response.status === 201) {
-        console.log("Save successful");
-        navigate("/welcome/addsong");
-      } else {
-        console.error("Save failed:", response.data.message);
-        setError(response.data.message || "Something went wrong");
-      }
-    } catch (error) {
-      console.error("Error saving song:", error);
-      setError("Something went wrong");
-    }
   };
 
   useEffect(() => {
@@ -280,12 +259,12 @@ function AddSong() {
                           ref={mp3InputRef}
                           type="file"
                           accept=".mp3"
-                          onChange={handleMp3Upload}
                           style={{
                             position: "absolute",
                             opacity: 0,
                             cursor: "pointer",
                           }}
+                          onChange={handleMp3Upload}
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
@@ -306,12 +285,12 @@ function AddSong() {
                           ref={jpgInputRef}
                           type="file"
                           accept=".jpg"
-                          onChange={handleJpgUpload}
                           style={{
                             position: "absolute",
                             opacity: 0,
                             cursor: "pointer",
                           }}
+                          onChange={handleJpgUpload}
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
