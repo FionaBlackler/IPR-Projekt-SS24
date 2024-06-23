@@ -1,48 +1,7 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
-const nodemailer = require('nodemailer');
-const {sendPasswordResetEmail} =require('../services/emailService');
-
-// Konfiguration von nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // oder ein anderer E-Mail-Service
-  auth: {
-    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
-    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
-  },
-});
-
-exports.register = async (req, res) => {
-  const { firstname, lastname, email, password, username } = req.body;
-  console.error('authController.register called with:', req.body); // Use console.error for logging
-  try {
-    console.error('Hashing password...'); // Use console.error
-    const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
-    console.error('Password hashed:', hashedPassword); // Use console.error
-
-    // Logging before creation
-    console.error('Creating new user with hashed password...'); // Use console.error
-    const newUser = await User.create({
-      firstname,
-      lastname,
-      email,
-      password: hashedPassword, // Gespeichertes, gehashtes Passwort
-      username,
-    });
-
-    // Logging after creation
-    console.error('User created:', newUser); // Use console.error
-    res.status(201).json({ message: 'User created successfully', user: newUser });
-  } catch (error) {
-    console.error('Error in authController.register:', error);
-    if (error.name === 'SequelizeUniqueConstraintError') {
-      res.status(400).json({ message: 'Username or email already exists' });
-    } else {
-      res.status(500).json({ message: 'Error registering user', error });
-    }
-  }
-};
+const { sendPasswordResetEmail } = require('../services/emailService');
 
 // Funktion zum Generieren eines Reset-Tokens
 function generateResetToken() {
@@ -64,7 +23,7 @@ exports.forgotPassword = async (req, res) => {
     await PasswordResetToken.create({ token, email });
 
     // E-Mail mit Reset-Link senden
-    const resetLink = `http://localhost:5137/reset_password?token=${token}&email=${email}`;
+    const resetLink = `http://localhost:5173/reset_password?token=${token}&email=${email}`;
 
     // Name des Benutzers und E-Mail an die Funktion übergeben
     await sendPasswordResetEmail(user.email, user.firstname, resetLink);
@@ -97,5 +56,37 @@ exports.resetPassword = async (req, res) => {
   } catch (error) {
     console.error('Error in resetPassword:', error);
     res.status(500).json({ message: 'Error resetting password' });
+  }
+};
+
+// Registrierung
+exports.register = async (req, res) => {
+  const { firstname, lastname, email, password, username } = req.body;
+  console.error('authController.register called with:', req.body); // Use console.error for logging
+  try {
+    console.error('Hashing password...'); // Use console.error
+    const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
+    console.error('Password hashed:', hashedPassword); // Use console.error
+
+    // Logging before creation
+    console.error('Creating new user with hashed password...'); // Use console.error
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword, // Gespeichertes, gehashtes Passwort
+      username,
+    });
+
+    // Logging after creation
+    console.error('User created:', newUser); // Use console.error
+    res.status(201).json({ message: 'User created successfully', user: newUser });
+  } catch (error) {
+    console.error('Error in authController.register:', error);
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      res.status(400).json({ message: 'Username or email already exists' });
+    } else {
+      res.status(500).json({ message: 'Error registering user', error });
+    }
   }
 };

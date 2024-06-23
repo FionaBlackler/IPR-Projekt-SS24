@@ -31,12 +31,19 @@ function Login() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const { login } = useAuth();
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
       const { token } = response.data;
@@ -53,10 +60,18 @@ function Login() {
       } else {
         console.error('Error setting up request:', error.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleForgotPassword = async () => {
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
       if (response.data.userExists) {
@@ -71,6 +86,8 @@ function Login() {
       }
     } catch (error) {
       alert('Error requesting password reset');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -161,8 +178,8 @@ function Login() {
 
                 <div className="button-container">
                   <ThemeProvider theme={original}>
-                    <Button primary onClick={handleLogin}>
-                      Login
+                    <Button primary onClick={handleLogin} disabled={loading}>
+                      {loading ? 'Loading...' : 'Login'}
                     </Button>
                     <Button primary onClick={() => navigate("/register")}>
                       Sign up
@@ -194,8 +211,9 @@ function Login() {
                     <Button
                       className="inquiry-button"
                       onClick={handleForgotPassword}
+                      disabled={loading}
                     >
-                      Send Inquiry
+                      {loading ? 'Sending...' : 'Send Inquiry'}
                     </Button>
                   </WindowContent>
                 </Window>
