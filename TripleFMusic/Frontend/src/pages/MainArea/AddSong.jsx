@@ -22,15 +22,15 @@ import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
 import axios from "axios";
 
-const truncateText = (text, maxLength) => {
-  if (text.length <= maxLength) {
-    return text;
-  }
-  return text.slice(0, maxLength) + "...";
-};
-
 function AddSong() {
   const navigate = useNavigate();
+
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + "...";
+  };
 
   const [mp3File, setMp3File] = useState(null);
   const [jpgFile, setJpgFile] = useState(null);
