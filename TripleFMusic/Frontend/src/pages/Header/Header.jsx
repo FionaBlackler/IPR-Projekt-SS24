@@ -25,14 +25,110 @@ import {
 import { useAuth } from "../../authContext";
 import Draggable from "react-draggable";
 
-function Header() {
-  const [sure, setSure] = useState(false);
-  const navigate = useNavigate();
-  const { logout } = useAuth();
 
+
+function Header() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  
+  const [sure, setSure] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [state, setState] = useState({
+    activeTab: 0,
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const headerRef = useRef(null);
+  const menuRef = useRef(null);
+  const { activeTab, oldPassword, newPassword, confirmPassword } = state;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const handleMenuClick = () => {
+    setOpen(!open);
+  };
+
+  const handleWelcomeClick = (event) => {
+    event.stopPropagation();
+  };
+  const handleChange = (value) => {
+    setState({
+      activeTab: value,
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: ""
+    });
+    setSure(false);
+    setMessage('');
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
+  const handleChangePassword = async () => {
+    const { oldPassword, newPassword, confirmPassword } = state;
+  
+    if (newPassword !== confirmPassword) {
+      window.alert('New passwords do not match');
+      return;
+    }
+  
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const response = await axios.post('http://localhost:8080/api/change_password', {
+        oldPassword,
+        newPassword,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      window.alert(response.data.message);
+      setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      window.alert('Error changing password');
+    }
+  };
+
+  const handleDeleteProfile = async () => {
+    if (!sure) {
+      window.alert('Please confirm that you want to delete your profile');
+      return;
+    }
+  
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      const response = await axios.delete('http://localhost:8080/api/delete_profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      window.alert(response.data.message);
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error('Error deleting profile:', error);
+      window.alert('Error deleting profile');
+    }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -40,10 +136,15 @@ function Header() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setState({
+      activeTab: 0,
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: ""
+    });
+    setSure(false);
+    setMessage('');
   };
-
-  const headerRef = useRef(null);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -63,87 +164,7 @@ function Header() {
     };
   }, [headerRef, menuRef]);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-
-  const handleMenuClick = () => {
-    setOpen(!open);
-  };
-
-  const handleWelcomeClick = (event) => {
-    event.stopPropagation();
-  };
-
-  const [state, setState] = useState({
-    activeTab: 0,
-    oldPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (value) => {
-    setState({ ...state, activeTab: value });
-  };
-
-  const handlePasswordChange = (e) => {
-    const { name, value } = e.target;
-    setState({ ...state, [name]: value });
-  };
-
-  const handleChangePassword = async () => {
-    const { oldPassword, newPassword, confirmPassword } = state;
-
-    if (newPassword !== confirmPassword) {
-      setMessage('New passwords do not match');
-      return;
-    }
-
-    try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-      const response = await axios.post('http://localhost:8080/api/change_password', {
-        oldPassword,
-        newPassword,
-      }, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMessage(response.data.message);
-      setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });
-    } catch (error) {
-      console.error('Error changing password:', error);
-      setMessage('Error changing password');
-    }
-  };
-
-  const handleDeleteProfile = async () => {
-    if (!sure) {
-      setMessage('Please confirm that you want to delete your profile');
-      return;
-    }
-
-    try {
-      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-      const response = await axios.delete('http://localhost:8080/api/delete_profile', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      setMessage(response.data.message);
-      logout();
-      navigate("/");
-    } catch (error) {
-      console.error('Error deleting profile:', error);
-      setMessage('Error deleting profile');
-    }
-  };
-
-  const { activeTab, oldPassword, newPassword, confirmPassword } = state;
-
+  
   return (
     <div className="main-header" ref={headerRef}>
       <ThemeProvider theme={original}>
@@ -231,6 +252,7 @@ function Header() {
                             <div style={{ marginBottom: "10px" }}>
                               <span style={{ display: "block", marginBottom: "5px" }}>Old Password:</span>
                               <TextInput
+                                type={showPassword ? "text" : "password"}
                                 name="oldPassword"
                                 value={oldPassword}
                                 placeholder="Type old password here..."
@@ -240,6 +262,7 @@ function Header() {
                               />
                               <span style={{ display: "block", marginBottom: "5px" }}>New Password:</span>
                               <TextInput
+                                type={showPassword ? "text" : "password"}
                                 name="newPassword"
                                 value={newPassword}
                                 placeholder="Type new password here..."
@@ -249,6 +272,7 @@ function Header() {
                               />
                               <span style={{ display: "block", marginBottom: "5px" }}>Confirm New Password:</span>
                               <TextInput
+                                type={showPassword ? "text" : "password"}
                                 name="confirmPassword"
                                 value={confirmPassword}
                                 placeholder="Confirm new password here..."
@@ -256,6 +280,14 @@ function Header() {
                                 fullWidth
                                 style={{ marginBottom: "10px" }}
                               />
+                              <span 
+                                role="img" 
+                                aria-label="toggle password visibility" 
+                                style={{ fontSize: "24px", marginLeft: 580, cursor: "pointer" }}
+                                onClick={toggleShowPassword}
+                              >
+                                {showPassword ? "🙈" : "👁️"}
+                              </span>
                               <Button onClick={handleChangePassword} style={{ width: "100%", marginTop: "10px" }}>Change Password</Button>
                               {message && <p>{message}</p>}
                             </div>

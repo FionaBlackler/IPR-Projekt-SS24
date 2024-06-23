@@ -165,3 +165,29 @@ body {
     margin-left: 38.7%;
     margin-top: 10px; /* Abstand zwischen Separator und Button */
   }
+
+  .success-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: darken background */
+  }
+  
+  .success-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .success-window {
+    width: 300px; /* Adjust width as needed */
+  }
+  
+  .success-text{
+    text-align: center;
+  }

@@ -1,18 +1,65 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { User, PasswordResetToken } = require('../models');
-const nodemailer = require('nodemailer');
-const {sendPasswordResetEmail} =require('../services/emailService');
+const { sendPasswordResetEmail } = require('../services/emailService');
 
-// Konfiguration von nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'Gmail', // oder ein anderer E-Mail-Service
-  auth: {
-    user: process.env.EMAIL_USER, // Umgebungsvariable anpassen
-    pass: process.env.EMAIL_PASS, // Umgebungsvariable anpassen
-  },
-});
+// Funktion zum Generieren eines Reset-Tokens
+function generateResetToken() {
+  return crypto.randomBytes(20).toString('hex'); // Beispiel: Zufälliger Token
+}
 
+// Controller für das Anfordern eines Passwort-Resets
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(404).json({ userExists: false, message: 'User not found' });
+    }
+
+    // Token generieren und speichern
+    const token = generateResetToken();
+    await PasswordResetToken.create({ token, email });
+
+    // E-Mail mit Reset-Link senden
+    const resetLink = `http://localhost:5173/reset_password?token=${token}&email=${email}`;
+
+    // Name des Benutzers und E-Mail an die Funktion übergeben
+    await sendPasswordResetEmail(user.email, user.firstname, resetLink);
+
+    res.status(200).json({ userExists: true, message: 'Reset token generated and sent successfully' });
+
+  } catch (error) {
+    console.error('Error in forgotPassword:', error);
+    res.status(500).json({ message: 'Error requesting password reset' });
+  }
+};
+
+// Controller für das Zurücksetzen des Passworts
+exports.resetPassword = async (req, res) => {
+  const { token, email, newPassword } = req.body;
+  try {
+    const resetToken = await PasswordResetToken.findOne({ where: { token, email } });
+
+    if (!resetToken) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await User.update({ password: hashedPassword }, { where: { email } });
+
+    await PasswordResetToken.destroy({ where: { email } });
+
+    res.status(200).json({ message: 'Password has been reset successfully' });
+  } catch (error) {
+    console.error('Error in resetPassword:', error);
+    res.status(500).json({ message: 'Error resetting password' });
+  }
+};
+
+// Registrierung
 exports.register = async (req, res) => {
   const { firstname, lastname, email, password, username } = req.body;
   console.error('authController.register called with:', req.body); // Use console.error for logging
@@ -41,61 +88,5 @@ exports.register = async (req, res) => {
     } else {
       res.status(500).json({ message: 'Error registering user', error });
     }
-  }
-};
-
-// Funktion zum Generieren eines Reset-Tokens
-function generateResetToken() {
-  return crypto.randomBytes(20).toString('hex'); // Beispiel: Zufälliger Token
-}
-
-// Controller für das Anfordern eines Passwort-Resets
-exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Token generieren und speichern
-    const token = generateResetToken();
-    await PasswordResetToken.create({ token, email });
-
-    // E-Mail mit Reset-Link senden
-    const resetLink = `http://localhost:5137/login`;
-
-    // Name des Benutzers und E-Mail an die Funktion übergeben
-    await sendPasswordResetEmail(user.email, user.firstname, resetLink);
-
-    res.status(200).json({ message: 'Reset token generated and sent successfully' });
-
-  } catch (error) {
-    console.error('Error in forgotPassword:', error);
-    res.status(500).json({ message: 'Error requesting password reset' });
-  }
-};
-
-// Controller für das Zurücksetzen des Passworts
-exports.resetPassword = async (req, res) => {
-  const { token, email, newPassword } = req.body;
-  try {
-    const resetToken = await PasswordResetToken.findOne({ where: { token, email } });
-
-    if (!resetToken) {
-      return res.status(400).json({ message: 'Invalid or expired token' });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    await User.update({ password: hashedPassword }, { where: { email } });
-
-    await PasswordResetToken.destroy({ where: { email } });
-
-    res.status(200).json({ message: 'Password has been reset successfully' });
-  } catch (error) {
-    console.error('Error in resetPassword:', error);
-    res.status(500).json({ message: 'Error resetting password' });
   }
 };

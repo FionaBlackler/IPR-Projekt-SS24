@@ -2,7 +2,6 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// Pfad zum Logo relativ zum Backend
 const logoPath = path.join(__dirname, '../../Frontend/src/pages/Images/TripleF3_2.png');
 
 const transporter = nodemailer.createTransport({
@@ -13,7 +12,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const sendPasswordResetEmail = (email, name, resetLink) => {
+const sendPasswordResetEmail = async (email, name, resetLink) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
@@ -61,7 +60,7 @@ const sendPasswordResetEmail = (email, name, resetLink) => {
             text-align: center;
           }
           .btn:hover {
-            background-color: #00AEBD; /* Dunklere grüne Farbe im Hover */
+            background-color: #008A9A; /* Dunklere grüne Farbe im Hover */
           }
           .footer {
             font-size: 14px;
@@ -74,13 +73,13 @@ const sendPasswordResetEmail = (email, name, resetLink) => {
       <body>
         <div class="container">
         <div>
-          <img src="cid:logo@triplef-music.com" alt="TripleF Music Logo" style="display: block; margin-right: 100 auto; max-width: 12%;">
+          <img src="cid:logo@triplef-music.com" alt="TripleF Music Logo" style="display: block; margin: 0 auto; max-width: 12%;">
         </div>
           <div class="header">Hello ${name}!, </div>
           <div class="content">
             <p>Did you misplace your password for your TripleF Music account? No worries!</p>
             <p>Click the button below to reset your password:</p>
-            <p><a href="http://localhost:5173/login" class="btn">Reset Password</a></p>
+            <p><a href="${resetLink}" class="btn">Reset Password</a></p>
             <p>If you didn't request this, you can safely ignore this email.</p>
           </div>
           <div class="footer">

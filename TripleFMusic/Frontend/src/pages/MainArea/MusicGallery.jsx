@@ -30,6 +30,11 @@ const Frame = styled(BaseFrame)`
   /* Custom styles here */
 `;
 
+/**
+ * Renders the Music Gallery page.
+ *
+ * @returns {JSX.Element} The Music Gallery component.
+ */
 function MusicGallery() {
   const navigate = useNavigate();
   const contextMenuRef = useRef(null);
@@ -47,6 +52,10 @@ function MusicGallery() {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
+    /**
+     * Fetches playlists from the server.
+     * @returns {Promise<void>} A promise that resolves when the playlists are fetched.
+     */
     const fetchPlaylists = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/playlists");
@@ -60,7 +69,12 @@ function MusicGallery() {
 
     fetchPlaylists();
   }, []);
-
+  
+  /**
+   * Fetches songs for a playlist.
+   * @param {string} playlistId - The ID of the playlist.
+   * @returns {Promise<void>} - A promise that resolves when the songs are fetched.
+   */
   const fetchSongsForPlaylist = async (playlistId) => {
     try {
       const response = await axios.get(
@@ -73,27 +87,12 @@ function MusicGallery() {
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        contextMenuRef.current &&
-        !contextMenuRef.current.contains(event.target)
-      ) {
-        closeContextMenu();
-      }
-    };
-
-    if (contextMenu.visible) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [contextMenu.visible]);
-
+  /**
+   * Handles the selection of a playlist.
+   *
+   * @param {Object} playlist - The playlist object.
+   * @param {Object} event - The event object.
+   */
   const selectPlaylist = (playlist, event) => {
     if (event.ctrlKey) {
       if (selectedPlaylists.includes(playlist)) {
@@ -107,6 +106,12 @@ function MusicGallery() {
     }
   };
 
+  /**
+   * Adds a new playlist.
+   * @async
+   * @function addNewPlaylist
+   * @returns {Promise<void>}
+   */
   const addNewPlaylist = async () => {
     try {
       const response = await axios.post("http://localhost:8080/api/playlists", {
@@ -131,6 +136,33 @@ function MusicGallery() {
     }
   };
 
+  /**
+   * Deletes a playlist with the specified ID (single).
+   *
+   * @param {number} playlistId - The ID of the playlist to delete.
+   * @returns {Promise<void>} - A promise that resolves when the playlist is successfully deleted.
+   */
+  const deletePlaylist = async (playlistId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
+      setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
+      console.log("Deleted playlist with ID:", playlistId);
+      if (selectedPlaylists.length === 1 && selectedPlaylists[0].id === playlistId) {
+        setSelectedPlaylists([]);
+        setSongs([]);
+      }
+    } catch (error) {
+      console.error("Error deleting playlist", error);
+      alert("Error deleting playlist");
+    } finally {
+      closeContextMenu();
+    }
+  };
+
+  /**
+   * Deletes the selected playlists (multiple).
+   * @returns {Promise<void>} A promise that resolves when the playlists are deleted.
+   */
   const deletePlaylists = async () => {
     try {
       await Promise.all(
@@ -145,24 +177,21 @@ function MusicGallery() {
       );
       setContextMenu({ ...contextMenu, visible: false });
       setSelectedPlaylists([]);
+      setSongs([]);
       console.log("Deleted playlists: ", selectedPlaylists);
     } catch (error) {
       console.error("Error deleting playlists", error);
       alert("Error deleting playlists");
+    } finally {
+      closeContextMenu();
     }
   };
 
-  const deletePlaylist = async (playlistId) => {
-    try {
-      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
-      setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
-      console.log("Deleted playlist with ID:", playlistId);
-    } catch (error) {
-      console.error("Error deleting playlist", error);
-      alert("Error deleting playlist");
-    }
-  };
-
+  /**
+   * Deletes a song with the specified ID (single).
+   * @param {string} songId - The ID of the song to delete.
+   * @returns {Promise<void>} - A promise that resolves when the song is deleted.
+   */
   const deleteSong = async (songId) => {
     try {
       await axios.delete(`http://localhost:8080/api/songs/${songId}`);
@@ -171,9 +200,17 @@ function MusicGallery() {
     } catch (error) {
       console.error("Error deleting song", error);
       alert("Error deleting song");
+    } finally {
+      closeContextMenu();
     }
   };
 
+  /**
+   * Deletes selected songs (multiple).
+   *
+   * @param {Array<number>} songIds - The IDs of the songs to delete.
+   * @returns {Promise<void>} - A promise that resolves when the songs are deleted.
+   */
   const deleteSongs = async (songIds) => {
     try {
       await axios.delete("http://localhost:8080/api/songs", {
@@ -184,6 +221,8 @@ function MusicGallery() {
     } catch (error) {
       console.error("Error deleting songs", error);
       alert("Error deleting songs");
+    } finally {
+      closeContextMenu();
     }
   };
 
@@ -200,6 +239,11 @@ function MusicGallery() {
     setNewPlaylistName(e.target.value);
   };
 
+  /**
+   * Handles the right click event on a playlist item.
+   * @param {Event} e - The right click event object.
+   * @param {Object} playlist - The playlist object.
+   */
   const handleRightClick = (e, playlist) => {
     e.preventDefault();
     if (!selectedPlaylists.includes(playlist)) {
@@ -212,6 +256,34 @@ function MusicGallery() {
       playlistId: playlist.id,
     });
   };
+
+  useEffect(() => {
+  /**
+   * Handles closing contect menu when clicking outside of context menu.
+   * @param {Event} e - The click event object.
+   */
+    const handleClickOutside = (event) => {
+      if (
+        contextMenuRef.current &&
+        !contextMenuRef.current.contains(event.target)
+      ) {
+        closeContextMenu();
+      }
+    };
+
+    if (contextMenu.visible) {
+      // Adds the event listener for mousedown when the context menu is visible.
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      // Removes the event listener for mousedown when the context menu is not visible.
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      // Cleanup function to remove the event listener on component unmount or when dependencies change.
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [contextMenu.visible]);
 
   const closeContextMenu = () => {
     setContextMenu({ ...contextMenu, visible: false });
@@ -310,7 +382,7 @@ function MusicGallery() {
       <ThemeProvider theme={original}>
         <Draggable
           handle=".music-gallery-window-header"
-          defaultPosition={{ x: 100, y: 50 }}
+          defaultPosition={{ x: 70, y: 0 }}
         >
           <div className="draggable-window">
             <Window className="music-gallery-window">
@@ -388,7 +460,7 @@ function MusicGallery() {
                         />
                       </div>
                     ) : (
-                      <p>Select a Mixtape.</p>
+                      <p> </p>
                     )}
                   </div>
                 </div>

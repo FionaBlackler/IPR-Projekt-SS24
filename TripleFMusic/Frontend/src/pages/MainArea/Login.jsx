@@ -26,16 +26,24 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const { login } = useAuth();
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/api/login', { username, password, rememberMe });
       const { token } = response.data;
@@ -43,6 +51,7 @@ function Login() {
       login(token, rememberMe);
       navigate('/welcome/home');
     } catch (error) {
+      alert('Login failed. Please check your credentials and try again.');
       console.error('Login failed:', error);
       if (error.response) {
         console.error('Server responded with:', error.response.status, error.response.data);
@@ -51,16 +60,34 @@ function Login() {
       } else {
         console.error('Error setting up request:', error.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleForgotPassword = async () => {
+    if (!email) {
+      alert("Please enter your email.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8080/api/forgot_password', { email });
-      setMessage(response.data.message);
+      if (response.data.userExists) {
+        setIsModalOpen(false);  // Close the forgot password modal
+        setSuccess(true);       // Show the success message
+        setTimeout(() => {
+          setSuccess(false);    // Hide the success message
+          navigate("/login");   // Redirect to the login page
+        }, 3000); // 3 seconds delay
+      } else {
+        alert('No user found with the provided email.');
+      }
     } catch (error) {
-      console.error('Error requesting password reset:', error);
-      setMessage('Error requesting password reset');
+      alert('Error requesting password reset');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,6 +97,10 @@ function Login() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -117,12 +148,21 @@ function Login() {
                     />
                     <br />
                     <TextInput
-                      type="password"
-                      value={password}
+                      type={showPassword ? "text" : "password"}
+                      value={password}                      
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
+                  <br />
+                  <span 
+                    role="img" 
+                    aria-label="toggle password visibility" 
+                    style={{ fontSize: "24px", marginLeft: 500, cursor: "pointer" }}
+                    onClick={toggleShowPassword}>
+                    {showPassword ? "🙈" : "👁️"}
+                  </span>
+
                   <br />
                   <div className="checkbox-container">
                     <Checkbox
@@ -138,18 +178,14 @@ function Login() {
 
                 <div className="button-container">
                   <ThemeProvider theme={original}>
-                    <Button primary onClick={handleLogin}>
-                      Login
+                    <Button primary onClick={handleLogin} disabled={loading}>
+                      {loading ? 'Loading...' : 'Login'}
                     </Button>
                     <Button primary onClick={() => navigate("/register")}>
                       Sign up
                     </Button>
                   </ThemeProvider>
                 </div>
-
-                {showForgotPassword && (
-                  <p>Contact support for help at triplefmusic@support.de</p>
-                )}
               </div>
             </div>
           </Window>
@@ -175,10 +211,24 @@ function Login() {
                     <Button
                       className="inquiry-button"
                       onClick={handleForgotPassword}
+                      disabled={loading}
                     >
-                      Send Inquiry
+                      {loading ? 'Sending...' : 'Send Inquiry'}
                     </Button>
-                    {message && <p>{message}</p>}
+                  </WindowContent>
+                </Window>
+              </div>
+            </div>
+          )}
+
+          {success && (
+            <div className="success-background">
+              <div className="success-div">
+                <Window className="success-window">
+                  <WindowContent>
+                    <p className="success-text">
+                      Inquiry sent. Please check your email for further instructions.
+                    </p>
                   </WindowContent>
                 </Window>
               </div>
