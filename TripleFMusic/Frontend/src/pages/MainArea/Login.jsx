@@ -77,7 +77,7 @@ function Login() {
 
   const toggleShowPassword = () => {
   setShowPassword(!showPassword);
-};
+  };
   return (
     <>
       <ThemeProvider theme={original}>

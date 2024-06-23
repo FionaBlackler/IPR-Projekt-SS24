@@ -1,23 +1,23 @@
 .register-window {
-  width: 550px; /* The width of the element to 100% of the parent element */
+  width: 550px; 
   height: 100%;
 }
 
 .register-container {
-  position: absolute; /* Make the container absolutely positioned */
-  top: 50%; /* Position it in the middle vertically */
-  left: 50%; /* Position it in the middle horizontally */
-  transform: translate(-50%, -50%); /* Center it */
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
   display: grid;
   justify-content: center; 
 }
 
 .register-header {
-  margin-top: 37.7vh; /* Space from the top edge of the container in viewport height */
-  width: 100%; /* The width of the element to 100% of the parent element */
-  display: flex; /* Use the Flexbox layout system */
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  margin-top: 37.7vh; 
+  width: 100%; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 
 .register-window-header {
@@ -30,27 +30,33 @@
   cursor: move;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Add margin between each group */
+}
+
 .register-checkbox {
-  display: flex; /* Use the Flexbox layout system */
-  align-items: center; /* Center align the checkbox and label */
-  margin-top: 1rem; /* Space from the top edge of the container */
+  display: flex; 
+  align-items: center; 
+  margin-top: 1rem; 
 }
 
 .button-container {
-  display: flex; /* Use the Flexbox layout system */
-  justify-content: flex-end; /* Align the buttons to the right */
-  margin-top: 1rem; /* Space from the top edge of the container */
+  display: flex; 
+  justify-content: flex-end; 
+  margin-top: 1rem; 
 }
 
 .terms-link {
   color: inherit;
-  cursor: pointer; /* Show pointer cursor to indicate it is clickable */
+  cursor: pointer; 
   text-decoration: none;
 }
 
 .terms-link:hover {
-  color: #3366ff; /* Change text color to blue on hover */
-  text-decoration: underline; /* Optional: add underline on hover */
+  color: #3366ff; 
+  text-decoration: underline; 
 }
 
 .terms-background {
@@ -61,23 +67,23 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
-
 }
+
 .terms-modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Center the modal */
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
+
 .terms-modal-window {
-  width: 490px; /* Adjusted width to make the modal smaller */
-  height: 450px; /* Adjusted height to fit the content */
-  max-height: 70vh;
-  overflow-y:auto; /* Add vertical scrolling if content overflows */
+  width: 530px; 
+  height: 600px; 
+  max-height: 60vh;
+  overflow-y:auto; 
 }
 
 .terms-window-header {
@@ -87,6 +93,7 @@
   padding: 5px;
   cursor: move;
 }
+
 .register-close-icon{
   display: inline-block;
   width: 16px;
@@ -95,39 +102,42 @@
   margin-top: -1px;
   transform: rotateZ(45deg);
   position: relative;
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    background: black;
-  }
-  &:before {
-    height: 100%;
-    width: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &:after {
-    height: 3px;
-    width: 100%;
-    left: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 }
 
+.register-close-icon:before,
+.register-close-icon:after {
+  content: "";
+  position: absolute;
+  background: black;
+}
+
+.register-close-icon:before {
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.register-close-icon:after {
+  height: 3px;
+  width: 100%;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .terms-title {
   display: block;
-  font-weight:bolder;
+  font-weight: bolder;
   margin-top: 1rem;
+  font-size: 1.2rem;
 }
-
-
 
 .terms-text {
   display: block;
   margin-top: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .terms-separator {
@@ -138,3 +148,48 @@
   overflow: auto;
   height: 100%;
 }
+
+.confirmation-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: darken background */
+}
+
+.confirmation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-window {
+  width: 300px; /* Adjust width as needed */
+}
+
+.success {
+  color: green;
+  text-align: center;
+}
+
+.terms-note {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.terms-signoff {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+
