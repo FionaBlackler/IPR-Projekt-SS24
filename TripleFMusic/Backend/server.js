@@ -51,7 +51,6 @@ app.use("/api", apiRoutes);
 app.use('/uploads/mp3files', express.static(path.join(__dirname, 'uploads/mp3files')));
 app.use('/uploads/jpgfiles', express.static(path.join(__dirname, 'uploads/jpgfiles')));
 
-
 // Sync the models and start the server
 db.sequelize
   .sync()
