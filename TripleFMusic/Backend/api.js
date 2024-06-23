@@ -1,39 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
-const verifyToken = require('./authMiddleware.js'); // Importieren der verifyToken-Middleware
+const verifyToken = require('./authMiddleware.js');
+const multer = require('multer');
+const path = require('path');
 
+// Configure storage for files
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.fieldname === 'mp3File') {
+      cb(null, './uploads/mp3files');
+    } else if (file.fieldname === 'jpgFile') {
+      cb(null, './uploads/jpgfiles');
+    }
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+  }
+});
 
-//Route to create a new song
-router.post('/songs', async (req, res) => {
-  const { mp3File, jpgFile, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
+const upload = multer({ storage });
 
-  console.log("mp3File: " + mp3File)
-  console.log("jpgFile: " + jpgFile)
-  
-  console.log(req.files);
+router.post('/songs', upload.fields([
+  { name: 'mp3File', maxCount: 1 },
+  { name: 'jpgFile', maxCount: 1 }
+]), async (req, res) => {
+  console.log('Received request to save new song');
+  const { songTitle, artist, selectedPlaylists, selectedGenres, notes } = req.body;
+
+  if (!req.files || !req.files['mp3File'] || !req.files['jpgFile']) {
+    return res.status(400).json({ error: 'mp3File and jpgFile are required' });
+  }
 
   try {
+    const mp3FilePath = req.files['mp3File'][0].path;
+    const jpgFilePath = req.files['jpgFile'][0].path;
+
     const newSong = await Songs.create({
-      mp3File,
-      jpgFile,
-      songTitle, 
+      mp3File: mp3FilePath,
+      jpgFile: jpgFilePath,
+      songTitle,
       artist,
-      selectedPlaylists,
-      selectedGenres,
+      selectedPlaylists: JSON.parse(selectedPlaylists),
+      selectedGenres: JSON.parse(selectedGenres),
       notes
     });
+
+    console.log('New song created:', newSong);
     res.status(201).json(newSong);
   } catch (error) {
     console.error('Error saving song:', error);
     res.status(500).json({ error: 'An error occurred while saving the song.' });
   }
 });
-
-
 
 // Route to create a new playlist
 router.post('/playlists', async (req, res) => {
