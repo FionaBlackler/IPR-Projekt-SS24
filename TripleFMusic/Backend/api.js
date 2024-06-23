@@ -1,31 +1,64 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt'); 
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Playlist, Songs, User } = require('./models');
 const authController = require('./controllers/authController');
-const verifyToken = require('./authMiddleware.js'); // Importieren der verifyToken-Middleware
+const verifyToken = require('./authMiddleware.js');
+const multer = require('multer');
+const path = require('path');
 
-
-//Route to create a new song
-router.post('/songs', async (req, res) => {
-  const { mp3File, jpgFile, songTitle,artist, selectedPlaylists, selectedGenres, notes } = req.body;
-
-  console.log("mp3File: " + mp3File)
-  console.log("jpgFile: " + jpgFile)
+const mp3storage = multer.diskStorage({
   
-  console.log(req.files);
+  destination: './uploads/mp3files',
+  filename: (req, file, cb) => {
+  cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`); // Unique filename
+  }
+});
+
+const jpgstorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+  cb(null, './uploads/jpgfiles');
+  },
+  filename: (req, file, cb) => {
+  cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`); // Unique filename
+  }
+});
+
+const mp3upload = multer({ storage: mp3storage });
+const jpgupload = multer({ storage: jpgstorage });
+
+
+
+router.post('/songs', mp3upload.single('mp3File'), jpgupload.single('jpgFile'), async (req, res) => {
+  const { songTitle, artist, selectedPlaylists, selectedGenres, notes } = req.body;
+
+  console.log("mp3File: ", req.files['mp3File']);
+  console.log("jpgFile: ", req.files['jpgFile']);
+
+  if (!req.files['mp3File'] || !req.files['jpgFile']) {
+    return res.status(400).json({ error: 'mp3File and jpgFile are required' });
+  }
 
   try {
+    const mp3FilePath = req.files['mp3File'][0].path; // Path to the stored mp3 file
+    const jpgFilePath = req.files['jpgFile'][0].path; // Path to the stored jpg file
+
+    console.log("mp3File: ", req.files['mp3File'][0].path);
+    console.log("jpgFile: ", req.files['jpgFile'][0].path);
+
     const newSong = await Songs.create({
-      mp3File,
-      jpgFile,
-      songTitle, 
+      mp3File: mp3FilePath,
+      jpgFile: jpgFilePath,
+      songTitle,
       artist,
-      selectedPlaylists,
-      selectedGenres,
+      selectedPlaylists: JSON.parse(selectedPlaylists), // Assuming these are sent as JSON strings
+      selectedGenres: JSON.parse(selectedGenres), // Assuming these are sent as JSON strings
       notes
     });
+
+    console.log('new song: '+newSong);
+    
     res.status(201).json(newSong);
   } catch (error) {
     console.error('Error saving song:', error);

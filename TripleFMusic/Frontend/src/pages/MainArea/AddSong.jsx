@@ -50,17 +50,9 @@ function AddSong() {
   const jpgInputRef = useRef(null);
 
   const handleMp3Upload = (e) => {
-    const { files } = e.target;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-      setMp3File(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setMp3FilePath(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = e.target.files[0];
+    setMp3File(file);
+    setMp3FilePath(file.name);
   };
 
   const triggerMp3Upload = () => {
@@ -68,21 +60,41 @@ function AddSong() {
   };
 
   const handleJpgUpload = (e) => {
-    const { files } = e.target;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-      setJpgFile(file);
-      const reader = new FileReader();
-      reader.onload = () => {
-        setJpgFilePath(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = e.target.files[0];
+    setJpgFile(file);
+    setJpgFilePath(file.name);
   };
 
   const triggerJpgUpload = () => {
     jpgInputRef.current.click();
+  };
+
+  const addNewSong = async () => {
+    const formData = new FormData();
+    formData.append("mp3File", mp3File); // Check if mp3File is correctly set
+    formData.append("jpgFile", jpgFile); // Check if jpgFile is correctly set
+    formData.append("songTitle", songTitle);
+    formData.append("artist", artist);
+    formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
+    formData.append("selectedGenres", JSON.stringify(selectedGenres));
+    formData.append("notes", notes);
+
+    console.log("mp3File appended:" + mp3File);
+    console.log("jpgFile appended:" + jpgFile);
+    console.log("sonTitle appended:" + songTitle);
+    console.log("artist appended:" + artist);
+    console.log("selectedPlaylists appended:" + selectedPlaylists);
+    console.log("selectedGenres appended:" + selectedGenres);
+    console.log("notes appended:" + notes);
+    console.log("formData: " + JSON.stringify(formData));
+
+    const response = await axios
+      .post("http://localhost:8080/api/songs", formData)
+      .then((res) => {
+        console.log("Upload successful");
+        alert("Upload successful");
+      })
+      .catch(console.log("Upload failed"), alert("Upload failed"));
   };
 
   const handlePlaylistChange = (playlist) => {
@@ -127,37 +139,6 @@ function AddSong() {
       setSelectedPlaylists(playlists.map((playlist) => playlist.name));
     }
     setAllPlaylistsChecked(!allPlaylistsChecked);
-  };
-
-  const addNewSong = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("songTitle", songTitle);
-      formData.append("artist", artist);
-      formData.append("selectedPlaylists", JSON.stringify(selectedPlaylists));
-      formData.append("selectedGenres", JSON.stringify(selectedGenres));
-      formData.append("notes", notes);
-      formData.append("mp3File", mp3File); // Append the mp3 file object
-      formData.append("jpgFile", jpgFile); // Append the jpg file object
-
-      const response = await axios.post(
-        "http://localhost:8080/api/songs",
-        formData
-      );
-
-      console.log("Save response:", response);
-
-      if (response.status === 201) {
-        console.log("Save successful");
-        navigate("/welcome/addsong");
-      } else {
-        console.error("Save failed:", response.data.message);
-        setError(response.data.message || "Something went wrong");
-      }
-    } catch (error) {
-      console.error("Error saving song:", error);
-      setError("Something went wrong");
-    }
   };
 
   useEffect(() => {
@@ -280,12 +261,12 @@ function AddSong() {
                           ref={mp3InputRef}
                           type="file"
                           accept=".mp3"
-                          onChange={handleMp3Upload}
                           style={{
                             position: "absolute",
                             opacity: 0,
                             cursor: "pointer",
                           }}
+                          onChange={handleMp3Upload}
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "2rem" }}>
@@ -306,12 +287,12 @@ function AddSong() {
                           ref={jpgInputRef}
                           type="file"
                           accept=".jpg"
-                          onChange={handleJpgUpload}
                           style={{
                             position: "absolute",
                             opacity: 0,
                             cursor: "pointer",
                           }}
+                          onChange={handleJpgUpload}
                         />
                       </Button>
                       <p style={{ marginTop: "1.15rem", marginLeft: "1rem" }}>
