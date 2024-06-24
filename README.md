@@ -8,6 +8,41 @@ Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blac
 <br>
 Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
+
+## Projekt Informationen
+Verwendete Sprachen:
+
+- JavaScript
+- HTML
+- CSS
+
+Verwendete Bibliotheken:
+
+- React JS
+- React95 component library
+
+## Vor dem Clonen des Repos
+
+Falls MySQL noch nicht installiert ist, lade den MySQL Installer von der offiziellen [MySQL-Website](https://dev.mysql.com/downloads/installer/) herunter und folge den Installationsanweisungen.<br>
+
+1. **Mit MySQL-Server verbinden**
+   Öffne die MySQL-Kommandozeile. Dies kann man durch Suchen nach "MySQL Command Line Client" im Startmenü tun.<br>
+   <br>
+   ~~~
+   mysql -u root -p
+   ~~~
+   *-u root gibt den Benutzer an (in diesem Fall root), und -p fordert zur Eingabe des Passworts auf.*<br>
+
+2. **Datenbank erstellen**
+   Gebe den folgenden Befehl ein, um eine neue Datenbank namens **musicdb** zu erstellen.<br>
+   <br>
+   ~~~
+   CREATE DATABASE musicdb;
+   ~~~
+*Annmerkung: Das root-Passwort für die Datenbank ist in **TripleFMusic/Backend/config/config.json** festgelegt und muss durch das **eigene** root-Passwort ersetzt werden.*
+
+
+
 ## Nach dem clonen des Repos
 Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
 ~~~
@@ -39,17 +74,7 @@ cd TripleFMusic/Frontend
 npm run dev
 ~~~
 
-## Projekt Informationen
-Verwendete Sprachen:
 
-- JavaScript
-- HTML
-- CSS
-
-Verwendete Bibliotheken:
-
-- React JS
-- React95 component library
 
 ## User-Stories
 
