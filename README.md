@@ -59,25 +59,23 @@ Login:<br>
 ✔ Konto registrieren<br>
 ✔ Passwort vergessen<br>
 ✔ Remember me (Für 7 Tage)<br>
-
-- "Welcome <username>"-Anzeige
-- User löschen
-
+✔ "Welcome <username>"-Anzeige<br>
+✔ User löschen<br>
+<br>
 Music Gallery:<br>
 <br>
-✔ Vorhandene Playlists anzeigen <br>
-✔ Songs innerhalb einer Playlist anzeigen <br>
-✔ Song löschen <br>
-✔ Neue Playlist hinzufügen <br>
-✔ Playlist löschen <br>
-(MERKE: FALLS WIR ES HINBEKOMMEN, DASS WIR SONGS IN VERSCHIEDENE PLAYLISTS BEKOMMENMUSS ICH ES ÄNDERN, DASS DIE SONGS NICHT AUS DER DATENBANK GELÖSCHT WERDEN WENN DIE PLAYLIST GELÖSCHT WIRD) <br>
-✔ Mehrere Playlists gleichzeitig löschen <br>
-✔ Mehrere Songs gleichzeitig löschen <br>
+✔ Vorhandene Playlists anzeigen<br>
+✔ Songs innerhalb einer Playlist anzeigen<br>
+✔ Song löschen<br>
+✔ Neue Playlist hinzufügen<br>
+✔ Playlist löschen<br>
+✔ Mehrere Playlists gleichzeitig löschen<br>
+✔ Mehrere Songs gleichzeitig löschen<br>
+✔ Songdetails anzeigen<br>
 
+- Songdetails bearbeiten
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
-- Songdetails anzeigen
-- Songdetails bearbeiten
 - Song erneut abspielen/überspringen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
@@ -87,10 +85,9 @@ Music Gallery:<br>
 
 Add Song:<br>
 <br>
-✔ Vorhandene Playlists anzeigen <br>
-✔ mp3/jpg file vom File Explorer auswählen <br>
-
-- Song speichern
+✔ Vorhandene Playlists anzeigen<br>
+✔ mp3/jpg file vom File Explorer auswählen<br>
+✔ Song speichern<br>
 
 Sonstiges:<br>
 <br>

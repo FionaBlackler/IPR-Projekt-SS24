@@ -192,18 +192,18 @@ function MusicGallery() {
    * @param {string} songId - The ID of the song to delete.
    * @returns {Promise<void>} - A promise that resolves when the song is deleted.
    */
-  const deleteSong = async (songId) => {
+  const deleteSong = async (playlistId, songId) => {
     try {
-      await axios.delete(`http://localhost:8080/api/songs/${songId}`);
+      console.log(`Sending request to delete song with ID ${songId} from playlist with ID ${playlistId}`);
+      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}/songs/${songId}`);
       setSongs(songs.filter((song) => song.id !== songId));
-      console.log("Deleted song with ID:", songId);
+      console.log(`Successfully deleted song with ID ${songId} from playlist with ID ${playlistId}`);
     } catch (error) {
-      console.error("Error deleting song", error);
-      alert("Error deleting song");
-    } finally {
-      closeContextMenu();
+      console.error("Error deleting song from playlist:", error);
+      alert("Error deleting song from playlist");
     }
   };
+  
 
   /**
    * Deletes selected songs (multiple).
@@ -211,18 +211,17 @@ function MusicGallery() {
    * @param {Array<number>} songIds - The IDs of the songs to delete.
    * @returns {Promise<void>} - A promise that resolves when the songs are deleted.
    */
-  const deleteSongs = async (songIds) => {
+  const deleteSongs = async (playlistId, songIds) => {
     try {
-      await axios.delete("http://localhost:8080/api/songs", {
+      console.log(`Sending request to delete songs with IDs ${songIds} from playlist with ID ${playlistId}`);
+      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}/songs`, {
         data: { songIds },
       });
-      setSongs(songs.filter((song) => !songIds.includes(song.id)));
-      console.log("Deleted songs with IDs:", songIds);
+      setSongs(songs.filter(song => !songIds.includes(song.id)));
+      console.log(`Deleted songs with IDs ${songIds} from playlist with ID ${playlistId}`);
     } catch (error) {
-      console.error("Error deleting songs", error);
+      console.error("Error deleting songs:", error);
       alert("Error deleting songs");
-    } finally {
-      closeContextMenu();
     }
   };
 
@@ -259,7 +258,7 @@ function MusicGallery() {
 
   useEffect(() => {
   /**
-   * Handles closing contect menu when clicking outside of context menu.
+   * Handles closing context menu when clicking outside of context menu.
    * @param {Event} e - The click event object.
    */
     const handleClickOutside = (event) => {
@@ -297,6 +296,7 @@ function MusicGallery() {
     navigate("/welcome/addsong");
   };
 
+ 
   return (
     <div className="music-gallery-body">
       <div className="icons-menu">
@@ -545,3 +545,4 @@ function MusicGallery() {
 }
 
 export default MusicGallery;
+

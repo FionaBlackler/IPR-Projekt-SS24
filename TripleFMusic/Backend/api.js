@@ -1,8 +1,9 @@
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Playlist, Songs, User } = require('./models');
+const { Playlist, Songs, SongPlaylists, User } = require('./models');
 const authController = require('./controllers/authController');
 const verifyToken = require('./authMiddleware.js');
 const multer = require('multer');
@@ -49,17 +50,20 @@ router.post('/songs', upload.fields([
       notes
     });
 
-    const playlists = JSON.parse(selectedPlaylists);
-    if (playlists && playlists.length > 0) {
+    console.log('New song created:', newSong);
+
+    const playlistIds = JSON.parse(selectedPlaylists);
+    if (playlistIds && playlistIds.length > 0) {
       const playlistRecords = await Playlist.findAll({
         where: {
-          name: playlists
+          id: playlistIds // Use `id` instead of `name`
         }
       });
+      console.log('Found playlists:', playlistRecords);
       await newSong.setPlaylists(playlistRecords);
+      console.log('Associated playlists with new song');
     }
 
-    console.log('New song created:', newSong);
     res.status(201).json(newSong);
   } catch (error) {
     console.error('Error saving song:', error);
@@ -116,47 +120,94 @@ router.delete('/playlists/:id', async (req, res) => {
 
 // Route to fetch songs for a specific playlist
 router.get('/playlists/:id/songs', async (req, res) => {
-  const playlistId = req.params.id;  // Ensure playlistId is defined here
+  const playlistId = req.params.id;
   try {
-    const songs = await Songs.findAll({ where: { PlaylistId: playlistId } });
-    res.status(200).json(songs);
+    const playlist = await Playlist.findByPk(playlistId, {
+      include: [{
+        model: Songs,
+        through: {
+          attributes: [] // Remove SongPlaylists attributes from the result
+        }
+      }]
+    });
+
+    if (!playlist) {
+      return res.status(404).json({ message: 'Playlist not found' });
+    }
+
+    console.log('Fetched playlist with songs:', playlist.Songs);
+    res.status(200).json(playlist.Songs);
   } catch (error) {
     console.error(`Error fetching songs for playlist ${playlistId}:`, error);
     res.status(500).json({ message: 'Error fetching songs', error });
   }
 });
 
-// Route to delete a song
-router.delete('/songs/:id', async (req, res) => {
-  try {
-    const songId = req.params.id;
-    const song = await Songs.findByPk(songId);
-    if (!song) {
-      return res.status(404).json({ message: 'Song not found' });
-    }
-    await song.destroy();
-    res.status(204).end();
-  } catch (error) {
-    console.error('Error deleting song:', error);
-    res.status(500).json({ message: 'Error deleting song', error });
-  }
-});
 
-// Route to delete multiple songs
-router.delete('/songs', async (req, res) => {
-  const { songIds } = req.body; // Expecting an array of song IDs in the request body
-  try {
-    await Songs.destroy({
-      where: {
-        id: songIds
+// Route to delete a single song from a specific playlist
+// Route to delete a song from a specific playlist
+router.delete('/playlists/:playlistId/songs/:songId', async (req, res) => {
+    try {
+      const { playlistId, songId } = req.params;
+      console.log(`Attempting to delete song with ID ${songId} from playlist with ID ${playlistId}`);
+      
+      const songPlaylist = await SongPlaylists.findOne({
+        where: {
+          songId,
+          playlistId
+        }
+      });
+      
+      if (!songPlaylist) {
+        console.log(`Song with ID ${songId} not found in playlist with ID ${playlistId}`);
+        return res.status(404).json({ message: 'Song not found in the specified playlist' });
       }
-    });
-    res.status(204).end();
-  } catch (error) {
-    console.error(`Error deleting songs with IDs ${songIds}:`, error);
-    res.status(500).json({ message: 'Error deleting songs', error });
-  }
-});
+      
+      await songPlaylist.destroy();
+      console.log(`Successfully deleted song with ID ${songId} from playlist with ID ${playlistId}`);
+      res.status(204).end();
+    } catch (error) {
+      console.error('Error deleting song from playlist:', error);
+      res.status(500).json({ message: 'Error deleting song from playlist', error });
+    }
+  });
+  
+  // Route to delete multiple songs from a specific playlist
+  router.delete('/playlists/:playlistId/songs', async (req, res) => {
+    const { playlistId } = req.params;
+    const { songIds } = req.body; // Expecting an array of song IDs in the request body
+    
+    console.log(`Attempting to delete songs with IDs ${songIds} from playlist with ID ${playlistId}`);
+  
+    try {
+      const songPlaylists = await SongPlaylists.findAll({
+        where: {
+          songId: songIds,
+          playlistId
+        }
+      });
+  
+      if (!songPlaylists.length) {
+        console.log(`No songs found with IDs ${songIds} in playlist with ID ${playlistId}`);
+        return res.status(404).json({ message: 'Songs not found in the specified playlist' });
+      }
+  
+      await SongPlaylists.destroy({
+        where: {
+          songId: songIds,
+          playlistId
+        }
+      });
+  
+      console.log(`Successfully deleted songs with IDs ${songIds} from playlist with ID ${playlistId}`);
+      res.status(204).end();
+    } catch (error) {
+      console.error(`Error deleting songs from playlist ${playlistId}:`, error);
+      res.status(500).json({ message: 'Error deleting songs from playlist', error });
+    }
+  });
+  
+  module.exports = router;
 
 // Passwort vergessen Route
 router.post('/forgot_password', authController.forgotPassword);
@@ -258,3 +309,4 @@ router.delete('/delete_profile', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+

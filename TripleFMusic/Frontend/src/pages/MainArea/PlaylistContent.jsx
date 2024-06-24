@@ -125,8 +125,8 @@ const PlaylistContent = ({
    *
    * @param {string} songId - The ID of the song to delete.
    */
-  const handleDeleteSong = async (songId) => {
-    await deleteSong(songId);
+  const handleDeleteSong = async (playlistId, songId) => {
+    await deleteSong(playlistId, songId);
     closeContextMenu();
   };
 
@@ -136,7 +136,7 @@ const PlaylistContent = ({
    * @param {Array} songIds - The IDs of the songs to delete.
    */
   const handleDeleteSongs = async (songIds) => {
-    await deleteSongs(songIds);
+    await deleteSongs(playlist.id, songIds); // Pass the playlist ID to deleteSongs
     closeContextMenu();
   };
 
@@ -231,18 +231,19 @@ const PlaylistContent = ({
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
           {selectedSongs.length === 1 ? (
-            <Button onClick={() => handleDeleteSong(contextMenu.songId)}>
+            <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
               Delete
             </Button>
           ) : (
             <Button
-              onClick={() =>
-                handleDeleteSongs(selectedSongs.map((song) => song.id))
-              }
-            >
-              Delete
-            </Button>
-          )}
+            onClick={() =>
+              handleDeleteSongs(selectedSongs.map((song) => song.id))
+            }
+          >
+            Delete
+          </Button>
+        )}
+
         </div>
       )}
 
@@ -342,7 +343,7 @@ const PlaylistContent = ({
                               marginBottom: "10px",
                             }}
                           >
-                            <span style={{ width: "100px" }}>Genres:</span>
+                            <span style={{ width: "100px" }}>Genre:</span>
                             <span style={{ flex: 1, textAlign: "left" }}>
                               {isEditMode ? (
                                 <TextInput
@@ -356,28 +357,6 @@ const PlaylistContent = ({
                                 />
                               ) : (
                                 selectedSongs[0].selectedGenres.join(", ")
-                              )}
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            <span style={{ width: "100px" }}>Playlist:</span>
-                            <span style={{ flex: 1, textAlign: "left" }}>
-                              {isEditMode ? (
-                                <TextInput
-                                  value={selectedSongs[0].selectedPlaylists}
-                                  onChange={(e) =>
-                                    handleInputChange(e, "selectedPlaylists")
-                                  }
-                                  fullWidth
-                                />
-                              ) : (
-                                selectedSongs[0].selectedPlaylists
                               )}
                             </span>
                           </div>
