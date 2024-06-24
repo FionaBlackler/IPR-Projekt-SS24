@@ -57,22 +57,28 @@ Login:<br>
 <br>
 ✔ An-/Abmelden <br>
 ✔ Konto registrieren<br>
-✔ Passwort vergessen<br>
+✔ Passwort zurücksetzen wenn vergessen<br>
 ✔ Remember me (Für 7 Tage)<br>
+<br>
+Home Screen "Start Button":<br>
+<br>
 ✔ "Welcome <username>"-Anzeige<br>
+✔ Passwort über Settings während man eingeloggt ist<br>
 ✔ User löschen<br>
+✔ Support kontaktieren<br>
 <br>
 Music Gallery:<br>
 <br>
-✔ Vorhandene Playlists anzeigen<br>
-✔ Songs innerhalb einer Playlist anzeigen<br>
-✔ Song löschen<br>
-✔ Neue Playlist hinzufügen<br>
-✔ Playlist löschen<br>
-✔ Mehrere Playlists gleichzeitig löschen<br>
-✔ Mehrere Songs gleichzeitig löschen<br>
+✔ Liste an vorhandener Playlists anzeigen<br>
+✔ Playlist anklicken und Songs innerhalb ihrer zugeordneten Playlist anzeigen<br>
+✔ Neue Playlist über ein Modal hinzufügen<br>
+✔ Playlist/-s löschen (single --> right-click auf Playlist)<br>
+✔ Song/-s löschen (single --> right-click auf Song)<br>
+✔ Mehrere Playlists gleichzeitig löschen (multiple --> mit strg+click auswählen und löschen über right-click)<br>
+✔ Mehrere Songs gleichzeitig löschen (multiple --> mit strg+click auswählen und löschen über right-click)<br>
 ✔ Songdetails anzeigen<br>
 ✔ Songdetails bearbeiten<br>
+✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
 
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
