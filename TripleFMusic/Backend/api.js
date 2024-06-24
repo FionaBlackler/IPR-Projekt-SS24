@@ -25,6 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/songs', upload.fields([
+  
   { name: 'mp3File', maxCount: 1 },
   { name: 'jpgFile', maxCount: 1 }
 ]), async (req, res) => {
