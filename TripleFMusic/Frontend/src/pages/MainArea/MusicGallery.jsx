@@ -12,6 +12,7 @@ import {
   Separator,
   Frame as BaseFrame,
   TextInput,
+  ScrollView,
 } from "react95";
 import axios from "../../axiosConfig";
 import original from "react95/dist/themes/original";
@@ -424,7 +425,8 @@ function MusicGallery() {
                       />
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
-                    <div className="playlist-menu" data-testid="playlist-menu">
+                    <ScrollView style={{ height: 287 }}>
+                    <div className="playlist-menu" data-testid="playlist-menu" >
                       {filteredPlaylists.map((playlist) => (
                         <div
                           key={playlist.id}
@@ -450,6 +452,7 @@ function MusicGallery() {
                         </div>
                       ))}
                     </div>
+                    </ScrollView >
                   </Frame>
                   <div className="playlist-content">
                     {selectedPlaylists.length === 1 ? (
