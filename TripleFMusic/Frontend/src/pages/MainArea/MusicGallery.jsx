@@ -47,6 +47,7 @@ function MusicGallery() {
   const [currentSong, setCurrentSong] = useState(null);
   const [songs, setSongs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [songSearchQuery, setSongSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchPlaylists = async () => {
@@ -76,7 +77,30 @@ function MusicGallery() {
     }
   }, [searchQuery, playlists]);
 
+  useEffect(() => {
+    if (selectedPlaylists.length > 0) {
+      fetchSongs(selectedPlaylists[0]?.id);
+    }
+  }, [selectedPlaylists]);
+
+  useEffect(() => {
+    if (songSearchQuery === "") {
+      fetchSongs(selectedPlaylists[0]?.id);
+    } else {
+      setSongs(
+        songs.filter((song) =>
+          song.songTitle.toLowerCase().includes(songSearchQuery.toLowerCase())
+        )
+      );
+    }
+  }, [songSearchQuery]);
+
   const fetchSongs = async (playlistId) => {
+    if (!playlistId) {
+      console.warn("No playlist selected");
+      return;
+    }
+
     try {
       const response = await axios.get(
         `http://localhost:8080/api/playlists/${playlistId}/songs`
@@ -130,7 +154,10 @@ function MusicGallery() {
       await axios.delete(`http://localhost:8080/api/playlists/${playlistId}`);
       setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
       console.log("Deleted playlist with ID:", playlistId);
-      if (selectedPlaylists.length === 1 && selectedPlaylists[0].id === playlistId) {
+      if (
+        selectedPlaylists.length === 1 &&
+        selectedPlaylists[0].id === playlistId
+      ) {
         setSelectedPlaylists([]);
         setSongs([]);
       }
@@ -168,10 +195,16 @@ function MusicGallery() {
 
   const deleteSong = async (playlistId, songId) => {
     try {
-      console.log(`Sending request to delete song with ID ${songId} from playlist with ID ${playlistId}`);
-      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}/songs/${songId}`);
+      console.log(
+        `Sending request to delete song with ID ${songId} from playlist with ID ${playlistId}`
+      );
+      await axios.delete(
+        `http://localhost:8080/api/playlists/${playlistId}/songs/${songId}`
+      );
       setSongs(songs.filter((song) => song.id !== songId));
-      console.log(`Successfully deleted song with ID ${songId} from playlist with ID ${playlistId}`);
+      console.log(
+        `Successfully deleted song with ID ${songId} from playlist with ID ${playlistId}`
+      );
     } catch (error) {
       console.error("Error deleting song from playlist:", error);
       alert("Error deleting song from playlist");
@@ -180,14 +213,21 @@ function MusicGallery() {
 
   const deleteSongs = async (playlistId, songIds) => {
     try {
-      console.log(`Sending request to delete songs with IDs ${songIds} from playlist with ID ${playlistId}`);
-      await axios.delete(`http://localhost:8080/api/playlists/${playlistId}/songs`, {
-        data: { songIds },
-      });
-      setSongs(songs.filter(song => !songIds.includes(song.id)));
-      console.log(`Deleted songs with IDs ${songIds} from playlist with ID ${playlistId}`);
+      console.log(
+        `Sending request to delete songs with IDs ${songIds} from playlist with ID ${playlistId}`
+      );
+      await axios.delete(
+        `http://localhost:8080/api/playlists/${playlistId}/songs`,
+        {
+          data: { songIds },
+        }
+      );
+      setSongs(songs.filter((song) => !songIds.includes(song.id)));
+      console.log(
+        `Deleted songs with IDs ${songIds} from playlist with ID ${playlistId}`
+      );
     } catch (error) {
-      console.error("Error deleting songs:", error);
+      console.error("Error deleting songs", error);
       alert("Error deleting songs");
     }
   };
@@ -356,7 +396,7 @@ function MusicGallery() {
                     variant="field"
                     style={{
                       width: "20%",
-                      height: "432px",
+                      height: "476px",
                       backgroundColor: "#ffffff",
                       borderLeft: "3px solid #333333",
                       borderTop: "3px solid #333333",
@@ -380,8 +420,8 @@ function MusicGallery() {
                         value={searchQuery}
                         onChange={handleSearchChange}
                         placeholder="Search Mixtapes..."
-                        style={{ marginLeft: '10px', marginRight: '10px' }}
-                      />  
+                        style={{ marginLeft: "10px", marginRight: "10px" }}
+                      />
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
                     <div className="playlist-menu" data-testid="playlist-menu">
@@ -417,6 +457,14 @@ function MusicGallery() {
                         <div className="playlist-header">
                           <h2>{selectedPlaylists[0].name}</h2>
                           <Button>►</Button>
+                        </div>
+                        <div className="search-bar">
+                          <TextInput
+                            value={songSearchQuery}
+                            onChange={(e) => setSongSearchQuery(e.target.value)}
+                            placeholder="Search Songs..."
+                            style={{ marginBottom: "10px" }}
+                          />
                         </div>
                         <PlaylistContent
                           playlist={selectedPlaylists[0]}
