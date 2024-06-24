@@ -41,7 +41,7 @@ Falls **MySQL** noch nicht installiert ist, lade den MySQL Installer von der off
    ~~~
 *Annmerkung: Das root-Passwort für die Datenbank ist in **TripleFMusic/Backend/config/config.json** festgelegt und muss durch das **eigene** root-Passwort ersetzt werden.*
 
-## Nach dem clonen des Repos
+## Nach dem Clonen des Repos
 Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
 ~~~
 npm install
