@@ -22,12 +22,13 @@ Verwendete Bibliotheken:
 - React95 component library
 
 ## Vor dem Clonen des Repos
-
-Falls MySQL noch nicht installiert ist, lade den MySQL Installer von der offiziellen [MySQL-Website](https://dev.mysql.com/downloads/installer/) herunter und folge den Installationsanweisungen.<br>
+### Node.js
+Falls **Node.js** noch nicht installiert ist, lade Node.js von der offiziellen [Node.js-Webseite](https://nodejs.org/en) herunter und folge den Installationsanweisungen.<br>
+### MySQL
+Falls **MySQL** noch nicht installiert ist, lade den MySQL Installer von der offiziellen [MySQL-Website](https://dev.mysql.com/downloads/installer/) herunter und folge den Installationsanweisungen.<br>
 
 1. **Mit MySQL-Server verbinden**
    Öffne die MySQL-Kommandozeile. Dies kann man durch Suchen nach "MySQL Command Line Client" im Startmenü tun.<br>
-   <br>
    ~~~
    mysql -u root -p
    ~~~
@@ -35,7 +36,6 @@ Falls MySQL noch nicht installiert ist, lade den MySQL Installer von der offizie
 
 2. **Datenbank erstellen**
    Gebe den folgenden Befehl ein, um eine neue Datenbank namens **musicdb** zu erstellen.<br>
-   <br>
    ~~~
    CREATE DATABASE musicdb;
    ~~~
@@ -73,8 +73,6 @@ nodemon server.js
 cd TripleFMusic/Frontend
 npm run dev
 ~~~
-
-
 
 ## User-Stories
 

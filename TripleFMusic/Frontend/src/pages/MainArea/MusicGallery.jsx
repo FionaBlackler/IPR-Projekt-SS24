@@ -379,8 +379,9 @@ function MusicGallery() {
                       <TextInput
                         value={searchQuery}
                         onChange={handleSearchChange}
-                        placeholder="Search Playlists..."
-                      />
+                        placeholder="Search Mixtapes..."
+                        style={{ marginLeft: '10px', marginRight: '10px' }}
+                      />  
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
                     <div className="playlist-menu" data-testid="playlist-menu">
