@@ -13,7 +13,7 @@ import {
   Frame as BaseFrame,
   TextInput,
 } from "react95";
-import axios from "axios";
+import axios from "../../axiosConfig"; // Ensure the correct path to axiosConfig
 import original from "react95/dist/themes/original";
 import "./MusicGallery.css";
 import aboutIcon from "../Images/icons/recycle2.png";
@@ -69,13 +69,13 @@ function MusicGallery() {
 
     fetchPlaylists();
   }, []);
-  
+
   /**
    * Fetches songs for a playlist.
    * @param {string} playlistId - The ID of the playlist.
    * @returns {Promise<void>} - A promise that resolves when the songs are fetched.
    */
-  const fetchSongsForPlaylist = async (playlistId) => {
+  const fetchSongs = async (playlistId) => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/playlists/${playlistId}/songs`
@@ -102,7 +102,7 @@ function MusicGallery() {
       }
     } else {
       setSelectedPlaylists([playlist]);
-      fetchSongsForPlaylist(playlist.id);
+      fetchSongs(playlist.id);
     }
   };
 
@@ -203,7 +203,6 @@ function MusicGallery() {
       alert("Error deleting song from playlist");
     }
   };
-  
 
   /**
    * Deletes selected songs (multiple).
@@ -257,10 +256,10 @@ function MusicGallery() {
   };
 
   useEffect(() => {
-  /**
-   * Handles closing context menu when clicking outside of context menu.
-   * @param {Event} e - The click event object.
-   */
+    /**
+     * Handles closing context menu when clicking outside of context menu.
+     * @param {Event} e - The click event object.
+     */
     const handleClickOutside = (event) => {
       if (
         contextMenuRef.current &&
@@ -296,7 +295,6 @@ function MusicGallery() {
     navigate("/welcome/addsong");
   };
 
- 
   return (
     <div className="music-gallery-body">
       <div className="icons-menu">
@@ -457,6 +455,7 @@ function MusicGallery() {
                           songs={songs}
                           deleteSong={deleteSong}
                           deleteSongs={deleteSongs}
+                          fetchSongs={() => fetchSongs(selectedPlaylists[0].id)}
                         />
                       </div>
                     ) : (
@@ -509,7 +508,7 @@ function MusicGallery() {
                     <div className="add-playlist-input-container">
                       <TextInput
                         value={newPlaylistName}
-                        placeholder="Playlist Name"
+                        placeholder="Name your Mixtape"
                         onChange={handleNewPlaylistNameChange}
                       />
                     </div>
@@ -545,4 +544,3 @@ function MusicGallery() {
 }
 
 export default MusicGallery;
-

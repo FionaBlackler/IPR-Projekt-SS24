@@ -72,8 +72,8 @@ Music Gallery:<br>
 ✔ Mehrere Playlists gleichzeitig löschen<br>
 ✔ Mehrere Songs gleichzeitig löschen<br>
 ✔ Songdetails anzeigen<br>
+✔ Songdetails bearbeiten<br>
 
-- Songdetails bearbeiten
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
 - Song erneut abspielen/überspringen
