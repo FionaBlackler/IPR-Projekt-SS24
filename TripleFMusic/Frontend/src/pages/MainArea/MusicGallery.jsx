@@ -34,6 +34,7 @@ function MusicGallery() {
   const navigate = useNavigate();
   const contextMenuRef = useRef(null);
   const [playlists, setPlaylists] = useState([]);
+  const [filteredPlaylists, setFilteredPlaylists] = useState([]);
   const [selectedPlaylists, setSelectedPlaylists] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState("");
@@ -45,12 +46,14 @@ function MusicGallery() {
   });
   const [currentSong, setCurrentSong] = useState(null);
   const [songs, setSongs] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/playlists");
         setPlaylists(response.data);
+        setFilteredPlaylists(response.data);
         console.log("Fetched playlists:", response.data);
       } catch (error) {
         alert("Error fetching playlists");
@@ -60,6 +63,18 @@ function MusicGallery() {
 
     fetchPlaylists();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      setFilteredPlaylists(playlists);
+    } else {
+      setFilteredPlaylists(
+        playlists.filter((playlist) =>
+          playlist.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+    }
+  }, [searchQuery, playlists]);
 
   const fetchSongs = async (playlistId) => {
     try {
@@ -214,15 +229,12 @@ function MusicGallery() {
     };
 
     if (contextMenu.visible) {
-      // Adds the event listener for mousedown when the context menu is visible.
       document.addEventListener("mousedown", handleClickOutside);
     } else {
-      // Removes the event listener for mousedown when the context menu is not visible.
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      // Cleanup function to remove the event listener on component unmount or when dependencies change.
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [contextMenu.visible]);
@@ -237,6 +249,10 @@ function MusicGallery() {
 
   const handleAddSong = () => {
     navigate("/welcome/addsong");
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -359,8 +375,16 @@ function MusicGallery() {
                       <Button onClick={openModal}>Add Mixtape</Button>
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
+                    <div className="search-bar">
+                      <TextInput
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        placeholder="Search Playlists..."
+                      />
+                    </div>
+                    <Separator style={{ margin: "10px 0" }} />
                     <div className="playlist-menu" data-testid="playlist-menu">
-                      {playlists.map((playlist) => (
+                      {filteredPlaylists.map((playlist) => (
                         <div
                           key={playlist.id}
                           className={`playlist-item ${

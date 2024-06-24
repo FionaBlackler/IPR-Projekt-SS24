@@ -1,26 +1,27 @@
-.about-body{
+.about-body {
   display: flex;
-  height:58.8rem
+  height: 58.8rem;
 }
+
 .icons-menu {
-  flex:1;
+  flex: 1;
 }
 
 .space {
   flex: 7.5;
 }
 
-.buffer{
-  height:2rem;
+.buffer {
+  height: 2rem;
 }
 
-.icon{
+.icon {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
-
 
 .about-window-header {
   display: flex;
@@ -41,13 +42,13 @@
 }
 
 .about-window {
-  padding: 2rem, 2rem, 2rem;
-  width:70%;
+  padding: 2rem;
+  width: 70%;
   height: 85%;
-  margin-top: 1rem; /* Keine Scrollbalken hier */
+  margin-top: 1rem;
 }
 
-.about-close-icon {
+.about-close-icon{
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -74,58 +75,64 @@
     top: 50%;
     transform: translateY(-50%);
   }
-}
-
-.about {
-  padding: 10px;
-}
-
-.content {
-  text-align: center;
-}
-
-.cutout {
-  margin: 1em 0;
-  padding: 1em;
-  width: 100%; /* Volle Breite */
-  text-align: center; /* Text zentrieren */
-}
-
-.about-section {
-  margin-bottom: 1em;
-  width: 100%; /* Volle Breite */
-}
-
-.section-header {
-  text-align: center;
-}
-
-.team-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%; /* Volle Breite */
-}
-
-.team-member {
-  text-align: center;
-}
-
-.team-member img {
-  width: 150px; /* Rechteckige Bilder */
-  height: 200px;
-  margin-bottom: 0.5em;
-  object-fit: cover; /* Zuschneiden des Bildes, um das Rechteck zu füllen */
-}
-
-
-
-.about-window-content {
-  max-height: 80vh; /* Adjust based on your design */
-  overflow: hidden;
-}
+  }
 
 .about-wrapper {
   overflow: auto;
   height: 100%;
+}
+
+.about-section {
+  margin-bottom: 1em;
+  width: 100%; /* Ensure all sections are the same width */
+}
+
+.about-header {
+  text-align: center;
+}
+
+.about-text, .team-cutout, .contact-cutout {
+  text-align: center;
+}
+
+.team-cutout {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+.team-member {
+  text-align: center;
+  margin: 0 1rem; /* Add margin for spacing */
+}
+
+.team-member img {
+  width: 150px;
+  height: 200px;
+  margin-bottom: 0.5em;
+  object-fit: contain;
+}
+
+.tooltip-button {
+  text-align: center;
+  height: 100px; /* Adjusted height for better visibility */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tooltip-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.contact-cutout p {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.about-header, .about-text {
+  text-align: center;
 }

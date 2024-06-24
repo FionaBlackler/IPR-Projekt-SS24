@@ -18,8 +18,8 @@ function Welcome() {
     // Simuliere einen Fortschritt (ersetze durch deine eigene Logik)
     const progressInterval = setInterval(() => {
       setProgress((prevProgress) => {
-        if (prevProgress < 100) {
-          return prevProgress + 10; // Beispiel: Erhöhe den Fortschritt um 10%
+        if (prevProgress < 90) {
+          return prevProgress + 25; // Beispiel: Erhöhe den Fortschritt um 10%
         } else {
           clearInterval(progressInterval);
           navigate("/login"); // Navigiere zur Login-Seite nach Abschluss

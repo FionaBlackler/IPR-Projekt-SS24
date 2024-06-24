@@ -146,6 +146,25 @@ const PlaylistContent = ({
       [field]: field === 'selectedGenres' ? value.split(', ') : value,
     }));
   };
+  
+  function PlaylistContent({ playlist, onSongClick, songs, deleteSong, deleteSongs, fetchSongs }) {
+    return (
+      <div className="playlist-content">
+        <h3>{playlist.name}</h3>
+        <ul>
+          {songs.map((song) => (
+            <li key={song.id}>
+              <a href="#" onClick={() => onSongClick(song)}>
+                {song.songTitle}
+              </a>
+              <button onClick={() => deleteSong(playlist.id, song.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+  
 
   return (
     <ThemeProvider theme={original}>
