@@ -16,24 +16,15 @@ import { ThemeProvider } from "styled-components";
 import Draggable from "react-draggable";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
+import axios from '../../axiosConfig'; // Import your Axios instance
 
-/**
- * PlaylistContent component displays the playlist content.
- *
- * @param {Object} props - The component props.
- * @param {Array} props.playlist - The playlist.
- * @param {Function} props.onSongClick - The function to handle song click.
- * @param {Array} props.songs - The songs in the playlist.
- * @param {Function} props.deleteSong - The function to delete a song.
- * @param {Function} props.deleteSongs - The function to delete multiple songs.
- * @returns {JSX.Element} The PlaylistContent component.
- */
 const PlaylistContent = ({
   playlist,
   onSongClick,
   songs,
   deleteSong,
   deleteSongs,
+  fetchSongs, // Add this prop to refetch songs
 }) => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [contextMenu, setContextMenu] = useState({
@@ -44,14 +35,9 @@ const PlaylistContent = ({
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [editedSong, setEditedSong] = useState({}); // Initialize as an empty object
   const contextMenuRef = useRef(null);
 
-  /**
-   * Handles the selection of a song.
-   *
-   * @param {Object} song - The selected song.
-   * @param {Object} event - The click event.
-   */
   const selectSong = (song, event) => {
     event.preventDefault();
     if (event.ctrlKey) {
@@ -69,11 +55,6 @@ const PlaylistContent = ({
   };
 
   useEffect(() => {
-    /**
-     * Handles the click outside of the context menu.
-     *
-     * @param {Object} event - The click event.
-     */
     const handleClickOutside = (event) => {
       if (
         contextMenuRef.current &&
@@ -84,15 +65,12 @@ const PlaylistContent = ({
     };
 
     if (contextMenu.visible) {
-      // Adds the event listener for mousedown when the context menu is visible.
       document.addEventListener("mousedown", handleClickOutside);
     } else {
-      // Removes the event listener for mousedown when the context menu is not visible.
       document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      // Cleanup function to remove the event listener on component unmount or when dependencies change.
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [contextMenu.visible]);
@@ -101,12 +79,6 @@ const PlaylistContent = ({
     setContextMenu({ ...contextMenu, visible: false });
   };
 
-  /**
-   * Handles the right click event on a song.
-   *
-   * @param {Object} e - The right click event.
-   * @param {Object} song - The selected song.
-   */
   const handleRightClick = (e, song) => {
     e.preventDefault();
     if (!selectedSongs.includes(song)) {
@@ -120,59 +92,59 @@ const PlaylistContent = ({
     });
   };
 
-  /**
-   * Handles the deletion of a song.
-   *
-   * @param {string} songId - The ID of the song to delete.
-   */
-  const handleDeleteSong = async (songId) => {
-    await deleteSong(songId);
+  const handleDeleteSong = async (playlistId, songId) => {
+    await deleteSong(playlistId, songId);
     closeContextMenu();
   };
 
-  /**
-   * Handles the deletion of multiple songs.
-   *
-   * @param {Array} songIds - The IDs of the songs to delete.
-   */
   const handleDeleteSongs = async (songIds) => {
-    await deleteSongs(songIds);
+    await deleteSongs(playlist.id, songIds);
     closeContextMenu();
   };
 
-  /**
-   * Opens the modal window.
-   */
   const openModal = () => {
     setIsModalOpen(true);
+    setEditedSong(selectedSongs[0]);
   };
 
-  /**
-   * Closes the modal window.
-   */
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditMode(false);
+    fetchSongs();
   };
 
-  /**
-   * Toggles the edit mode.
-   */
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
+  const toggleEditMode = async () => {
+    if (isEditMode) {
+      // Save the changes
+      try {
+        await axios.put(`http://localhost:8080/api/songs/${editedSong.id}`, {
+          songTitle: editedSong.songTitle,
+          artist: editedSong.artist,
+          selectedGenres: editedSong.selectedGenres,
+          notes: editedSong.notes,
+        });
+        // Update the song in the songs list locally
+        const updatedSongs = songs.map(song =>
+          song.id === editedSong.id ? editedSong : song
+        );
+        setSelectedSongs([editedSong]);
+        setIsModalOpen(false);
+        setIsEditMode(false);
+        fetchSongs();
+      } catch (error) {
+        console.error('Error updating song:', error);
+      }
+    } else {
+      setIsEditMode(true);
+    }
   };
 
-  /**
-   * Handles the change of song details.
-   *
-   * @param {Object} event - The change event.
-   */
   const handleInputChange = (event, field) => {
     const value = event.target.value;
-    setSelectedSongs((prevSelectedSongs) => {
-      const updatedSong = { ...prevSelectedSongs[0], [field]: value };
-      return [updatedSong];
-    });
+    setEditedSong((prevEditedSong) => ({
+      ...prevEditedSong,
+      [field]: field === 'selectedGenres' ? value.split(', ') : value,
+    }));
   };
 
   return (
@@ -231,7 +203,7 @@ const PlaylistContent = ({
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
           {selectedSongs.length === 1 ? (
-            <Button onClick={() => handleDeleteSong(contextMenu.songId)}>
+            <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
               Delete
             </Button>
           ) : (
@@ -246,9 +218,8 @@ const PlaylistContent = ({
         </div>
       )}
 
-      {isModalOpen && (
+      {isModalOpen && editedSong && (
         <>
-          <div className="song-details-modal-background" />
           <Draggable handle=".song-details-window-header">
             <div className="song-details-modal">
               <Window
@@ -283,7 +254,7 @@ const PlaylistContent = ({
                         overflow: isEditMode ? "hidden" : "auto",
                       }}
                     >
-                      {selectedSongs.length > 0 && (
+                      {selectedSongs.length > 0 && editedSong && (
                         <div
                           style={{
                             display: "flex",
@@ -302,14 +273,14 @@ const PlaylistContent = ({
                             <span style={{ flex: 1, textAlign: "left" }}>
                               {isEditMode ? (
                                 <TextInput
-                                  value={selectedSongs[0].songTitle}
+                                  value={editedSong.songTitle || ""}
                                   onChange={(e) =>
                                     handleInputChange(e, "songTitle")
                                   }
                                   fullWidth
                                 />
                               ) : (
-                                selectedSongs[0].songTitle
+                                editedSong.songTitle
                               )}
                             </span>
                           </div>
@@ -324,14 +295,14 @@ const PlaylistContent = ({
                             <span style={{ flex: 1, textAlign: "left" }}>
                               {isEditMode ? (
                                 <TextInput
-                                  value={selectedSongs[0].artist}
+                                  value={editedSong.artist || ""}
                                   onChange={(e) =>
                                     handleInputChange(e, "artist")
                                   }
                                   fullWidth
                                 />
                               ) : (
-                                selectedSongs[0].artist
+                                editedSong.artist
                               )}
                             </span>
                           </div>
@@ -342,43 +313,9 @@ const PlaylistContent = ({
                               marginBottom: "10px",
                             }}
                           >
-                            <span style={{ width: "100px" }}>Genres:</span>
+                            <span style={{ width: "100px" }}>Genre:</span>
                             <span style={{ flex: 1, textAlign: "left" }}>
-                              {isEditMode ? (
-                                <TextInput
-                                  value={selectedSongs[0].selectedGenres.join(
-                                    ", "
-                                  )}
-                                  onChange={(e) =>
-                                    handleInputChange(e, "selectedGenres")
-                                  }
-                                  fullWidth
-                                />
-                              ) : (
-                                selectedSongs[0].selectedGenres.join(", ")
-                              )}
-                            </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            <span style={{ width: "100px" }}>Playlist:</span>
-                            <span style={{ flex: 1, textAlign: "left" }}>
-                              {isEditMode ? (
-                                <TextInput
-                                  value={selectedSongs[0].selectedPlaylists}
-                                  onChange={(e) =>
-                                    handleInputChange(e, "selectedPlaylists")
-                                  }
-                                  fullWidth
-                                />
-                              ) : (
-                                selectedSongs[0].selectedPlaylists
-                              )}
+                              {editedSong.selectedGenres.join(", ")}
                             </span>
                           </div>
                           <div
@@ -392,14 +329,14 @@ const PlaylistContent = ({
                             <span style={{ flex: 1, textAlign: "left" }}>
                               {isEditMode ? (
                                 <TextInput
-                                  value={selectedSongs[0].notes}
+                                  value={editedSong.notes || ""}
                                   onChange={(e) =>
                                     handleInputChange(e, "notes")
                                   }
                                   fullWidth
                                 />
                               ) : (
-                                selectedSongs[0].notes
+                                editedSong.notes
                               )}
                             </span>
                           </div>
