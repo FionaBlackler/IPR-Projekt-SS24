@@ -32,6 +32,7 @@ function AddSong() {
     return text.slice(0, maxLength) + "...";
   };
 
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [mp3File, setMp3File] = useState(null);
   const [jpgFile, setJpgFile] = useState(null);
   const [songTitle, setSongTitle] = useState("");
@@ -88,7 +89,10 @@ function AddSong() {
         }
       );
       console.log("Upload successful");
-      alert("Upload successful");
+      setIsConfirmationOpen(true); // Show confirmation dialog
+      setTimeout(() => {
+        navigate("/musicgallery");
+      }, 3000);
     } catch (error) {
       console.error("Upload failed", error);
       alert("Upload failed");
@@ -418,6 +422,22 @@ function AddSong() {
             </div>
           </div>
         </Draggable>
+        {isConfirmationOpen && (
+          <>
+            <div className="confirmation-background">
+              <div className="confirmation">
+                <Window className="confirmation-window">
+                  <WindowContent>
+                    <p className="success">
+                      Song saved successfully! <br />
+                      You will be redirected to the Music Gallery now.
+                    </p>
+                  </WindowContent>
+                </Window>
+              </div>
+            </div>
+          </>
+        )}
       </ThemeProvider>
     </div>
   );
