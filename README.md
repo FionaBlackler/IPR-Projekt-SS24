@@ -1,22 +1,22 @@
 # Triple F Music Webplayer
 
-Hochschule: HFT Stuttgart;<br>
-Modul: Internetprogrammierung;<br>
-Dozent: Mathias Maciossek;<br>
-Semester: Sommersemester 2024;<br>
-Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
+**Hochschule:** HFT Stuttgart;<br>
+**Modul:** Internetprogrammierung;<br>
+**Dozent:** Mathias Maciossek;<br>
+**Semester:** Sommersemester 2024;<br>
+**Gruppenmitglieder:** Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
 <br>
 Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
 
 ## Projekt Informationen
-Verwendete Sprachen:
+**Verwendete Sprachen:**
 
 - JavaScript
 - HTML
 - CSS
 
-Verwendete Bibliotheken:
+**Verwendete Bibliotheken:**
 
 - React JS
 - React95 component library
@@ -40,8 +40,6 @@ Falls **MySQL** noch nicht installiert ist, lade den MySQL Installer von der off
    CREATE DATABASE musicdb;
    ~~~
 *Annmerkung: Das root-Passwort für die Datenbank ist in **TripleFMusic/Backend/config/config.json** festgelegt und muss durch das **eigene** root-Passwort ersetzt werden.*
-
-
 
 ## Nach dem clonen des Repos
 Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
@@ -102,13 +100,13 @@ Music Gallery:<br>
 ✔ Songdetails anzeigen<br>
 ✔ Songdetails bearbeiten<br>
 ✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
+✔ Nach Playlist suchen<br>
 
 - Song abspielen/pausieren
 - Song vor-/zurückspulen
 - Song erneut abspielen/überspringen
 - Playlist abspielen/zufällig wiedergeben
 - Songs in Playlist sortieren (?)
-- Nach Playlist suchen
 - Nach einzelnen Songs suchen
 - Nach Song im Mixtape suchen<br>
 
