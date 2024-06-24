@@ -389,4 +389,18 @@ router.delete("/delete_profile", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/playlists", async (req, res) => {
+  const { search } = req.query;
+  try {
+    const playlists = search
+      ? await Playlist.findAll({ where: { name: { [Op.iLike]: `%${search}%` } } })
+      : await Playlist.findAll();
+    res.json(playlists);
+  } catch (error) {
+    console.error("Error fetching playlists:", error);
+    res.status(500).json({ message: "Error fetching playlists" });
+  }
+});
+
+
 module.exports = router;
