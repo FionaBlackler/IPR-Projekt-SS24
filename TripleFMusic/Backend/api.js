@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+
 router.post(
   "/songs",
   upload.fields([
@@ -37,12 +38,6 @@ router.post(
     console.log("Received request to save new song");
     const { songTitle, artist, selectedPlaylists, selectedGenres, notes } =
       req.body;
-
-    if (!req.files || !req.files["mp3File"] || !req.files["jpgFile"]) {
-      return res
-        .status(400)
-        .json({ error: "mp3File and jpgFile are required" });
-    }
 
     try {
       const mp3FilePath = req.files["mp3File"][0].path;
