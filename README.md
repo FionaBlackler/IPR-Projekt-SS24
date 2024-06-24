@@ -101,14 +101,15 @@ Music Gallery:<br>
 ✔ Songdetails bearbeiten<br>
 ✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
 ✔ Nach Playlist suchen<br>
-
-- Song abspielen/pausieren
-- Song vor-/zurückspulen
-- Song erneut abspielen/überspringen
-- Playlist abspielen/zufällig wiedergeben
+✔ Nach Song im Mixtape suchen<br>
+✔ Nach einzelnen Songs innerhalb einer Playlist suchen<br>
+✔ Song abspielen/pausieren<br>
+✔ Song vor-/zurückspulen<br>
+✔ Song erneut abspielen/Song skippen<br>
+✔ Playlist von oben der Reihe nach abspielen<br>
+- Playlist geshuffelt abspielen
 - Songs in Playlist sortieren (?)
-- Nach einzelnen Songs suchen
-- Nach Song im Mixtape suchen<br>
+- Nach Song in allen Playlists suchen<br>
 
 Add Song:<br>
 <br>
