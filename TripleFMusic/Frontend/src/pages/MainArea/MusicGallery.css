@@ -31,7 +31,8 @@
 }
 
 .music-gallery-window {
-  width: 90%;
+  width: 70%;
+  height: 80%;
   margin: 20px auto;
   border: 2px solid #000;
   box-shadow: none;
@@ -137,6 +138,7 @@
 .playlist-content {
   width: 80%;
   padding: 10px;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -147,7 +149,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   cursor: default;
 }
 
