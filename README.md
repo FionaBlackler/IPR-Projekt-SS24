@@ -41,7 +41,7 @@ Falls **MySQL** noch nicht installiert ist, lade den MySQL Installer von der off
    ~~~
 *Annmerkung: Das root-Passwort für die Datenbank ist in **TripleFMusic/Backend/config/config.json** festgelegt und muss durch das **eigene** root-Passwort ersetzt werden.*
 
-## Nach dem clonen des Repos
+## Nach dem Clonen des Repos
 Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
 ~~~
 npm install
@@ -101,14 +101,15 @@ Music Gallery:<br>
 ✔ Songdetails bearbeiten<br>
 ✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
 ✔ Nach Playlist suchen<br>
-
-- Song abspielen/pausieren
-- Song vor-/zurückspulen
-- Song erneut abspielen/überspringen
-- Playlist abspielen/zufällig wiedergeben
+✔ Nach Song im Mixtape suchen<br>
+✔ Nach einzelnen Songs innerhalb einer Playlist suchen<br>
+✔ Song abspielen/pausieren<br>
+✔ Song vor-/zurückspulen<br>
+✔ Song erneut abspielen/Song skippen<br>
+✔ Playlist von oben der Reihe nach abspielen<br>
+- Playlist geshuffelt abspielen
 - Songs in Playlist sortieren (?)
-- Nach einzelnen Songs suchen
-- Nach Song im Mixtape suchen<br>
+- Nach Song in allen Playlists suchen<br>
 
 Add Song:<br>
 <br>
