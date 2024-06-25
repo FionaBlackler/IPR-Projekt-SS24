@@ -1,33 +1,34 @@
 # Triple F Music Webplayer
 
-Hochschule: HFT Stuttgart;<br>
-Modul: Internetprogrammierung;<br>
-Dozent: Mathias Maciossek;<br>
-Semester: Sommersemester 2024;<br>
-Gruppenmitglieder: Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
+**Hochschule:** HFT Stuttgart;<br>
+**Modul:** Internetprogrammierung;<br>
+**Dozent:** Mathias Maciossek;<br>
+**Semester:** Sommersemester 2024;<br>
+**Gruppenmitglieder:** Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
 <br>
 Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
 <br>
 
 ## Projekt Informationen
-Verwendete Sprachen:
+**Verwendete Sprachen:**
 
 - JavaScript
 - HTML
 - CSS
 
-Verwendete Bibliotheken:
+**Verwendete Bibliotheken:**
 
 - React JS
 - React95 component library
 
 ## Vor dem Clonen des Repos
-
-Falls MySQL noch nicht installiert ist, lade den MySQL Installer von der offiziellen [MySQL-Website](https://dev.mysql.com/downloads/installer/) herunter und folge den Installationsanweisungen.<br>
+### Node.js
+Falls **Node.js** noch nicht installiert ist, lade Node.js von der offiziellen [Node.js-Webseite](https://nodejs.org/en) herunter und folge den Installationsanweisungen.<br>
+### MySQL
+Falls **MySQL** noch nicht installiert ist, lade den MySQL Installer von der offiziellen [MySQL-Website](https://dev.mysql.com/downloads/installer/) herunter und folge den Installationsanweisungen.<br>
 
 1. **Mit MySQL-Server verbinden**
    Öffne die MySQL-Kommandozeile. Dies kann man durch Suchen nach "MySQL Command Line Client" im Startmenü tun.<br>
-   <br>
    ~~~
    mysql -u root -p
    ~~~
@@ -35,15 +36,12 @@ Falls MySQL noch nicht installiert ist, lade den MySQL Installer von der offizie
 
 2. **Datenbank erstellen**
    Gebe den folgenden Befehl ein, um eine neue Datenbank namens **musicdb** zu erstellen.<br>
-   <br>
    ~~~
    CREATE DATABASE musicdb;
    ~~~
 *Annmerkung: Das root-Passwort für die Datenbank ist in **TripleFMusic/Backend/config/config.json** festgelegt und muss durch das **eigene** root-Passwort ersetzt werden.*
 
-
-
-## Nach dem clonen des Repos
+## Nach dem Clonen des Repos
 Im Frontend (cd TripdleFMusic/Frontend) UND Backend (cd TripleFMusic/Backend):<br>
 ~~~
 npm install
@@ -74,8 +72,6 @@ cd TripleFMusic/Frontend
 npm run dev
 ~~~
 
-
-
 ## User-Stories
 
 Login:<br>
@@ -104,15 +100,16 @@ Music Gallery:<br>
 ✔ Songdetails anzeigen<br>
 ✔ Songdetails bearbeiten<br>
 ✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
-
-- Song abspielen/pausieren
-- Song vor-/zurückspulen
-- Song erneut abspielen/überspringen
-- Playlist abspielen/zufällig wiedergeben
+✔ Nach Playlist suchen<br>
+✔ Nach Song im Mixtape suchen<br>
+✔ Nach einzelnen Songs innerhalb einer Playlist suchen<br>
+✔ Song abspielen/pausieren<br>
+✔ Song vor-/zurückspulen<br>
+✔ Song erneut abspielen/Song skippen<br>
+✔ Playlist von oben der Reihe nach abspielen<br>
+✔ Playlist geshuffelt abspielen <br>
 - Songs in Playlist sortieren (?)
-- Nach Playlist suchen
-- Nach einzelnen Songs suchen
-- Nach Song im Mixtape suchen<br>
+
 
 Add Song:<br>
 <br>

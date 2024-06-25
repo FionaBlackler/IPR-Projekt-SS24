@@ -24,7 +24,7 @@ const PlaylistContent = ({
   songs,
   deleteSong,
   deleteSongs,
-  fetchSongs, // Add this prop to refetch songs
+  fetchSongs,
 }) => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [contextMenu, setContextMenu] = useState({
@@ -38,9 +38,10 @@ const PlaylistContent = ({
   const [editedSong, setEditedSong] = useState({}); // Initialize as an empty object
   const contextMenuRef = useRef(null);
 
+
   const selectSong = (song, event) => {
     event.preventDefault();
-    if (event.ctrlKey) {
+    if (event.ctrlKey|| event.metaKey) {
       setSelectedSongs((prevSelectedSongs) => {
         if (prevSelectedSongs.includes(song)) {
           return prevSelectedSongs.filter((s) => s !== song);
@@ -52,7 +53,7 @@ const PlaylistContent = ({
       setSelectedSongs([song]);
       onSongClick(song);
     }
-  };
+  }; 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -146,25 +147,6 @@ const PlaylistContent = ({
       [field]: field === 'selectedGenres' ? value.split(', ') : value,
     }));
   };
-  
-  function PlaylistContent({ playlist, onSongClick, songs, deleteSong, deleteSongs, fetchSongs }) {
-    return (
-      <div className="playlist-content">
-        <h3>{playlist.name}</h3>
-        <ul>
-          {songs.map((song) => (
-            <li key={song.id}>
-              <a href="#" onClick={() => onSongClick(song)}>
-                {song.songTitle}
-              </a>
-              <button onClick={() => deleteSong(playlist.id, song.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-  
 
   return (
     <ThemeProvider theme={original}>

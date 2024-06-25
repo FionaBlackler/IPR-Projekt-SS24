@@ -23,7 +23,7 @@
     "axios-mock-adapter": "^1.22.0",
     "dotenv": "^16.4.5",
     "jwt-decode": "^4.0.0",
-    "node-fetch": "^3.3.2",
+    "node": "^20.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
+    "@babel/plugin-syntax-jsx": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
     "@testing-library/jest-dom": "^6.4.6",

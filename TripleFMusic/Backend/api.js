@@ -169,7 +169,6 @@ router.get("/playlists/:id/songs", async (req, res) => {
 });
 
 // Route to delete a single song from a specific playlist
-// Route to delete a song from a specific playlist
 router.delete("/playlists/:playlistId/songs/:songId", async (req, res) => {
   try {
     const { playlistId, songId } = req.params;
