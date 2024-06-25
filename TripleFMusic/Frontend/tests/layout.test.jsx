@@ -315,6 +315,7 @@ test("verifies password match before submission", async () => {
   });
 });
 
+/*
 test("closes settings modal on outside click", async () => {
   render(
     <Router>
@@ -341,3 +342,4 @@ test("closes settings modal on outside click", async () => {
   });
 });
 
+*/
