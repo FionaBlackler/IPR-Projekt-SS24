@@ -13,9 +13,10 @@ jest.mock("react-router-dom", () => ({
   Outlet: jest.fn(() => <div>Mocked Outlet</div>) // Mocking Outlet component with a mock content
 }));
 
+const mockLogout = jest.fn();
 jest.mock("../src/authContext.jsx", () => ({
   useAuth: () => ({
-    logout: jest.fn(),
+    logout: mockLogout,
     user: { name: "Test User" },
     isAuthenticated: true,
     login: jest.fn(),
@@ -178,3 +179,165 @@ test("deletes profile successfully", async () => {
     expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
   });
 });
+
+test("toggles password visibility", () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu and settings modal
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+  const settingsMenuItem = screen.getByText(/Settings/i);
+  fireEvent.click(settingsMenuItem);
+
+  // Change password fields
+  const newPasswordInput = screen.getByPlaceholderText("Type new password here...");
+  fireEvent.change(newPasswordInput, { target: { value: 'newPassword123' } });
+
+  // Toggle password visibility
+  const toggleVisibilityButton = screen.getByLabelText(/toggle password visibility/i);
+  fireEvent.click(toggleVisibilityButton);
+
+  // Check if the password input type has changed to text
+  expect(newPasswordInput.type).toBe('text');
+
+  // Toggle password visibility back
+  fireEvent.click(toggleVisibilityButton);
+
+  // Check if the password input type has changed back to password
+  expect(newPasswordInput.type).toBe('password');
+});
+
+test("handles logout correctly", () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+
+  // Click logout
+  const logoutButton = screen.getByText(/Logout/i);
+  fireEvent.click(logoutButton);
+
+  // Check if logout was called and navigation occurred
+  expect(mockLogout).toHaveBeenCalled(); // Use the mockLogout function here
+  expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
+});
+
+test("handles tab change correctly", () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu and settings modal
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+  const settingsMenuItem = screen.getByText(/Settings/i);
+  fireEvent.click(settingsMenuItem);
+
+  // Switch to Edit Profile tab
+  const editProfileTab = screen.getByText(/Edit Profile/i);
+  fireEvent.click(editProfileTab);
+
+  // Verify Edit Profile tab is active
+  expect(editProfileTab.getAttribute("aria-selected")).toBe("true");
+
+  // Switch to Delete Profile tab
+  const deleteProfileTab = screen.getByText(/Delete Profile/i);
+  fireEvent.click(deleteProfileTab);
+
+  // Verify Delete Profile tab is active
+  expect(deleteProfileTab.getAttribute("aria-selected")).toBe("true");
+});
+
+test("handles password input changes correctly", () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu and settings modal
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+  const settingsMenuItem = screen.getByText(/Settings/i);
+  fireEvent.click(settingsMenuItem);
+
+  // Change password input fields
+  const oldPasswordInput = screen.getByPlaceholderText("Type old password here...");
+  const newPasswordInput = screen.getByPlaceholderText("Type new password here...");
+  const confirmPasswordInput = screen.getByPlaceholderText("Confirm new password here...");
+  fireEvent.change(oldPasswordInput, { target: { value: 'oldPassword123' } });
+  expect(oldPasswordInput.value).toBe('oldPassword123');
+  fireEvent.change(newPasswordInput, { target: { value: 'newPassword123' } });
+  expect(newPasswordInput.value).toBe('newPassword123');
+  fireEvent.change(confirmPasswordInput, { target: { value: 'newPassword123' } });
+  expect(confirmPasswordInput.value).toBe('newPassword123');
+});
+
+test("verifies password match before submission", async () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu and settings modal
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+  const settingsMenuItem = screen.getByText(/Settings/i);
+  fireEvent.click(settingsMenuItem);
+
+  // Change password input fields
+  const oldPasswordInput = screen.getByPlaceholderText("Type old password here...");
+  const newPasswordInput = screen.getByPlaceholderText("Type new password here...");
+  const confirmPasswordInput = screen.getByPlaceholderText("Confirm new password here...");
+  fireEvent.change(oldPasswordInput, { target: { value: 'oldPassword123' } });
+  fireEvent.change(newPasswordInput, { target: { value: 'newPassword123' } });
+  fireEvent.change(confirmPasswordInput, { target: { value: 'differentPassword123' } });
+
+  // Click change password button
+  const changePasswordButton = screen.getByRole("button", { name: /Change Password/i });
+  fireEvent.click(changePasswordButton);
+
+  // Check for alert about mismatched passwords
+  await waitFor(() => {
+    expect(window.alert).toHaveBeenCalledWith('New passwords do not match');
+  });
+});
+
+test("closes settings modal on outside click", async () => {
+  render(
+    <Router>
+      <Layout />
+    </Router>
+  );
+
+  // Open the menu and settings modal
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
+  fireEvent.click(buttonElement);
+  const settingsMenuItem = screen.getByText(/Settings/i);
+  fireEvent.click(settingsMenuItem);
+
+  // Check if the settings modal is open
+  const settingsModal = screen.getByText(/Settings/i);
+  expect(settingsModal).toBeInTheDocument();
+
+  // Click outside the modal
+  fireEvent.mouseDown(document.body);
+
+  // Check if the settings modal is closed
+  await waitFor(() => {
+    expect(screen.queryByText(/Settings/i)).not.toBeInTheDocument();
+  });
+});
+
