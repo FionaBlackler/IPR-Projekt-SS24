@@ -1,4 +1,3 @@
-// jest.config.js
 export default {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setupTests.js'],
@@ -14,7 +13,8 @@ export default {
   ],
   moduleNameMapper: {
     '\\.(css|less)$': 'identity-obj-proxy',
-    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/tests/__mocks__/fileMock.js'
+    '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/tests/__mocks__/fileMock.js',
+    '^useAuth$': '<rootDir>/tests/__mocks__/useAuth.js' // Add this line
   },
   transform: {
     '^.+\\.jsx?$': 'babel-jest'
@@ -23,7 +23,6 @@ export default {
     '/node_modules/',
     '/dist/',
     'node_modules/(?!@react-three)'
-
   ],
   roots: [
     '<rootDir>/tests',

@@ -12,6 +12,16 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
+jest.mock("../src/authContext.jsx", () => ({
+  useAuth: () => ({
+    logout: jest.fn(),
+    user: { name: "Test User" },
+    isAuthenticated: true,
+    login: jest.fn(),
+    loading: false,
+  }),
+}));
+
 test("renders Layout component", () => {
   render(
     <Router>
@@ -19,18 +29,15 @@ test("renders Layout component", () => {
     </Router>
   );
 
-  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i }); // Ensure correct role
+  const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
   expect(buttonElement).toBeInTheDocument();
 
-  // Simulate button click to test if the menu toggles
   fireEvent.click(buttonElement);
   expect(mockedUsedNavigate).not.toHaveBeenCalled();
 
-  // Check for menu items after button click
   const menuItem = screen.getByText(/Logout/i);
   expect(menuItem).toBeInTheDocument();
 
-  // Simulate menu item click to test navigation
   fireEvent.click(menuItem);
   expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
 });
@@ -42,7 +49,7 @@ test("renders Header component", () => {
     </Router>
   );
 
-  const logoElement = screen.getByAltText("TripleF Music"); // Match the actual alt text used in Header component
+  const logoElement = screen.getByAltText("TripleF Music");
   expect(logoElement).toBeInTheDocument();
 });
 
@@ -62,13 +69,9 @@ test("navigates to correct route on menu item click", () => {
   );
 
   const buttonElement = screen.getByRole("button", { name: /TripleF Music/i });
-
-  // Simulate button click to open the menu
   fireEvent.click(buttonElement);
 
   const menuItem = screen.getByText(/Logout/i);
-
-  // Simulate menu item click to test navigation
   fireEvent.click(menuItem);
   expect(mockedUsedNavigate).toHaveBeenCalledWith("/");
 });
