@@ -1,10 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { AuthProvider } from "../src/authContext";
+import { AuthProvider, useAuth } from "../src/authContext";
 import { routes } from "../src/main.jsx"; // Ensure the correct import path
 
-jest.mock("../src/layout.jsx", () => () => <div>Mocked Layout</div>);
+jest.mock("../src/layout.jsx", () => ({ children }) => (
+  <div>Mocked Layout{children}</div>
+));
 jest.mock("../src/pages/MainArea/Home.jsx", () => () => <div>Mocked Home</div>);
 jest.mock("../src/pages/MainArea/MusicGallery.jsx", () => () => (
   <div>Mocked Music Gallery</div>
@@ -34,7 +36,14 @@ jest.mock("../src/pages/MainArea/SnakeGame.jsx", () => () => (
 jest.mock("../src/pages/MainArea/ResetPassword.jsx", () => () => (
   <div>Mocked Reset Password</div>
 ));
-jest.mock("../src/PrivateRoute", () => ({ children }) => <>{children}</>);
+
+jest.mock("../src/authContext", () => {
+  const actualAuthContext = jest.requireActual("../src/authContext");
+  return {
+    ...actualAuthContext,
+    useAuth: jest.fn(),
+  };
+});
 
 describe("Main Router", () => {
   beforeAll(() => {
@@ -42,6 +51,11 @@ describe("Main Router", () => {
     const root = document.createElement("div");
     root.setAttribute("id", "root");
     document.body.appendChild(root);
+  });
+
+  beforeEach(() => {
+    const { useAuth } = require("../src/authContext");
+    useAuth.mockReturnValue({ isAuthenticated: true, loading: false });
   });
 
   test("renders welcome page by default", () => {
@@ -96,6 +110,9 @@ describe("Main Router", () => {
         <RouterProvider router={router} />
       </AuthProvider>
     );
+
+    console.log("Rendered HTML:", document.body.innerHTML);
+    console.log("useAuth state:", useAuth.mock.results[0].value);
 
     expect(screen.getByText("Mocked Home")).toBeInTheDocument();
   });
