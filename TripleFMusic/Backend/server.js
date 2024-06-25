@@ -5,7 +5,8 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./models");
 const apiRoutes = require("./api");
-const path = require("path"); // Import path module for handling file paths
+const path = require("path");
+const jwt = require('jsonwebtoken');
 
 
 const app = express();
