@@ -21,7 +21,9 @@ export default {
   },
   testPathIgnorePatterns: [
     '/node_modules/',
-    '/dist/'
+    '/dist/',
+    'node_modules/(?!@react-three)'
+
   ],
   roots: [
     '<rootDir>/tests',

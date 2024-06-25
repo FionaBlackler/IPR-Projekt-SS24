@@ -133,7 +133,7 @@ function Login() {
               <div className="title-bar-login">
                 <WindowHeader className="login-window-header">
                   <span>TripleF Music - Sign in</span>
-                  <Button onClick={() => navigate("/")}>
+                  <Button onClick={() => navigate("/")} data-testid="login-close-button">
                     <span className="login-close-icon" />
                   </Button>
                 </WindowHeader>
@@ -196,7 +196,7 @@ function Login() {
                 <Window className="forgotPassword-modal-window">
                   <WindowHeader className="forgotPassword-window-header">
                     <span>Forgot Password</span>
-                    <Button onClick={closeModal}>
+                    <Button onClick={closeModal} data-testid="forgot-password-close-button">
                       <span className="forgotPassword-close-icon" />
                     </Button>
                   </WindowHeader>

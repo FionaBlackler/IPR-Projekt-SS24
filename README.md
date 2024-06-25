@@ -107,9 +107,9 @@ Music Gallery:<br>
 ✔ Song vor-/zurückspulen<br>
 ✔ Song erneut abspielen/Song skippen<br>
 ✔ Playlist von oben der Reihe nach abspielen<br>
-- Playlist geshuffelt abspielen
+✔ Playlist geshuffelt abspielen <br>
 - Songs in Playlist sortieren (?)
-- Nach Song in allen Playlists suchen<br>
+
 
 Add Song:<br>
 <br>
