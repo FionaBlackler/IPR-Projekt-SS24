@@ -21,16 +21,10 @@ import galleryIcon from "../Images/icons/gallery4.png";
 import addSongIcon from "../Images/icons/addsong2.png";
 import homeIcon from "../Images/icons/computer3.png";
 import internetexplorerIcon from "../Images/icons/internetexplorer.png";
+import { truncateText } from "./truncateText";
 
 function AddSong() {
   const navigate = useNavigate();
-
-  const truncateText = (text, maxLength) => {
-    if (text.length <= maxLength) {
-      return text;
-    }
-    return text.slice(0, maxLength) + "...";
-  };
 
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [mp3File, setMp3File] = useState(null);

@@ -1,5 +1,11 @@
 import React from "react";
-import { render, fireEvent, waitFor, screen } from "@testing-library/react";
+import {
+  render,
+  renderHook,
+  fireEvent,
+  waitFor,
+  screen,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import AddSong from "../../../src/pages/MainArea/AddSong";
@@ -125,13 +131,13 @@ describe("AddSong Component", () => {
   });
 
   test("toggles playlist selection", () => {
-    const { getByLabelText } = render(
+    const { getAllByLabelText } = render(
       <Router>
         <AddSong />
       </Router>
     );
 
-    const playlistCheckbox = getByLabelText("All");
+    const playlistCheckbox = getAllByLabelText("All")[0];
 
     fireEvent.click(playlistCheckbox);
     expect(playlistCheckbox.checked).toBe(true);
@@ -140,16 +146,14 @@ describe("AddSong Component", () => {
     expect(playlistCheckbox.checked).toBe(false);
   });
 
-  /*
-
   test("toggles genre selection", () => {
-    const { getByLabelText } = render(
+    const { getAllByLabelText } = render(
       <Router>
         <AddSong />
       </Router>
     );
 
-    const genreCheckbox = getByLabelText("All");
+    const genreCheckbox = getAllByLabelText("All")[1];
 
     fireEvent.click(genreCheckbox);
     expect(genreCheckbox.checked).toBe(true);
@@ -182,10 +186,19 @@ describe("AddSong Component", () => {
       expect(axios.post).toHaveBeenCalledTimes(1);
     });
 
-    expect(screen.getByText("Song saved successfully!")).toBeInTheDocument();
+    expect(
+      screen.getByText((content, element) => {
+        return (
+          element.tagName.toLowerCase() === "p" &&
+          content.includes("Song saved successfully!")
+        );
+      })
+    ).toBeInTheDocument();
   });
 
   test("navigates to music gallery after successful submission", async () => {
+    jest.spyOn(global, "setTimeout");
+
     const { getByText, getByPlaceholderText } = render(
       <Router>
         <AddSong />
@@ -209,6 +222,133 @@ describe("AddSong Component", () => {
       expect(axios.post).toHaveBeenCalledTimes(1);
     });
 
-    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 3000);
-  }); */
+    await waitFor(() => {
+      expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 2000);
+    });
+
+    global.setTimeout.mockRestore();
+  });
+
+  test("confirmation window closes after timeout", async () => {
+    jest.useFakeTimers();
+    const { getByText, getByPlaceholderText } = render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    axios.post.mockResolvedValue({ data: "Upload successful" });
+    fetch.mockResponseOnce(JSON.stringify([])); // Mock the fetch response
+
+    fireEvent.change(getByPlaceholderText("Add song title"), {
+      target: { value: "Sample Song" },
+    });
+    fireEvent.change(getByPlaceholderText("Add artist name"), {
+      target: { value: "Sample Artist" },
+    });
+
+    const saveButton = getByText("Save");
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(axios.post).toHaveBeenCalledTimes(1);
+    });
+
+    jest.advanceTimersByTime(2000);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Song saved successfully!")
+      ).not.toBeInTheDocument();
+    });
+
+    jest.useRealTimers();
+  });
+
+  test("handles song title input change", () => {
+    const { getByPlaceholderText } = render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    const songTitleInput = getByPlaceholderText("Add song title");
+    fireEvent.change(songTitleInput, { target: { value: "New Song Title" } });
+    expect(songTitleInput.value).toBe("New Song Title");
+  });
+
+  test("handles artist input change", () => {
+    const { getByPlaceholderText } = render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    const artistInput = getByPlaceholderText("Add artist name");
+    fireEvent.change(artistInput, { target: { value: "New Artist Name" } });
+    expect(artistInput.value).toBe("New Artist Name");
+  });
+
+  test("handles individual playlist selection", async () => {
+    const mockPlaylists = [
+      { id: 1, name: "Playlist 1" },
+      { id: 2, name: "Playlist 2" },
+    ];
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockPlaylists),
+    });
+
+    const { findByLabelText } = render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    const playlistCheckbox = await findByLabelText("Playlist 1");
+
+    fireEvent.click(playlistCheckbox);
+    expect(playlistCheckbox.checked).toBe(true);
+
+    fireEvent.click(playlistCheckbox);
+    expect(playlistCheckbox.checked).toBe(false);
+  });
+
+  test("handles individual genre selection", () => {
+    const { getByLabelText } = render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    const genreCheckbox = getByLabelText("Rock");
+
+    fireEvent.click(genreCheckbox);
+    expect(genreCheckbox.checked).toBe(true);
+
+    fireEvent.click(genreCheckbox);
+    expect(genreCheckbox.checked).toBe(false);
+  });
+
+  test("displays error message on fetch playlists failure", async () => {
+    global.fetch.mockRejectedValueOnce(new Error("Failed to fetch"));
+
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    render(
+      <Router>
+        <AddSong />
+      </Router>
+    );
+
+    await waitFor(() => {
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "Error fetching playlists:",
+        expect.any(Error)
+      );
+    });
+
+    consoleErrorSpy.mockRestore();
+  });
 });
