@@ -436,15 +436,7 @@
 <a name='L371'></a><a href='#L371'>371</a>
 <a name='L372'></a><a href='#L372'>372</a>
 <a name='L373'></a><a href='#L373'>373</a>
-<a name='L374'></a><a href='#L374'>374</a>
-<a name='L375'></a><a href='#L375'>375</a>
-<a name='L376'></a><a href='#L376'>376</a>
-<a name='L377'></a><a href='#L377'>377</a>
-<a name='L378'></a><a href='#L378'>378</a>
-<a name='L379'></a><a href='#L379'>379</a>
-<a name='L380'></a><a href='#L380'>380</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L374'></a><a href='#L374'>374</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -475,7 +467,6 @@
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -506,6 +497,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -533,7 +525,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -614,7 +605,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -762,8 +752,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -848,13 +836,10 @@ import {
 import { useAuth } from "../../authContext";
 import Draggable from "react-draggable";
 &nbsp;
-&nbsp;
-&nbsp;
 function Header() {
   const { logout, user } = useAuth();
   const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
 &nbsp;
-  
   const [sure, setSure] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [showPassword, setShowPassword] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
   const [open, setOpen] = <span class="cstat-no" title="statement not covered" >useState(false);</span>
@@ -885,6 +870,7 @@ function Header() {
   const handleWelcomeClick = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    event.stopPropagation();</span>
   };
+&nbsp;
   const handleChange = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(v</span>alue) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    setState({</span>
       activeTab: value,
@@ -903,15 +889,15 @@ function Header() {
 &nbsp;
   const handleChangePassword = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync () =&gt; {</span>
     const { oldPassword, newPassword, confirmPassword } = <span class="cstat-no" title="statement not covered" >state;</span>
-  
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    if (newPassword !== confirmPassword) {</span>
 <span class="cstat-no" title="statement not covered" >      window.alert('New passwords do not match');</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
-  
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    try {</span>
       const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token') || sessionStorage.getItem('token');</span>
-      const response = <span class="cstat-no" title="statement not covered" >await axios.post('http://localhost:8080/api/change_password', {</span>
+<span class="cstat-no" title="statement not covered" >      await axios.post('http://localhost:8080/api/change_password', {</span>
         oldPassword,
         newPassword,
       }, {
@@ -919,13 +905,12 @@ function Header() {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
-      //window.alert(response.data.message);
+&nbsp;
 <span class="cstat-no" title="statement not covered" >      setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });</span>
-<span class="cstat-no" title="statement not covered" >      setSuccess(true); </span>      // Show the success message
-<span class="cstat-no" title="statement not covered" >        setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          setSuccess(false); </span>   // Hide the success message
-        }, 3000); // 3 seconds delay
+<span class="cstat-no" title="statement not covered" >      setSuccess(true);</span>
+<span class="cstat-no" title="statement not covered" >      setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        setSuccess(false);</span>
+      }, 3000); // 3 seconds delay
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      console.error('Error changing password:', error);</span>
 <span class="cstat-no" title="statement not covered" >      window.alert('Error changing password');</span>
@@ -937,7 +922,7 @@ function Header() {
 <span class="cstat-no" title="statement not covered" >      window.alert('Please confirm that you want to delete your profile');</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
-  
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    try {</span>
       const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token') || sessionStorage.getItem('token');</span>
       const response = <span class="cstat-no" title="statement not covered" >await axios.delete('http://localhost:8080/api/delete_profile', {</span>
@@ -945,7 +930,7 @@ function Header() {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
+&nbsp;
 <span class="cstat-no" title="statement not covered" >      window.alert(response.data.message);</span>
 <span class="cstat-no" title="statement not covered" >      logout();</span>
 <span class="cstat-no" title="statement not covered" >      navigate("/");</span>
@@ -993,7 +978,6 @@ function Header() {
     };
   }, [headerRef, menuRef]);
 &nbsp;
-  
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className="main-header" ref={headerRef}&gt;
       &lt;ThemeProvider theme={original}&gt;
@@ -1030,7 +1014,7 @@ function Header() {
                     🤗
                   &lt;/span&gt;
                   &lt;br /&gt;
-                  Welcome {user?.firstname || 'Guest'} {}!
+                  Welcome {user?.firstname || 'Guest'}!
                 &lt;/div&gt;
 &nbsp;
                 &lt;Separator style={{ margin: "4px 0" }} /&gt;
@@ -1109,9 +1093,9 @@ function Header() {
                                 fullWidth
                                 style={{ marginBottom: "10px" }}
                               /&gt;
-                              &lt;span 
-                                role="img" 
-                                aria-label="toggle password visibility" 
+                              &lt;span
+                                role="img"
+                                aria-label="toggle password visibility"
                                 style={{ fontSize: "24px", marginLeft: 580, cursor: "pointer" }}
                                 onClick={toggleShowPassword}
                               &gt;
@@ -1191,8 +1175,6 @@ function Header() {
               &lt;/Window&gt;
             &lt;/Draggable&gt;
           &lt;/div&gt;
-&nbsp;
-          
         )}
       &lt;/ThemeProvider&gt;
     &lt;/div&gt;
@@ -1207,7 +1189,7 @@ export default Header;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-25T14:34:23.160Z
+                at 2024-06-25T19:01:03.036Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
