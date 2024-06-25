@@ -25,13 +25,10 @@ import {
 import { useAuth } from "../../authContext";
 import Draggable from "react-draggable";
 
-
-
 function Header() {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
-  
   const [sure, setSure] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
@@ -62,6 +59,7 @@ function Header() {
   const handleWelcomeClick = (event) => {
     event.stopPropagation();
   };
+
   const handleChange = (value) => {
     setState({
       activeTab: value,
@@ -80,15 +78,15 @@ function Header() {
 
   const handleChangePassword = async () => {
     const { oldPassword, newPassword, confirmPassword } = state;
-  
+
     if (newPassword !== confirmPassword) {
       window.alert('New passwords do not match');
       return;
     }
-  
+
     try {
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-      const response = await axios.post('http://localhost:8080/api/change_password', {
+      await axios.post('http://localhost:8080/api/change_password', {
         oldPassword,
         newPassword,
       }, {
@@ -96,13 +94,12 @@ function Header() {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
-      //window.alert(response.data.message);
+
       setState({ ...state, oldPassword: '', newPassword: '', confirmPassword: '' });
-      setSuccess(true);       // Show the success message
-        setTimeout(() => {
-          setSuccess(false);    // Hide the success message
-        }, 3000); // 3 seconds delay
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000); // 3 seconds delay
     } catch (error) {
       console.error('Error changing password:', error);
       window.alert('Error changing password');
@@ -114,7 +111,7 @@ function Header() {
       window.alert('Please confirm that you want to delete your profile');
       return;
     }
-  
+
     try {
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       const response = await axios.delete('http://localhost:8080/api/delete_profile', {
@@ -122,7 +119,7 @@ function Header() {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
+
       window.alert(response.data.message);
       logout();
       navigate("/");
@@ -170,7 +167,6 @@ function Header() {
     };
   }, [headerRef, menuRef]);
 
-  
   return (
     <div className="main-header" ref={headerRef}>
       <ThemeProvider theme={original}>
@@ -207,7 +203,7 @@ function Header() {
                     🤗
                   </span>
                   <br />
-                  Welcome {user?.firstname || 'Guest'} {}!
+                  Welcome {user?.firstname || 'Guest'}!
                 </div>
 
                 <Separator style={{ margin: "4px 0" }} />
@@ -286,9 +282,9 @@ function Header() {
                                 fullWidth
                                 style={{ marginBottom: "10px" }}
                               />
-                              <span 
-                                role="img" 
-                                aria-label="toggle password visibility" 
+                              <span
+                                role="img"
+                                aria-label="toggle password visibility"
                                 style={{ fontSize: "24px", marginLeft: 580, cursor: "pointer" }}
                                 onClick={toggleShowPassword}
                               >
@@ -368,8 +364,6 @@ function Header() {
               </Window>
             </Draggable>
           </div>
-
-          
         )}
       </ThemeProvider>
     </div>
