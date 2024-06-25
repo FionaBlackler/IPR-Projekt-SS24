@@ -119,7 +119,7 @@ function MusicGallery() {
   };
 
   const selectPlaylist = (playlist, event) => {
-    if (event.ctrlKey || event.metaKey){
+    if (event.ctrlKey || event.metaKey) {
       if (selectedPlaylists.includes(playlist)) {
         setSelectedPlaylists(selectedPlaylists.filter((p) => p !== playlist));
       } else {
@@ -339,7 +339,9 @@ function MusicGallery() {
       return;
     }
     if (songs.length > 0 && currentSong) {
-      const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+      const currentIndex = songs.findIndex(
+        (song) => song.id === currentSong.id
+      );
       const previousIndex = (currentIndex - 1 + songs.length) % songs.length;
       const previousSong = songs[previousIndex];
       handleSongClick(previousSong);
@@ -362,7 +364,9 @@ function MusicGallery() {
         const randomSong = songs[randomIndex];
         handleSongClick(randomSong);
       } else {
-        const currentIndex = songs.findIndex(song => song.id === currentSong.id);
+        const currentIndex = songs.findIndex(
+          (song) => song.id === currentSong.id
+        );
         const nextIndex = (currentIndex + 1) % songs.length;
         const nextSong = songs[nextIndex];
         handleSongClick(nextSong);
@@ -518,29 +522,25 @@ function MusicGallery() {
                       >
                         {filteredPlaylists.map((playlist) => (
                           <div
-                            key={playlist.id}
-                            className={`playlist-item ${
-                              selectedPlaylists.includes(playlist)
-                                ? "selected"
-                                : ""
-                            }`}
-                            data-testid={`playlist-item-${playlist.id}`}
+                          key={playlist.id}
+                          className={`playlist-item ${
+                            selectedPlaylists.includes(playlist) ? "selected" : ""
+                          }`}
+                          data-testid={`playlist-item-${playlist.id}`}
+                        >
+                          <a
+                            className="playlist-link"
+                            href="#"
+                            data-testid={`playlist-link-${playlist.id}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              selectPlaylist(playlist, e);
+                            }}
+                            onContextMenu={(e) => handleRightClick(e, playlist)}
                           >
-                            <a
-                              className="playlist-link"
-                              href="#"
-                              data-testid={`playlist-link-${playlist.id}`}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                selectPlaylist(playlist, e);
-                              }}
-                              onContextMenu={(e) =>
-                                handleRightClick(e, playlist)
-                              }
-                            >
-                              {playlist.name}
-                            </a>
-                          </div>
+                            {playlist.name}
+                          </a>
+                        </div>
                         ))}
                       </div>
                     </ScrollView>
@@ -637,7 +637,7 @@ function MusicGallery() {
                       />
                     </div>
                     <div className="add-playlist-modal-buttons">
-                      <Button onClick={addNewPlaylist}>Add</Button>
+                      <Button data-testid="add-playlist-button" onClick={addNewPlaylist}>Add</Button>
                       <Button onClick={closeModal}>Cancel</Button>
                     </div>
                   </WindowContent>
