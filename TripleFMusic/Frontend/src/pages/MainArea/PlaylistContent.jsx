@@ -25,7 +25,6 @@ const PlaylistContent = ({
   deleteSong,
   deleteSongs,
   fetchSongs,
-  selectedSong, // Add this prop to track the selected song
 }) => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [contextMenu, setContextMenu] = useState({
@@ -56,17 +55,6 @@ const PlaylistContent = ({
     }
   }; 
 
-
-
-  /*
-    const selectSong = (song, event) => {
-    event.preventDefault();
-    setSelectedSongs([song]);
-    onSongClick(song);
-  };
-  
-  */
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -94,7 +82,9 @@ const PlaylistContent = ({
 
   const handleRightClick = (e, song) => {
     e.preventDefault();
-    setSelectedSongs([song]);
+    if (!selectedSongs.includes(song)) {
+      setSelectedSongs([song]);
+    }
     setContextMenu({
       visible: true,
       x: e.clientX - 28,
@@ -157,7 +147,6 @@ const PlaylistContent = ({
       [field]: field === 'selectedGenres' ? value.split(', ') : value,
     }));
   };
-  
 
   return (
     <ThemeProvider theme={original}>
@@ -172,7 +161,7 @@ const PlaylistContent = ({
                     onClick={(e) => selectSong(song, e)}
                     onContextMenu={(e) => handleRightClick(e, song)}
                     className={`playlist-table-row ${
-                      selectedSong === song ? "selected" : ""
+                      selectedSongs.includes(song) ? "selected" : ""
                     }`}
                     style={{ cursor: "pointer" }}
                   >
@@ -214,9 +203,19 @@ const PlaylistContent = ({
           className="delete-song-context-menu"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
-            Delete
-          </Button>
+          {selectedSongs.length === 1 ? (
+            <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
+              Delete
+            </Button>
+          ) : (
+            <Button
+              onClick={() =>
+                handleDeleteSongs(selectedSongs.map((song) => song.id))
+              }
+            >
+              Delete
+            </Button>
+          )}
         </div>
       )}
 
