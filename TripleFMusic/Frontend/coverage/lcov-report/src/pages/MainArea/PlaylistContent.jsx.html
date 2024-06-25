@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.38% </span>
+                <span class="strong">1.31% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/72</span>
+                <span class='fraction'>1/76</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>0/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.44% </span>
+                <span class="strong">1.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/69</span>
+                <span class='fraction'>1/73</span>
             </div>
         
             
@@ -577,6 +577,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -940,6 +959,25 @@ const PlaylistContent = <span class="fstat-no" title="function not covered" >({<
       [field]: field === 'selectedGenres' ? value.split(', ') : value,
     }));
   };
+  
+  function <span class="fstat-no" title="function not covered" >PlaylistContent(</span>{ playlist, onSongClick, songs, deleteSong, deleteSongs, fetchSongs }) {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div className="playlist-content"&gt;
+        &lt;h3&gt;{playlist.name}&lt;/h3&gt;
+        &lt;ul&gt;
+          {songs.map(<span class="fstat-no" title="function not covered" >(s</span>ong) =&gt; (
+<span class="cstat-no" title="statement not covered" >            &lt;li key={song.id}&gt;</span>
+              &lt;a href="#" onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >onSongClick(song)}</span>&gt;
+                {song.songTitle}
+              &lt;/a&gt;
+              &lt;button onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >deleteSong(playlist.id, song.id)}</span>&gt;Delete&lt;/button&gt;
+            &lt;/li&gt;
+          ))}
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    );
+  }
+  
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;ThemeProvider theme={original}&gt;

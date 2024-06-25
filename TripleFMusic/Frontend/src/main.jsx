@@ -31,34 +31,39 @@ const ProtectedLayout = () => {
   );
 };
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<Welcome />} />
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="reset_password" element={<ResetPassword />} />
-      <Route element={<PrivateRoute />}>
-        <Route path="welcome" element={<ProtectedLayout />}>
-          <Route path="home" element={<Home />} />
-          <Route path="musicgallery" element={<MusicGallery />} />
-          <Route path="song" element={<Song />} />
-          <Route path="addsong" element={<AddSong />} />
-          <Route path="about" element={<About />} />
-          <Route path="internet" element={<Internet />} />
-          <Route path="snake" element={<SnakeGame />} />
-        </Route>
+const routes = createRoutesFromElements(
+  <Route path="/">
+    <Route index element={<Welcome />} />
+    <Route path="login" element={<Login />} />
+    <Route path="register" element={<Register />} />
+    <Route path="reset_password" element={<ResetPassword />} />
+    <Route element={<PrivateRoute />}>
+      <Route path="welcome" element={<ProtectedLayout />}>
+        <Route path="home" element={<Home />} />
+        <Route path="musicgallery" element={<MusicGallery />} />
+        <Route path="song" element={<Song />} />
+        <Route path="addsong" element={<AddSong />} />
+        <Route path="about" element={<About />} />
+        <Route path="internet" element={<Internet />} />
+        <Route path="snake" element={<SnakeGame />} />
       </Route>
-      {/* Fallback Route for undefined paths */}
-      <Route path="*" element={<Navigate to="/" />} />
     </Route>
-  )
+    {/* Fallback Route for undefined paths */}
+    <Route path="*" element={<Navigate to="/" />} />
+  </Route>
 );
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  </React.StrictMode>
-);
+const router = createBrowserRouter(routes);
+
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </React.StrictMode>
+  );
+}
+
+export { routes };
