@@ -1,128 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719287618455" clover="3.2.0">
-  <project timestamp="1719287618455" name="All files">
-    <metrics statements="102" coveredstatements="94" conditionals="38" coveredconditionals="32" methods="22" coveredmethods="19" elements="162" coveredelements="145" complexity="0" loc="102" ncloc="102" packages="3" files="4" classes="4"/>
+<coverage generated="1719291016928" clover="3.2.0">
+  <project timestamp="1719291016928" name="All files">
+    <metrics statements="95" coveredstatements="55" conditionals="42" coveredconditionals="21" methods="21" coveredmethods="10" elements="158" coveredelements="86" complexity="0" loc="95" ncloc="95" packages="2" files="2" classes="2"/>
     <package name="src">
-      <metrics statements="30" coveredstatements="30" conditionals="10" coveredconditionals="10" methods="5" coveredmethods="5"/>
+      <metrics statements="30" coveredstatements="14" conditionals="10" coveredconditionals="6" methods="5" coveredmethods="2"/>
       <file name="authContext.jsx" path="/Users/fundasebnemyesiltas/TFMusic/IPR-Projekt-SS24/TripleFMusic/Frontend/src/authContext.jsx">
-        <metrics statements="30" coveredstatements="30" conditionals="10" coveredconditionals="10" methods="5" coveredmethods="5"/>
+        <metrics statements="30" coveredstatements="14" conditionals="10" coveredconditionals="6" methods="5" coveredmethods="2"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="61" type="stmt"/>
-        <line num="8" count="61" type="stmt"/>
-        <line num="9" count="61" type="stmt"/>
-        <line num="11" count="61" type="stmt"/>
-        <line num="12" count="28" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="28" type="cond" truecount="2" falsecount="0"/>
-        <line num="14" count="28" type="cond" truecount="4" falsecount="0"/>
-        <line num="15" count="19" type="stmt"/>
-        <line num="16" count="19" type="stmt"/>
-        <line num="18" count="28" type="stmt"/>
-        <line num="21" count="61" type="stmt"/>
-        <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="29" count="4" type="stmt"/>
-        <line num="30" count="4" type="stmt"/>
-        <line num="33" count="61" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="36" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="42" count="61" type="stmt"/>
+        <line num="7" count="8" type="stmt"/>
+        <line num="8" count="8" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
+        <line num="12" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="4" type="cond" truecount="2" falsecount="2"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="21" count="8" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="33" count="8" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="42" count="8" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
-        <line num="50" count="145" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.models">
-      <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
-      <file name="computer.jsx" path="/Users/fundasebnemyesiltas/TFMusic/IPR-Projekt-SS24/TripleFMusic/Frontend/src/models/computer.jsx">
-        <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="140" type="stmt"/>
-        <line num="9" count="140" type="stmt"/>
-        <line num="10" count="139" type="cond" truecount="1" falsecount="1"/>
-        <line num="11" count="139" type="stmt"/>
-        <line num="12" count="139" type="stmt"/>
-        <line num="13" count="139" type="stmt"/>
-        <line num="17" count="139" type="cond" truecount="1" falsecount="1"/>
-        <line num="18" count="139" type="stmt"/>
-        <line num="19" count="139" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="140" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.pages.MainArea">
-      <metrics statements="60" coveredstatements="52" conditionals="24" coveredconditionals="20" methods="14" coveredmethods="11"/>
-      <file name="Loader.jsx" path="/Users/fundasebnemyesiltas/TFMusic/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Loader.jsx">
-        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-      </file>
-      <file name="Login.jsx" path="/Users/fundasebnemyesiltas/TFMusic/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Login.jsx">
-        <metrics statements="58" coveredstatements="50" conditionals="24" coveredconditionals="20" methods="13" coveredmethods="10"/>
-        <line num="26" count="139" type="stmt"/>
-        <line num="27" count="138" type="stmt"/>
-        <line num="28" count="138" type="stmt"/>
-        <line num="29" count="138" type="stmt"/>
-        <line num="30" count="138" type="stmt"/>
-        <line num="31" count="138" type="stmt"/>
-        <line num="32" count="138" type="stmt"/>
-        <line num="33" count="138" type="stmt"/>
-        <line num="34" count="138" type="stmt"/>
-        <line num="36" count="138" type="stmt"/>
-        <line num="38" count="138" type="stmt"/>
-        <line num="40" count="138" type="stmt"/>
-        <line num="41" count="10" type="cond" truecount="4" falsecount="0"/>
-        <line num="42" count="4" type="stmt"/>
-        <line num="43" count="4" type="stmt"/>
-        <line num="46" count="6" type="stmt"/>
-        <line num="47" count="6" type="stmt"/>
-        <line num="48" count="6" type="stmt"/>
-        <line num="49" count="2" type="stmt"/>
-        <line num="51" count="2" type="stmt"/>
-        <line num="52" count="2" type="stmt"/>
-        <line num="54" count="4" type="stmt"/>
-        <line num="55" count="4" type="stmt"/>
-        <line num="56" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="57" count="4" type="stmt"/>
-        <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="59" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="64" count="6" type="stmt"/>
-        <line num="68" count="138" type="stmt"/>
-        <line num="69" count="13" type="cond" truecount="1" falsecount="1"/>
-        <line num="70" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="74" count="13" type="stmt"/>
-        <line num="75" count="13" type="stmt"/>
-        <line num="76" count="13" type="stmt"/>
-        <line num="77" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="78" count="8" type="stmt"/>
-        <line num="79" count="8" type="stmt"/>
-        <line num="80" count="8" type="stmt"/>
-        <line num="81" count="8" type="stmt"/>
-        <line num="82" count="8" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="88" count="4" type="stmt"/>
-        <line num="90" count="13" type="stmt"/>
-        <line num="94" count="138" type="stmt"/>
-        <line num="95" count="15" type="stmt"/>
-        <line num="98" count="138" type="stmt"/>
-        <line num="99" count="2" type="stmt"/>
-        <line num="102" count="138" type="stmt"/>
-        <line num="103" count="2" type="stmt"/>
-        <line num="106" count="138" type="stmt"/>
-        <line num="136" count="0" type="stmt"/>
-        <line num="147" count="6" type="stmt"/>
-        <line num="154" count="6" type="stmt"/>
-        <line num="171" count="0" type="stmt"/>
-        <line num="184" count="0" type="stmt"/>
-        <line num="208" count="13" type="stmt"/>
+      <metrics statements="65" coveredstatements="41" conditionals="32" coveredconditionals="15" methods="16" coveredmethods="8"/>
+      <file name="Register.jsx" path="/Users/fundasebnemyesiltas/TFMusic/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Register.jsx">
+        <metrics statements="65" coveredstatements="41" conditionals="32" coveredconditionals="15" methods="16" coveredmethods="8"/>
+        <line num="24" count="17" type="stmt"/>
+        <line num="25" count="16" type="stmt"/>
+        <line num="26" count="16" type="stmt"/>
+        <line num="27" count="16" type="stmt"/>
+        <line num="28" count="16" type="stmt"/>
+        <line num="29" count="16" type="stmt"/>
+        <line num="30" count="16" type="stmt"/>
+        <line num="31" count="16" type="stmt"/>
+        <line num="32" count="16" type="stmt"/>
+        <line num="33" count="16" type="stmt"/>
+        <line num="35" count="16" type="stmt"/>
+        <line num="37" count="16" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="16" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="50" count="16" type="stmt"/>
+        <line num="51" count="3" type="cond" truecount="7" falsecount="0"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="56" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="85" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="98" count="16" type="stmt"/>
+        <line num="100" count="16" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+        <line num="104" count="16" type="stmt"/>
+        <line num="105" count="0" type="stmt"/>
+        <line num="108" count="16" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="112" count="16" type="stmt"/>
+        <line num="113" count="0" type="stmt"/>
+        <line num="116" count="16" type="stmt"/>
+        <line num="117" count="0" type="stmt"/>
+        <line num="120" count="16" type="stmt"/>
+        <line num="153" count="2" type="stmt"/>
+        <line num="162" count="2" type="stmt"/>
+        <line num="171" count="2" type="stmt"/>
+        <line num="180" count="2" type="stmt"/>
+        <line num="190" count="2" type="stmt"/>
+        <line num="206" count="1" type="stmt"/>
       </file>
     </package>
   </project>
