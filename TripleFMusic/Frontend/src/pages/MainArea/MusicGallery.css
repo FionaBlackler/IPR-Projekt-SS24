@@ -1,25 +1,25 @@
 .music-gallery-body {
   display: flex;
-  height:58.8rem
+  height: 58.8rem;
 }
 
 .icons-menu {
-  flex:1;
+  flex: 1;
 }
 
-.buffer{
-  height:2rem;
+.buffer {
+  height: 2rem;
 }
 
-.icon{
+.icon {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.space{
-  flex: 7.5; 
+.space {
+  flex: 7.5;
 }
 
 .draggable-window {
@@ -32,7 +32,6 @@
 
 .music-gallery-window {
   width: 90%;
-  height: 80%;
   margin: 20px auto;
   border: 2px solid #000;
   box-shadow: none;
@@ -58,25 +57,25 @@
   margin-top: -1px;
   transform: rotateZ(45deg);
   position: relative;
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    background: black;
-  }
-  &:before {
-    height: 100%;
-    width: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  &:after {
-    height: 3px;
-    width: 100%;
-    left: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+}
+.music-gallery-close-icon:before,
+.music-gallery-close-icon:after {
+  content: "";
+  position: absolute;
+  background: black;
+}
+.music-gallery-close-icon:before {
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.music-gallery-close-icon:after {
+  height: 3px;
+  width: 100%;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .music-gallery {
@@ -101,9 +100,9 @@
 
 .playlist-menu {
   padding: 10px;
-  height: inherit;
   flex-grow: 1;
   overflow-y: auto;
+  height: inherit;
 }
 
 .playlist-item {
@@ -155,6 +154,11 @@
 
 .playlist-header h2 {
   margin: 0;
+}
+
+.playlist-header-buttons {
+  display: flex;
+  gap: 0;
 }
 
 .player-controls {
@@ -270,4 +274,9 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+
+button[active="true"] {
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.2), inset -2px -2px 2px rgba(255, 255, 255, 0.2);
+  background-color: #d3d3d3;
 }

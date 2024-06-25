@@ -91,7 +91,7 @@ function AddSong() {
       console.log("Upload successful");
       setIsConfirmationOpen(true); // Show confirmation dialog
       setTimeout(() => {
-        navigate("/musicgallery");
+        navigate("/welcome/musicgallery");
       }, 3000);
     } catch (error) {
       console.error("Upload failed", error);

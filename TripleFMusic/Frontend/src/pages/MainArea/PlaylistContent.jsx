@@ -24,7 +24,8 @@ const PlaylistContent = ({
   songs,
   deleteSong,
   deleteSongs,
-  fetchSongs, // Add this prop to refetch songs
+  fetchSongs,
+  selectedSong, // Add this prop to track the selected song
 }) => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [contextMenu, setContextMenu] = useState({
@@ -38,9 +39,10 @@ const PlaylistContent = ({
   const [editedSong, setEditedSong] = useState({}); // Initialize as an empty object
   const contextMenuRef = useRef(null);
 
+
   const selectSong = (song, event) => {
     event.preventDefault();
-    if (event.ctrlKey) {
+    if (event.ctrlKey|| event.metaKey) {
       setSelectedSongs((prevSelectedSongs) => {
         if (prevSelectedSongs.includes(song)) {
           return prevSelectedSongs.filter((s) => s !== song);
@@ -52,7 +54,18 @@ const PlaylistContent = ({
       setSelectedSongs([song]);
       onSongClick(song);
     }
+  }; 
+
+
+
+  /*
+    const selectSong = (song, event) => {
+    event.preventDefault();
+    setSelectedSongs([song]);
+    onSongClick(song);
   };
+  
+  */
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -81,9 +94,7 @@ const PlaylistContent = ({
 
   const handleRightClick = (e, song) => {
     e.preventDefault();
-    if (!selectedSongs.includes(song)) {
-      setSelectedSongs([song]);
-    }
+    setSelectedSongs([song]);
     setContextMenu({
       visible: true,
       x: e.clientX - 28,
@@ -147,24 +158,6 @@ const PlaylistContent = ({
     }));
   };
   
-  function PlaylistContent({ playlist, onSongClick, songs, deleteSong, deleteSongs, fetchSongs }) {
-    return (
-      <div className="playlist-content">
-        <h3>{playlist.name}</h3>
-        <ul>
-          {songs.map((song) => (
-            <li key={song.id}>
-              <a href="#" onClick={() => onSongClick(song)}>
-                {song.songTitle}
-              </a>
-              <button onClick={() => deleteSong(playlist.id, song.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-  
 
   return (
     <ThemeProvider theme={original}>
@@ -179,7 +172,7 @@ const PlaylistContent = ({
                     onClick={(e) => selectSong(song, e)}
                     onContextMenu={(e) => handleRightClick(e, song)}
                     className={`playlist-table-row ${
-                      selectedSongs.includes(song) ? "selected" : ""
+                      selectedSong === song ? "selected" : ""
                     }`}
                     style={{ cursor: "pointer" }}
                   >
@@ -221,19 +214,9 @@ const PlaylistContent = ({
           className="delete-song-context-menu"
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
         >
-          {selectedSongs.length === 1 ? (
-            <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
-              Delete
-            </Button>
-          ) : (
-            <Button
-              onClick={() =>
-                handleDeleteSongs(selectedSongs.map((song) => song.id))
-              }
-            >
-              Delete
-            </Button>
-          )}
+          <Button onClick={() => handleDeleteSong(playlist.id, contextMenu.songId)}>
+            Delete
+          </Button>
         </div>
       )}
 
