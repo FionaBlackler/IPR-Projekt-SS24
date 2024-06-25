@@ -1,26 +1,26 @@
-import React from "react";
-import { render, screen, fireEvent, within, act } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
-import ComputerCanvas from "../../../src/models/computer";
-import Login from "../../../src/pages/MainArea/Login";
-import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import { AuthProvider, useAuth } from "../../../src/authContext";
-import Loader from "../../../src/pages/MainArea/Loader";
+import React from 'react';
+import { render, screen, fireEvent, within, act } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import ComputerCanvas from '../../../src/models/computer';
+import Login from '../../../src/pages/MainArea/Login';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+import { AuthProvider, useAuth } from '../../../src/authContext';
+import Loader from '../../../src/pages/MainArea/Loader';
 
 // Mocking useNavigate from react-router-dom
 const mockedUsedNavigate = jest.fn();
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUsedNavigate,
 }));
 
 // Mocking react-three-fiber and drei
-jest.mock("@react-three/fiber", () => ({
+jest.mock('@react-three/fiber', () => ({
   Canvas: ({ children }) => <div>{children}</div>,
 }));
 
-jest.mock("@react-three/drei", () => ({
+jest.mock('@react-three/drei', () => ({
   Html: ({ children }) => <div>{children}</div>,
   OrbitControls: () => null,
   Preload: () => null,
@@ -46,11 +46,7 @@ const TestComponent = () => {
 
   return (
     <div>
-      <button
-        onClick={() => login("fake-token", true, { username: "testuser" })}
-      >
-        Login
-      </button>
+      <button onClick={() => login('fake-token', true, { username: 'testuser' })}>Login</button>
       <button onClick={logout}>Logout</button>
       {user && <span>{user.username}</span>}
     </div>
@@ -62,7 +58,7 @@ beforeEach(() => {
   mockAxios.reset();
 });
 
-test("forgot password modal shows and hides correctly", () => {
+test('forgot password modal shows and hides correctly', () => {
   render(
     <Router>
       <AuthProvider>
@@ -76,20 +72,16 @@ test("forgot password modal shows and hides correctly", () => {
   expect(screen.getByPlaceholderText(/Enter your email/i)).toBeInTheDocument();
 
   // Suchen Sie das 'Forgot Password'-Modal im DOM
-  const modal = screen.getByText(/Forgot Password/).closest("div");
+  const modal = screen.getByText(/Forgot Password/).closest('div');
 
   // Suchen Sie das Schließen-Button im Modal und klicken Sie darauf
-  const closeButton = within(modal).getByTestId("forgot-password-close-button");
+  const closeButton = within(modal).getByTestId('forgot-password-close-button');
   fireEvent.click(closeButton);
-  expect(
-    screen.queryByPlaceholderText(/Enter your email/i)
-  ).not.toBeInTheDocument();
+  expect(screen.queryByPlaceholderText(/Enter your email/i)).not.toBeInTheDocument();
 });
 
-test("forgot password button triggers API call on success", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('forgot password button triggers API call on success', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -100,25 +92,19 @@ test("forgot password button triggers API call on success", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
-
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
+  
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 });
 
-test("login button triggers API call and navigation on success", async () => {
-  mockAxios.onPost("http://localhost:8080/api/login").reply(200, {
-    token: "fake-token",
-    user: { username: "testuser" },
+test('login button triggers API call and navigation on success', async () => {
+  mockAxios.onPost('http://localhost:8080/api/login').reply(200, {
+    token: 'fake-token',
+    user: { username: 'testuser' }
   });
 
   render(
@@ -130,27 +116,23 @@ test("login button triggers API call and navigation on success", async () => {
   );
 
   // Füllen Sie die Anmeldedaten aus
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
   // Suchen Sie den spezifischen Login-Button im Anmeldeformular und klicken Sie darauf
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
-
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
+  
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
   // Überprüfen Sie, ob die Navigation zur Startseite stattgefunden hat
-  expect(mockedUsedNavigate).toHaveBeenCalledWith("/welcome/home");
+  expect(mockedUsedNavigate).toHaveBeenCalledWith('/welcome/home');
 });
 
-test("login sets user and token", async () => {
+test('login sets user and token', async () => {
   render(
     <AuthProvider>
       <TestComponent />
@@ -162,10 +144,10 @@ test("login sets user and token", async () => {
   });
 
   expect(screen.getByText(/testuser/i)).toBeInTheDocument();
-  expect(localStorage.getItem("token")).toBe("fake-token");
+  expect(localStorage.getItem('token')).toBe('fake-token');
 });
 
-test("logout clears user and token", async () => {
+test('logout clears user and token', async () => {
   render(
     <AuthProvider>
       <TestComponent />
@@ -181,21 +163,21 @@ test("logout clears user and token", async () => {
   });
 
   expect(screen.queryByText(/testuser/i)).not.toBeInTheDocument();
-  expect(localStorage.getItem("token")).toBeNull();
+  expect(localStorage.getItem('token')).toBeNull();
 });
 
-test("renders ComputerCanvas component", () => {
+test('renders ComputerCanvas component', () => {
   const { container } = render(<ComputerCanvas />);
   expect(container).toBeInTheDocument();
 });
 
-test("renders Loader component", () => {
+test('renders Loader component', () => {
   const { container } = render(<Loader />);
   expect(container).toBeInTheDocument();
-  expect(container.querySelector(".loader-container")).toBeInTheDocument();
+  expect(container.querySelector('.loader-container')).toBeInTheDocument();
 });
 
-test("shows alert if username or password is missing", () => {
+test('shows alert if username or password is missing', () => {
   window.alert = jest.fn();
 
   render(
@@ -206,19 +188,17 @@ test("shows alert if username or password is missing", () => {
     </Router>
   );
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
-
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
+  
   fireEvent.click(loginButton);
-  expect(window.alert).toHaveBeenCalledWith(
-    "Please enter both username and password."
-  );
+  expect(window.alert).toHaveBeenCalledWith('Please enter both username and password.');
 });
 
-test("shows alert if login fails", async () => {
+test('shows alert if login fails', async () => {
   window.alert = jest.fn();
-  mockAxios.onPost("http://localhost:8080/api/login").reply(401);
+  mockAxios.onPost('http://localhost:8080/api/login').reply(401);
 
   render(
     <Router>
@@ -228,30 +208,22 @@ test("shows alert if login fails", async () => {
     </Router>
   );
 
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
-  expect(window.alert).toHaveBeenCalledWith(
-    "Login failed. Please check your credentials and try again."
-  );
+  expect(window.alert).toHaveBeenCalledWith('Login failed. Please check your credentials and try again.');
 });
 
-test("handles forgot password submission", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('handles forgot password submission', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -262,22 +234,16 @@ test("handles forgot password submission", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 });
 
-test("handles forgot password modal open and close", () => {
+test('handles forgot password modal open and close', () => {
   render(
     <Router>
       <AuthProvider>
@@ -289,13 +255,11 @@ test("handles forgot password modal open and close", () => {
   fireEvent.click(screen.getByText(/Forgot password\?/i));
   expect(screen.getByPlaceholderText(/Enter your email/i)).toBeInTheDocument();
 
-  fireEvent.click(screen.getByTestId("forgot-password-close-button"));
-  expect(
-    screen.queryByPlaceholderText(/Enter your email/i)
-  ).not.toBeInTheDocument();
+  fireEvent.click(screen.getByTestId('forgot-password-close-button'));
+  expect(screen.queryByPlaceholderText(/Enter your email/i)).not.toBeInTheDocument();
 });
 
-test("toggles password visibility", () => {
+test('toggles password visibility', () => {
   render(
     <Router>
       <AuthProvider>
@@ -304,34 +268,23 @@ test("toggles password visibility", () => {
     </Router>
   );
 
-  const toggleButton = screen.getByRole("img", {
-    name: /toggle password visibility/i,
-  });
+  const toggleButton = screen.getByRole('img', { name: /toggle password visibility/i });
 
   fireEvent.click(toggleButton);
-  expect(screen.getByPlaceholderText(/Password/i)).toHaveAttribute(
-    "type",
-    "text"
-  );
+  expect(screen.getByPlaceholderText(/Password/i)).toHaveAttribute('type', 'text');
 
   fireEvent.click(toggleButton);
-  expect(screen.getByPlaceholderText(/Password/i)).toHaveAttribute(
-    "type",
-    "password"
-  );
+  expect(screen.getByPlaceholderText(/Password/i)).toHaveAttribute('type', 'password');
 });
 
-test("shows loading state during login", async () => {
-  mockAxios.onPost("http://localhost:8080/api/login").reply(() => {
-    return new Promise((resolve) => {
+test('shows loading state during login', async () => {
+  mockAxios.onPost('http://localhost:8080/api/login').reply(() => {
+    return new Promise(resolve => {
       setTimeout(() => {
-        resolve([
-          200,
-          {
-            token: "fake-token",
-            user: { username: "testuser" },
-          },
-        ]);
+        resolve([200, {
+          token: 'fake-token',
+          user: { username: 'testuser' }
+        }]);
       }, 100); // Verzögerung simulieren
     });
   });
@@ -344,36 +297,28 @@ test("shows loading state during login", async () => {
     </Router>
   );
 
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
   // Überprüfen, ob der Ladezustand angezeigt wird
-  expect(
-    screen.getByRole("button", { name: /Loading.../i })
-  ).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Loading.../i })).toBeInTheDocument();
 
   // Warten, bis die Anfrage abgeschlossen ist
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise(resolve => setTimeout(resolve, 200));
   });
 });
 
-test("shows success message and hides modal on successful password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('shows success message and hides modal on successful password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -384,28 +329,18 @@ test("shows success message and hides modal on successful password reset", async
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.queryByPlaceholderText(/Enter your email/i)
-  ).not.toBeInTheDocument();
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.queryByPlaceholderText(/Enter your email/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 });
 
-test("navigates to login page after successful password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('navigates to login page after successful password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -416,23 +351,19 @@ test("navigates to login page after successful password reset", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
-  expect(mockedUsedNavigate).toHaveBeenCalledWith("/login");
+  expect(mockedUsedNavigate).toHaveBeenCalledWith('/login');
 });
 
-test("handles no user found during forgot password", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: false });
+test('handles no user found during forgot password', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: false });
 
   render(
     <Router>
@@ -443,21 +374,17 @@ test("handles no user found during forgot password", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(window.alert).toHaveBeenCalledWith(
-    "No user found with the provided email."
-  );
+  expect(window.alert).toHaveBeenCalledWith('No user found with the provided email.');
 });
 
-test("handles error during forgot password", async () => {
-  mockAxios.onPost("http://localhost:8080/api/forgot_password").reply(500);
+test('handles error during forgot password', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(500);
 
   render(
     <Router>
@@ -468,21 +395,17 @@ test("handles error during forgot password", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(window.alert).toHaveBeenCalledWith("Error requesting password reset");
+  expect(window.alert).toHaveBeenCalledWith('Error requesting password reset');
 });
 
-test("sets success message and closes modal after password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('sets success message and closes modal after password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -493,25 +416,17 @@ test("sets success message and closes modal after password reset", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
-  expect(
-    screen.queryByPlaceholderText(/Enter your email/i)
-  ).not.toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
+  expect(screen.queryByPlaceholderText(/Enter your email/i)).not.toBeInTheDocument();
 });
 
-test("handleLogin sets loading state when username or password is missing", async () => {
+test('handleLogin sets loading state when username or password is missing', async () => {
   render(
     <Router>
       <AuthProvider>
@@ -520,18 +435,16 @@ test("handleLogin sets loading state when username or password is missing", asyn
     </Router>
   );
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
-
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
+  
   fireEvent.click(loginButton);
-  expect(
-    screen.queryByRole("button", { name: /Loading.../i })
-  ).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /Loading.../i })).not.toBeInTheDocument();
 });
 
-test("handleLogin sets loading state when API call fails", async () => {
-  mockAxios.onPost("http://localhost:8080/api/login").reply(500);
+test('handleLogin sets loading state when API call fails', async () => {
+  mockAxios.onPost('http://localhost:8080/api/login').reply(500);
 
   render(
     <Router>
@@ -541,28 +454,22 @@ test("handleLogin sets loading state when API call fails", async () => {
     </Router>
   );
 
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
-  expect(
-    screen.queryByRole("button", { name: /Loading.../i })
-  ).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: /Loading.../i })).not.toBeInTheDocument();
 });
 
-test("handles error during forgot password request", async () => {
-  mockAxios.onPost("http://localhost:8080/api/forgot_password").reply(500);
+test('handles error during forgot password request', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(500);
 
   render(
     <Router>
@@ -573,24 +480,18 @@ test("handles error during forgot password request", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(window.alert).toHaveBeenCalledWith("Error requesting password reset");
-  expect(
-    screen.queryByRole("button", { name: /Sending.../i })
-  ).not.toBeInTheDocument();
+  expect(window.alert).toHaveBeenCalledWith('Error requesting password reset');
+  expect(screen.queryByRole('button', { name: /Sending.../i })).not.toBeInTheDocument();
 });
 
-test("shows and hides success message after password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('shows and hides success message after password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -601,33 +502,23 @@ test("shows and hides success message after password reset", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
   });
 
-  expect(
-    screen.queryByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).not.toBeInTheDocument();
+  expect(screen.queryByText(/Inquiry sent. Please check your email for further instructions./i)).not.toBeInTheDocument();
 });
 
 // Test to handle the case when username or password is missing
-test("handleLogin sets loading state when username or password is missing", () => {
+test('handleLogin sets loading state when username or password is missing', () => {
   render(
     <Router>
       <AuthProvider>
@@ -636,21 +527,17 @@ test("handleLogin sets loading state when username or password is missing", () =
     </Router>
   );
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   fireEvent.click(loginButton);
-  expect(window.alert).toHaveBeenCalledWith(
-    "Please enter both username and password."
-  );
-  expect(
-    screen.queryByRole("button", { name: /Loading.../i })
-  ).not.toBeInTheDocument();
+  expect(window.alert).toHaveBeenCalledWith('Please enter both username and password.');
+  expect(screen.queryByRole('button', { name: /Loading.../i })).not.toBeInTheDocument();
 });
 // Test to handle the case when API call fails during login
-test("handleLogin sets loading state when API call fails", async () => {
-  mockAxios.onPost("http://localhost:8080/api/login").reply(500);
+test('handleLogin sets loading state when API call fails', async () => {
+  mockAxios.onPost('http://localhost:8080/api/login').reply(500);
 
   render(
     <Router>
@@ -660,32 +547,24 @@ test("handleLogin sets loading state when API call fails", async () => {
     </Router>
   );
 
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
-  expect(window.alert).toHaveBeenCalledWith(
-    "Login failed. Please check your credentials and try again."
-  );
-  expect(
-    screen.queryByRole("button", { name: /Loading.../i })
-  ).not.toBeInTheDocument();
+  expect(window.alert).toHaveBeenCalledWith('Login failed. Please check your credentials and try again.');
+  expect(screen.queryByRole('button', { name: /Loading.../i })).not.toBeInTheDocument();
 });
 
 // Test to handle error during forgot password request
-test("handles error during forgot password request", async () => {
-  mockAxios.onPost("http://localhost:8080/api/forgot_password").reply(500);
+test('handles error during forgot password request', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(500);
 
   render(
     <Router>
@@ -696,25 +575,19 @@ test("handles error during forgot password request", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(window.alert).toHaveBeenCalledWith("Error requesting password reset");
-  expect(
-    screen.queryByRole("button", { name: /Sending.../i })
-  ).not.toBeInTheDocument();
+  expect(window.alert).toHaveBeenCalledWith('Error requesting password reset');
+  expect(screen.queryByRole('button', { name: /Sending.../i })).not.toBeInTheDocument();
 });
 
 // Test to show and hide success message after password reset
-test("shows and hides success message after password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('shows and hides success message after password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -725,33 +598,24 @@ test("shows and hides success message after password reset", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
   });
 
-  expect(
-    screen.queryByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).not.toBeInTheDocument();
+  expect(screen.queryByText(/Inquiry sent. Please check your email for further instructions./i)).not.toBeInTheDocument();
 });
+
 
 // Test to handle the case when username or password is missing
-test("handleLogin sets loading state when username or password is missing", () => {
+test('handleLogin sets loading state when username or password is missing', () => {
   render(
     <Router>
       <AuthProvider>
@@ -760,19 +624,17 @@ test("handleLogin sets loading state when username or password is missing", () =
     </Router>
   );
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   fireEvent.click(loginButton);
-  expect(window.alert).toHaveBeenCalledWith(
-    "Please enter both username and password."
-  );
+  expect(window.alert).toHaveBeenCalledWith('Please enter both username and password.');
 });
 
 // Test to handle the case when API call fails during login
-test("handleLogin sets loading state when API call fails", async () => {
-  mockAxios.onPost("http://localhost:8080/api/login").reply(500);
+test('handleLogin sets loading state when API call fails', async () => {
+  mockAxios.onPost('http://localhost:8080/api/login').reply(500);
 
   render(
     <Router>
@@ -782,29 +644,23 @@ test("handleLogin sets loading state when API call fails", async () => {
     </Router>
   );
 
-  fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-    target: { value: "testuser" },
-  });
-  fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-    target: { value: "testpassword" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Username/i), { target: { value: 'testuser' } });
+  fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'testpassword' } });
 
-  const loginButton = screen
-    .getAllByText(/Login/i)
-    .find((button) => button.closest(".login-container"));
+  const loginButton = screen.getAllByText(/Login/i).find(button => 
+    button.closest('.login-container')
+  );
 
   await act(async () => {
     fireEvent.click(loginButton);
   });
 
-  expect(window.alert).toHaveBeenCalledWith(
-    "Login failed. Please check your credentials and try again."
-  );
+  expect(window.alert).toHaveBeenCalledWith('Login failed. Please check your credentials and try again.');
 });
 
 // Test to handle error during forgot password request
-test("handles error during forgot password request", async () => {
-  mockAxios.onPost("http://localhost:8080/api/forgot_password").reply(500);
+test('handles error during forgot password request', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(500);
 
   render(
     <Router>
@@ -815,22 +671,18 @@ test("handles error during forgot password request", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(window.alert).toHaveBeenCalledWith("Error requesting password reset");
+  expect(window.alert).toHaveBeenCalledWith('Error requesting password reset');
 });
 
 // Test to show and hide success message after password reset
-test("shows and hides success message after password reset", async () => {
-  mockAxios
-    .onPost("http://localhost:8080/api/forgot_password")
-    .reply(200, { userExists: true });
+test('shows and hides success message after password reset', async () => {
+  mockAxios.onPost('http://localhost:8080/api/forgot_password').reply(200, { userExists: true });
 
   render(
     <Router>
@@ -841,27 +693,17 @@ test("shows and hides success message after password reset", async () => {
   );
 
   fireEvent.click(screen.getByText(/Forgot password\?/i));
-  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), {
-    target: { value: "testemail@example.com" },
-  });
+  fireEvent.change(screen.getByPlaceholderText(/Enter your email/i), { target: { value: 'testemail@example.com' } });
 
   await act(async () => {
     fireEvent.click(screen.getByText(/Send Inquiry/i));
   });
 
-  expect(
-    screen.getByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).toBeInTheDocument();
+  expect(screen.getByText(/Inquiry sent. Please check your email for further instructions./i)).toBeInTheDocument();
 
   await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
   });
 
-  expect(
-    screen.queryByText(
-      /Inquiry sent. Please check your email for further instructions./i
-    )
-  ).not.toBeInTheDocument();
+  expect(screen.queryByText(/Inquiry sent. Please check your email for further instructions./i)).not.toBeInTheDocument();
 });
