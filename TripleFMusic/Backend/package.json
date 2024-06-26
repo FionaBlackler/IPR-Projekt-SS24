@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test:backend": "jest --config ./jest.config.js --coverage"
+    "test:backend": "jest --config ./jest.config.js --coverage",
+    "test:api": "jest tests/api.test.js --coverage"
   },
   "keywords": [],
   "author": "",
@@ -32,25 +33,7 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^3.1.4",
-    "nyc": "^17.0.0",
     "sequelize-mock": "^0.10.2",
     "supertest": "^6.3.4"
-  },
-  "jest": {
-    "testEnvironment": "node"
-  },
-  "nyc": {
-    "reporter": [
-      "text",
-      "html"
-    ],
-    "all": true,
-    "include": [
-      "src//*.js"
-    ],
-    "exclude": [
-      "/node_modules/",
-      "/tests/**"
-    ]
   }
 }

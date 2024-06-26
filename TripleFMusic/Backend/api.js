@@ -144,6 +144,12 @@ router.delete("/playlists/:id", async (req, res) => {
 // Route to fetch songs for a specific playlist
 router.get("/playlists/:id/songs", async (req, res) => {
   const playlistId = req.params.id;
+
+  // Add validation for playlist ID format
+  if (!/^\d+$/.test(playlistId)) {
+    return res.status(400).json({ message: 'Invalid playlist ID format' });
+  }
+
   try {
     const playlist = await Playlist.findByPk(playlistId, {
       include: [
@@ -400,6 +406,5 @@ router.get("/playlists", async (req, res) => {
     res.status(500).json({ message: "Error fetching playlists" });
   }
 });
-
 
 module.exports = router;
