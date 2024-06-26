@@ -1,11 +1,18 @@
-// __mocks__/axios.js
-const mockAxios = jest.genMockFromModule('axios');
+const axios = jest.genMockFromModule('axios');
+const MockAdapter = require('axios-mock-adapter');
 
-mockAxios.create = jest.fn(() => mockAxios);
+// Create an instance of MockAdapter and configure it
+const mockAxios = new MockAdapter(axios);
 
-mockAxios.get = jest.fn();
-mockAxios.post = jest.fn();
-mockAxios.put = jest.fn();
-mockAxios.delete = jest.fn();
+// Mock methods provided by axios
+axios.create = jest.fn(() => axios);
+axios.get = jest.fn();
+axios.post = jest.fn();
+axios.put = jest.fn();
+axios.delete = jest.fn();
+axios.reset = () => {
+  mockAxios.reset();
+};
 
-export default mockAxios;
+// Export the axios instance
+module.exports = axios;

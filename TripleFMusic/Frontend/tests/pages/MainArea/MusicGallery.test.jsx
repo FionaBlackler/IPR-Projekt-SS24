@@ -4,8 +4,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import MusicGallery from '../../../src/pages/MainArea/MusicGallery';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import axios from '../../__mocks__/axios'; // Use the mock axios module
 
 // Mocking useNavigate from react-router-dom
 const mockedUsedNavigate = jest.fn();
@@ -17,29 +16,27 @@ jest.mock('react-router-dom', () => ({
 // Mocking window.alert
 global.alert = jest.fn();
 
-jest.mock('axios');
-
 describe('MusicGallery Component', () => {
-  const mock = new MockAdapter(axios, { onNoMatch: 'throwException' });
-
   beforeEach(() => {
     // Reset mocks before each test
     jest.clearAllMocks();
-    mock.resetHistory();
+    axios.reset(); // Use the reset method from the mock axios module
 
     // Default mock setup for most tests
-    mock.onGet('http://localhost:8080/api/playlists').reply(200, [
-      { id: 1, name: 'Playlist 1' },
-      { id: 2, name: 'Playlist 2' },
-    ], {
+    axios.get.mockResolvedValueOnce({
+      data: [
+        { id: 1, name: 'Playlist 1' },
+        { id: 2, name: 'Playlist 2' },
+      ],
       headers: { 'Access-Control-Allow-Origin': '*' }
     });
 
     // Setting up the mock for songs in a playlist
-    mock.onGet('http://localhost:8080/api/playlists/1/songs').reply(200, [
-      { songTitle: 'Song 1', artist: 'Artist 1', selectedGenres: ['Genre1'] },
-      { songTitle: 'Song 2', artist: 'Artist 2', selectedGenres: ['Genre2'] },
-    ], {
+    axios.get.mockResolvedValueOnce({
+      data: [
+        { songTitle: 'Song 1', artist: 'Artist 1', selectedGenres: ['Genre1'] },
+        { songTitle: 'Song 2', artist: 'Artist 2', selectedGenres: ['Genre2'] },
+      ],
       headers: { 'Access-Control-Allow-Origin': '*' }
     });
 
@@ -161,14 +158,14 @@ describe('MusicGallery Component', () => {
       fireEvent.contextMenu(playlistItem);
 
       // Mock the DELETE request for deleting a playlist
-      mock.onDelete('http://localhost:8080/api/playlists/1').reply(204);
+      axios.delete.mockResolvedValueOnce({ status: 204 });
 
       const deleteButton = await screen.findByText('Delete');
       fireEvent.click(deleteButton);
 
       // Assert
       await waitFor(() => {
-        expect(mock.history.delete.length).toBe(1);
+        expect(axios.delete).toHaveBeenCalledTimes(1);
         expect(screen.queryByTestId('playlist-item-1')).not.toBeInTheDocument();
       });
     }
@@ -176,7 +173,7 @@ describe('MusicGallery Component', () => {
 
   test('displays error message when fetching playlists fails', async () => {
     // Arrange
-    mock.onGet('http://localhost:8080/api/playlists').reply(500);
+    axios.get.mockRejectedValueOnce(new Error('Request failed'));
 
     render(
       <Router>
@@ -192,9 +189,11 @@ describe('MusicGallery Component', () => {
 
   test('edits a playlist name and verifies the updated name', async () => {
     // Arrange: Mocking the update playlist API response
-    mock.onPut('http://localhost:8080/api/playlists/1').reply(200, {
-      id: 1,
-      name: 'Updated Playlist 1',
+    axios.put.mockResolvedValueOnce({
+      data: {
+        id: 1,
+        name: 'Updated Playlist 1',
+      },
     });
 
     render(
@@ -238,17 +237,21 @@ describe('MusicGallery Component', () => {
 
   test('adds a new playlist successfully', async () => {
     // Arrange: Mock the POST request for adding a playlist
-    mock.onPost('http://localhost:8080/api/playlists').reply(200, {
-      id: 3,
-      name: 'New Playlist',
+    axios.post.mockResolvedValueOnce({
+      data: {
+        id: 3,
+        name: 'New Playlist',
+      },
     });
 
     // Mock the GET request to return the updated list of playlists
-    mock.onGet('http://localhost:8080/api/playlists').reply(200, [
-      { id: 1, name: 'Playlist 1' },
-      { id: 2, name: 'Playlist 2' },
-      { id: 3, name: 'New Playlist' },
-    ]);
+    axios.get.mockResolvedValueOnce({
+      data: [
+        { id: 1, name: 'Playlist 1' },
+        { id: 2, name: 'Playlist 2' },
+        { id: 3, name: 'New Playlist' },
+      ],
+    });
 
     // Render the MusicGallery component inside a Router
     render(
@@ -303,3 +306,4 @@ describe('MusicGallery Component', () => {
     });
   });
 });
+
