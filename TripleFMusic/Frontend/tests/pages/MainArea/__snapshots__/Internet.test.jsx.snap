@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Internet Component matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="internet-body"
+  >
+    <div
+      class="icons-menu"
+    >
+      <div
+        style="height: 3rem;"
+      />
+      <div>
+        <a
+          class="icon"
+        >
+          <img
+            alt="About"
+            src="test-file-stub"
+            style="margin-right: 4px;"
+          />
+          <span>
+            About
+          </span>
+        </a>
+      </div>
+      <div
+        class="buffer"
+      />
+      <div>
+        <a
+          class="icon"
+        >
+          <img
+            alt="home"
+            src="test-file-stub"
+            style="margin-right: 4px;"
+          />
+          <span>
+            Home
+          </span>
+        </a>
+      </div>
+      <div
+        class="buffer"
+      />
+      <div>
+        <a
+          class="icon"
+        >
+          <img
+            alt="Music Gallery"
+            src="test-file-stub"
+            style="margin-right: 4px;"
+          />
+          <span>
+            Music Gallery
+          </span>
+        </a>
+      </div>
+      <div
+        class="buffer"
+      />
+      <div>
+        <a
+          class="icon"
+        >
+          <img
+            alt="addsong"
+            src="test-file-stub"
+            style="margin-right: 4px;"
+          />
+          <span>
+            Upload new song
+          </span>
+        </a>
+      </div>
+      <div
+        class="buffer"
+      />
+      <div>
+        <a
+          class="icon"
+        >
+          <img
+            alt="internetexplorer"
+            src="test-file-stub"
+            style="margin-right: 4px;"
+          />
+          <span>
+            Internet Explorer
+          </span>
+        </a>
+      </div>
+    </div>
+    <div
+      class="space"
+    />
+    <div
+      class="draggable-window-internet react-draggable"
+      style="transform: translate(100px,50px);"
+    >
+      <div
+        class="sc-lcIQwB brMtzx internet-window"
+      >
+        <div
+          class="sc-jxOSYQ cXImuS internet-window-header"
+        >
+          <span>
+            Microsoft Internet Explorer - [No Document]
+          </span>
+          <button
+            class="sc-dcJtft gGzOWQ"
+            type="button"
+            variant="default"
+          >
+            <span
+              class="internet-close-icon"
+            />
+          </button>
+        </div>
+        <div
+          class="sc-dCFGXG dsYMML"
+        >
+          <button
+            class="sc-dcJtft ikfceh"
+            type="button"
+            variant="menu"
+          >
+            File
+          </button>
+          <button
+            class="sc-dcJtft ikfceh"
+            type="button"
+            variant="menu"
+          >
+            Edit
+          </button>
+          <button
+            class="sc-dcJtft ikfceh"
+            type="button"
+            variant="menu"
+          >
+            View
+          </button>
+          <button
+            class="sc-dcJtft eBZzQn"
+            disabled=""
+            type="button"
+            variant="menu"
+          >
+            Favorites
+          </button>
+          <button
+            class="sc-dcJtft ikfceh"
+            type="button"
+            variant="menu"
+          >
+            Help
+          </button>
+        </div>
+        <div
+          class="separator-horizontal"
+        />
+        <div
+          class="sc-fhzEvr heDfsD internet-container"
+        >
+          <div
+            class="address-input-container"
+          >
+            <span>
+              Address:
+            </span>
+            <div
+              class="sc-dhKdPU sc-feUYzb gySDZy bKpwcv textinput"
+              data-testid="variant-default"
+            >
+              <input
+                class="sc-hzhKNl hFvftg"
+                placeholder="Type address here..."
+                type="text"
+                variant="default"
+              />
+            </div>
+            <button
+              class="sc-dcJtft gGzOWQ button-retry"
+              type="button"
+              variant="default"
+            >
+              ↻
+            </button>
+          </div>
+          <div
+            class="sc-cPiJYC eIKBiO"
+          />
+          <div
+            class="internet-message-container"
+          >
+            <span
+              class="internet-text"
+            >
+              Unfortunately no internet connection could be established.
+            </span>
+            <div
+              class="internet-button-container"
+            >
+              <button
+                class="sc-dcJtft gGzOWQ button-game"
+                type="button"
+                variant="default"
+              >
+                Snake me up!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

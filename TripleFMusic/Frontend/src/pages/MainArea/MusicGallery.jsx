@@ -72,6 +72,8 @@ function MusicGallery() {
   }, []);
 
   useEffect(() => {
+    console.log("Search query:", searchQuery);
+    console.log("Filtered playlists before update:", filteredPlaylists);
     if (searchQuery === "") {
       setFilteredPlaylists(playlists);
     } else {
