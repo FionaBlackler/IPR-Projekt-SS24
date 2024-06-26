@@ -593,10 +593,10 @@ function MusicGallery() {
                     )}
                     <div className="player-song-info">
                       <div className="player-song-title">
-                        {currentSong ? currentSong.songTitle : "Song Title"}
+                        {currentSong ? currentSong.songTitle : ""}
                       </div>
                       <div className="player-song-artist">
-                        {currentSong ? currentSong.artist : "Artist Name"}
+                        {currentSong ? currentSong.artist : ""}
                       </div>
                     </div>
                   </div>
