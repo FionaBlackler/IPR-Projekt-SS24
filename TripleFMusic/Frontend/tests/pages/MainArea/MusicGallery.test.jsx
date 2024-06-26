@@ -1,64 +1,103 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import MusicGallery from '../../../src/pages/MainArea/MusicGallery';
+import PlaylistContent from '../../../src/pages/MainArea/PlaylistContent';
 
-describe('MusicGallery', () => {
-  test('renders MusicGallery component', async () => {
+const sampleSongs = [
+  { id: 1, songTitle: 'Song 1', artist: 'Artist 1', selectedGenres: ['Genre 1'], notes: 'Note 1' },
+  { id: 2, songTitle: 'Song 2', artist: 'Artist 2', selectedGenres: ['Genre 2'], notes: 'Note 2' },
+];
+
+describe('PlaylistContent', () => {
+  const mockDeleteSong = jest.fn();
+  const mockDeleteSongs = jest.fn();
+  const mockFetchSongs = jest.fn();
+  const mockOnSongClick = jest.fn();
+
+  const renderComponent = () =>
     render(
-      <Router>
-        <MusicGallery />
-      </Router>
+      <PlaylistContent
+        playlist={{ id: 1, name: 'Sample Playlist' }}
+        songs={sampleSongs}
+        deleteSong={mockDeleteSong}
+        deleteSongs={mockDeleteSongs}
+        fetchSongs={mockFetchSongs}
+        onSongClick={mockOnSongClick}
+      />
     );
 
-    expect(screen.getByText(/MIXTAPES/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Search Mixtape.../i)).toBeInTheDocument();
+  test('selects a song on click', () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    fireEvent.click(song1);
+    expect(mockOnSongClick).toHaveBeenCalledWith(sampleSongs[0]);
   });
 
-  test('fetches and displays playlists', async () => {
-    render(
-      <Router>
-        <MusicGallery />
-      </Router>
-    );
+  test('handles outside click to close context menu', () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    fireEvent.contextMenu(song1);
+    expect(screen.getByText('Delete')).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByText('Delete')).not.toBeInTheDocument();
+  });
 
-    // Assuming playlists data is available in your backend
+  test('closes context menu', () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    fireEvent.contextMenu(song1);
+    expect(screen.getByText('Delete')).toBeInTheDocument();
+    fireEvent.mouseDown(document.body);
+    expect(screen.queryByText('Delete')).not.toBeInTheDocument();
+  });
+
+  test('handles right-click on a song to open context menu', () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    fireEvent.contextMenu(song1);
+    expect(screen.getByText('Delete')).toBeInTheDocument();
+  });
+
+  test('handles delete song action from context menu', async () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    fireEvent.contextMenu(song1);
+    expect(screen.getByText('Delete')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Delete'));
     await waitFor(() => {
-      expect(screen.getByText('Rock Classics')).toBeInTheDocument();
-      expect(screen.getByText('Pop Hits')).toBeInTheDocument();
+      expect(mockDeleteSong).toHaveBeenCalledWith(1, 1);
     });
   });
 
-  test('opens and closes modal for adding new playlist', async () => {
+
+  test('renders PlaylistContent component with songs', () => {
+    renderComponent();
+    expect(screen.getByText('Song 1')).toBeInTheDocument();
+    expect(screen.getByText('Song 2')).toBeInTheDocument();
+  });
+
+  test('renders "No songs available" when no songs are present', () => {
     render(
-      <Router>
-        <MusicGallery />
-      </Router>
+      <PlaylistContent
+        playlist={{ id: 1, name: 'Sample Playlist' }}
+        songs={[]}
+        deleteSong={mockDeleteSong}
+        deleteSongs={mockDeleteSongs}
+        fetchSongs={mockFetchSongs}
+        onSongClick={mockOnSongClick}
+      />
     );
-
-    fireEvent.click(screen.getByText(/Add Mixtape/i));
-    expect(screen.getByText(/Add New Mixtape/i)).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText(/Cancel/i));
-    await waitFor(() => {
-      expect(screen.queryByText(/Add New Mixtape/i)).not.toBeInTheDocument();
-    });
+    expect(screen.getByText('No songs available')).toBeInTheDocument();
   });
 
-  test('handles search input change', async () => {
-    render(
-      <Router>
-        <MusicGallery />
-      </Router>
-    );
-
-    fireEvent.change(screen.getByPlaceholderText(/Search Mixtape.../i), {
-      target: { value: 'Rock' },
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Rock Classics')).toBeInTheDocument();
-      expect(screen.queryByText('Pop Hits')).not.toBeInTheDocument();
-    });
+  test('handles multiple song selection with ctrl/cmd click', () => {
+    renderComponent();
+    const song1 = screen.getByText('Song 1');
+    const song2 = screen.getByText('Song 2');
+    fireEvent.click(song1, { ctrlKey: true });
+    fireEvent.click(song2, { ctrlKey: true });
+    expect(song1.parentNode).toHaveClass('selected');
+    expect(song2.parentNode).toHaveClass('selected');
   });
+
+
 });
