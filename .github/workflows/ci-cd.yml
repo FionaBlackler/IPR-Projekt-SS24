@@ -92,7 +92,7 @@ jobs:
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build . -- Dockerfile --tag triplef/tut:${{steps.version.outputs.tag}}
+        run: docker build . -- Dockerfile --tag fionablackler/tut:${{steps.version.outputs.tag}}
 
       - name: Push to DockerHub
         run: docker push triplef/tut:${{steps.version.outputs.tag}}
