@@ -1086,7 +1086,7 @@ function Header() {
                     🤗
                   &lt;/span&gt;
                   &lt;br /&gt;
-                  Welcome {user?.firstname || <span class="branch-1 cbranch-no" title="branch not covered" >'Guest'}</span>!
+                  Welcome {user?.firstname || 'Guest'}!
                 &lt;/div&gt;
 &nbsp;
                 &lt;Separator style={{ margin: "4px 0" }} /&gt;
@@ -1137,7 +1137,7 @@ function Header() {
                             &lt;div style={{ marginBottom: "10px" }}&gt;
                               &lt;span style={{ display: "block", marginBottom: "5px" }}&gt;Old Password:&lt;/span&gt;
                               &lt;TextInput
-                                type={showPassword ? <span class="branch-0 cbranch-no" title="branch not covered" >"text" </span>: "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="oldPassword"
                                 value={oldPassword}
                                 placeholder="Type old password here..."
@@ -1147,7 +1147,7 @@ function Header() {
                               /&gt;
                               &lt;span style={{ display: "block", marginBottom: "5px" }}&gt;New Password:&lt;/span&gt;
                               &lt;TextInput
-                                type={showPassword ? <span class="branch-0 cbranch-no" title="branch not covered" >"text" </span>: "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="newPassword"
                                 value={newPassword}
                                 placeholder="Type new password here..."
@@ -1157,7 +1157,7 @@ function Header() {
                               /&gt;
                               &lt;span style={{ display: "block", marginBottom: "5px" }}&gt;Confirm New Password:&lt;/span&gt;
                               &lt;TextInput
-                                type={showPassword ? <span class="branch-0 cbranch-no" title="branch not covered" >"text" </span>: "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="confirmPassword"
                                 value={confirmPassword}
                                 placeholder="Confirm new password here..."
@@ -1171,7 +1171,7 @@ function Header() {
                                 style={{ fontSize: "24px", marginLeft: 580, cursor: "pointer" }}
                                 onClick={toggleShowPassword}
                               &gt;
-                                {showPassword ? <span class="branch-0 cbranch-no" title="branch not covered" >"🙈" </span>: "👁️"}
+                                {showPassword ? "🙈" : "👁️"}
                               &lt;/span&gt;
                               &lt;Button onClick={handleChangePassword} style={{ width: "100%", marginTop: "10px" }}&gt;Change Password&lt;/Button&gt;
                               {message &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;p&gt;{message}&lt;/p&gt;}</span>
