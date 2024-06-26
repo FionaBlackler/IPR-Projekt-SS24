@@ -48,12 +48,17 @@ jobs:
       - name: Install dependencies
         working-directory: ./TripleFMusic/Backend
         run: npm install
-        
 
-      # Vorübergehend Backend-Tests deaktivieren
-      #- name: Run tests
-      #  working-directory: ./TripleFMusic/Backend
-      #  run: npm test
+      - name: Set up environment variables
+        run: |
+          echo "DB_USERNAME=root" >> $GITHUB_ENV
+          echo "DB_PASSWORD=fifafu455.." >> $GITHUB_ENV
+          echo "DB_NAME=musicdb" >> $GITHUB_ENV
+          echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
+
+      - name: Run tests
+        working-directory: ./TripleFMusic/Backend
+        run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
