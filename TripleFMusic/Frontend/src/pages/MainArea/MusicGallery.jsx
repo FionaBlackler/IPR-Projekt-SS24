@@ -488,8 +488,8 @@ function MusicGallery() {
                   <Frame
                     variant="field"
                     style={{
-                      width: "20%",
-                      height: "476px",
+                      width: "30%",
+                      height: "417px",
                       backgroundColor: "#ffffff",
                       borderLeft: "3px solid #333333",
                       borderTop: "3px solid #333333",
@@ -517,32 +517,36 @@ function MusicGallery() {
                       />
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
-                    <ScrollView style={{ height: 287 }}>
+                    <ScrollView style={{ height: 230, padding: 0 }}>
                       <div
                         className="playlist-menu"
                         data-testid="playlist-menu"
                       >
                         {filteredPlaylists.map((playlist) => (
                           <div
-                          key={playlist.id}
-                          className={`playlist-item ${
-                            selectedPlaylists.includes(playlist) ? "selected" : ""
-                          }`}
-                          data-testid={`playlist-item-${playlist.id}`}
-                        >
-                          <a
-                            className="playlist-link"
-                            href="#"
-                            data-testid={`playlist-link-${playlist.id}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              selectPlaylist(playlist, e);
-                            }}
-                            onContextMenu={(e) => handleRightClick(e, playlist)}
+                            key={playlist.id}
+                            className={`playlist-item ${
+                              selectedPlaylists.includes(playlist)
+                                ? "selected"
+                                : ""
+                            }`}
+                            data-testid={`playlist-item-${playlist.id}`}
                           >
-                            {playlist.name}
-                          </a>
-                        </div>
+                            <a
+                              className="playlist-link"
+                              href="#"
+                              data-testid={`playlist-link-${playlist.id}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                selectPlaylist(playlist, e);
+                              }}
+                              onContextMenu={(e) =>
+                                handleRightClick(e, playlist)
+                              }
+                            >
+                              {playlist.name}
+                            </a>
+                          </div>
                         ))}
                       </div>
                     </ScrollView>
@@ -562,7 +566,9 @@ function MusicGallery() {
                         <div className="search-bar">
                           <TextInput
                             value={songSearchQuery}
-                            onChange={(e) => setSongSearchQuery(e.target.value)}
+                            onChange={(e) =>
+                              setSongSearchQuery(e.target.value)
+                            }
                             placeholder="Search Songs..."
                             style={{ marginBottom: "10px" }}
                           />
@@ -593,10 +599,10 @@ function MusicGallery() {
                     )}
                     <div className="player-song-info">
                       <div className="player-song-title">
-                        {currentSong ? currentSong.songTitle : "Song Title"}
+                        {currentSong ? currentSong.songTitle : ""}
                       </div>
                       <div className="player-song-artist">
-                        {currentSong ? currentSong.artist : "Artist Name"}
+                        {currentSong ? currentSong.artist : ""}
                       </div>
                     </div>
                   </div>
@@ -639,7 +645,12 @@ function MusicGallery() {
                       />
                     </div>
                     <div className="add-playlist-modal-buttons">
-                      <Button data-testid="add-playlist-button" onClick={addNewPlaylist}>Add</Button>
+                      <Button
+                        data-testid="add-playlist-button"
+                        onClick={addNewPlaylist}
+                      >
+                        Add
+                      </Button>
                       <Button onClick={closeModal}>Cancel</Button>
                     </div>
                   </WindowContent>

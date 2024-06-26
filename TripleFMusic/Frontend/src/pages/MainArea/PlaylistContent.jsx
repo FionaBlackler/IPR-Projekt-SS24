@@ -16,7 +16,7 @@ import { ThemeProvider } from "styled-components";
 import Draggable from "react-draggable";
 import original from "react95/dist/themes/original";
 import "./PlaylistContent.css";
-import axios from '../../axiosConfig'; // Import your Axios instance
+import axios from '../../axiosConfig';
 
 const PlaylistContent = ({
   playlist,
@@ -35,7 +35,7 @@ const PlaylistContent = ({
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedSong, setEditedSong] = useState({}); // Initialize as an empty object
+  const [editedSong, setEditedSong] = useState({});
   const contextMenuRef = useRef(null);
 
 
