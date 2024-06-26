@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test:backend": "jest --config ./jest.config.js --coverage",
+    "test:api": "jest tests/api.test.js --coverage"
   },
   "keywords": [],
   "author": "",

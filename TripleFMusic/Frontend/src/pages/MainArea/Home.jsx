@@ -61,7 +61,7 @@ function Home() {
           >
             <img
               src={galleryIcon}
-              alt="Music Gallery"
+              alt="MusicGallery"
               style={{ marginRight: 4 }}
             />
             <span>Music Gallery</span>
