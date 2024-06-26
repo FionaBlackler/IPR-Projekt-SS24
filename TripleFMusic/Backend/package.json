@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "nyc --reporter=html --reporter=text jest",
     "start": "nodemon server.js"
   },
   "keywords": [],
@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "bcrpyt": "^2.0.0",
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -32,7 +32,17 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^3.1.4",
+    "nyc": "^17.0.0",
     "sequelize-mock": "^0.10.2",
     "supertest": "^6.3.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "nyc": {
+    "reporter": ["text", "html"],
+    "all": true,
+    "include": ["src//*.js"],
+    "exclude": ["/node_modules/", "/tests/**"]
   }
 }
