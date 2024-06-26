@@ -14,7 +14,7 @@ describe('Home Component', () => {
     // Check for the presence of all icons
     expect(screen.getByAltText('About')).toBeInTheDocument();
     expect(screen.getByAltText('home')).toBeInTheDocument();
-    expect(screen.getByAltText('Music Gallery')).toBeInTheDocument();
+    expect(screen.getByAltText('MusicGallery')).toBeInTheDocument();
     expect(screen.getByAltText('addsong')).toBeInTheDocument();
     expect(screen.getByAltText('internetexplorer')).toBeInTheDocument();
   });
@@ -32,41 +32,60 @@ describe('Home Component', () => {
     fireEvent.click(screen.getByAltText('About'));
     await waitFor(() => expect(container.innerHTML).toMatch('About Page'));
   });
-/*
-  test('navigates to other pages on click', async () => {
+
+  test('navigates to home page on click', async () => {
     const { container } = render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/welcome/home" element={<div>Home Page</div>} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByAltText('home'));
+    await waitFor(() => expect(container.innerHTML).toMatch('Home Page'));
+  });
+
+  test('navigates to music gallery page on click', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/welcome/musicgallery" element={<div>Music Gallery Page</div>} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByAltText('MusicGallery'));
+    await waitFor(() => expect(container.innerHTML).toMatch('Music Gallery Page'));
+  });
+
+  test('navigates to add song page on click', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/welcome/addsong" element={<div>Add Song Page</div>} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByAltText('addsong'));
+    await waitFor(() => expect(container.innerHTML).toMatch('Add Song Page'));
+  });
+
+  test('navigates to internet explorer page on click', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/welcome/internet" element={<div>Internet Explorer Page</div>} />
         </Routes>
       </MemoryRouter>
     );
 
-    // Function to click link by its text content
-    const clickLinkByText = (text) => {
-      const link = screen.getByText(text);
-      fireEvent.click(link);
-    };
-
-    // Click on Home
-    clickLinkByText('Home');
-    await waitFor(() => expect(container.innerHTML).toMatch('Home Page'));
-
-    // Click on Music Gallery
-    clickLinkByText('Music Gallery');
-    await waitFor(() => expect(container.innerHTML).toMatch('Music Gallery Page'));
-
-    // Click on Upload new song
-    clickLinkByText('Upload new song');
-    await waitFor(() => expect(container.innerHTML).toMatch('Add Song Page'));
-
-    // Click on Internet Explorer
-    clickLinkByText('Internet Explorer');
+    fireEvent.click(screen.getByAltText('internetexplorer'));
     await waitFor(() => expect(container.innerHTML).toMatch('Internet Explorer Page'));
   });
-  */
 });
