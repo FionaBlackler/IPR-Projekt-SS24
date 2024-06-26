@@ -7,6 +7,8 @@ module.exports = {
       'migrations/**/*.js',
       'models/**/*.js',
       'services/**/*.js',
+      'backend/**/*.js',
+      '!src/**/*.test.js',
       '!node_modules/**',
       '!**/node_modules/**'
     ],
@@ -24,4 +26,3 @@ module.exports = {
       '^@services/(.*)$': '<rootDir>/services/$1',
     },
   };
-  

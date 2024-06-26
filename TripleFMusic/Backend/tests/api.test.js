@@ -1,8 +1,9 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('../api'); // Ensure this path is correct
+const router = require('../api'); // Adjust the path as needed
 const bodyParser = require('body-parser');
-const { Sequelize, DataTypes } = require('sequelize');
+const fs = require('fs');
+const path = require('path');
 
 // Mock Sequelize models
 jest.mock('../models', () => {
@@ -13,9 +14,14 @@ jest.mock('../models', () => {
     name: 'Test Playlist'
   });
 
-  // Add findByPk method
   PlaylistMock.findByPk = jest.fn((id) => {
-    return PlaylistMock.build({ id, name: 'Test Playlist' });
+    const playlist = PlaylistMock.build({ id, name: 'Test Playlist' });
+    playlist.Songs = [{
+      id: 1,
+      songTitle: 'Test Song',
+      artist: 'Test Artist'
+    }];
+    return Promise.resolve(playlist);
   });
 
   const SongsMock = dbMock.define('Songs', {
@@ -70,5 +76,45 @@ describe('API Tests', () => {
     expect(response.status).toBe(204);
   });
 
+  it('should create a new song', async () => {
+    const mp3Buffer = fs.readFileSync(path.join(__dirname, 'test_files/sample.mp3'));
+    const jpgBuffer = fs.readFileSync(path.join(__dirname, 'test_files/sample.jpg'));
+
+    const response = await request(app)
+      .post('/songs')
+      .field('songTitle', 'New Song')
+      .field('artist', 'New Artist')
+      .field('selectedPlaylists', '[]')
+      .field('selectedGenres', '[]')
+      .field('notes', 'Some notes')
+      .attach('mp3File', mp3Buffer, 'sample.mp3')
+      .attach('jpgFile', jpgBuffer, 'sample.jpg');
+
+    expect(response.status).toBe(201);
+    expect(response.body.songTitle).toBe('New Song');
+  });
+  
+  it('should fetch songs for a playlist', async () => {
+    const response = await request(app).get('/playlists/1/songs');
+
+    if (response.status !== 200) {
+      console.error('Error response:', response.body);
+    }
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 for invalid playlist ID format', async () => {
+    const response = await request(app).get('/playlists/invalid-id/songs');
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid playlist ID format');
+  });
+
+  it('should return 400 for creating a playlist without a name', async () => {
+    const response = await request(app).post('/playlists').send({});
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Playlist name is required');
+  });
   
 });
