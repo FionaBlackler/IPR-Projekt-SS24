@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719400174622" clover="3.2.0">
-  <project timestamp="1719400174622" name="All files">
-    <metrics statements="545" coveredstatements="332" conditionals="243" coveredconditionals="106" methods="155" coveredmethods="86" elements="943" coveredelements="524" complexity="0" loc="545" ncloc="545" packages="3" files="14" classes="14"/>
+<coverage generated="1719411019056" clover="3.2.0">
+  <project timestamp="1719411019057" name="All files">
+    <metrics statements="545" coveredstatements="332" conditionals="243" coveredconditionals="107" methods="155" coveredmethods="86" elements="943" coveredelements="525" complexity="0" loc="545" ncloc="545" packages="3" files="14" classes="14"/>
     <package name="src">
       <metrics statements="37" coveredstatements="36" conditionals="14" coveredconditionals="12" methods="6" coveredmethods="6"/>
-      <file name="PrivateRoute.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/PrivateRoute.jsx">
+      <file name="PrivateRoute.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/PrivateRoute.jsx">
         <metrics statements="6" coveredstatements="5" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="7" type="stmt"/>
@@ -13,7 +13,7 @@
         <line num="11" count="0" type="stmt"/>
         <line num="14" count="7" type="cond" truecount="1" falsecount="1"/>
       </file>
-      <file name="authContext.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/authContext.jsx">
+      <file name="authContext.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/authContext.jsx">
         <metrics statements="30" coveredstatements="30" conditionals="10" coveredconditionals="10" methods="5" coveredmethods="5"/>
         <line num="4" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
@@ -46,14 +46,14 @@
         <line num="49" count="3" type="stmt"/>
         <line num="50" count="98" type="stmt"/>
       </file>
-      <file name="axiosConfig.js" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/axiosConfig.js">
+      <file name="axiosConfig.js" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/axiosConfig.js">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="8" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.models">
       <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
-      <file name="computer.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/models/computer.jsx">
+      <file name="computer.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/models/computer.jsx">
         <metrics statements="12" coveredstatements="12" conditionals="4" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="79" type="stmt"/>
@@ -70,8 +70,8 @@
       </file>
     </package>
     <package name="src.pages.MainArea">
-      <metrics statements="496" coveredstatements="284" conditionals="225" coveredconditionals="92" methods="146" coveredmethods="77"/>
-      <file name="About.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/About.jsx">
+      <metrics statements="496" coveredstatements="284" conditionals="225" coveredconditionals="93" methods="146" coveredmethods="77"/>
+      <file name="About.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/About.jsx">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8"/>
         <line num="19" count="8" type="stmt"/>
         <line num="20" count="8" type="stmt"/>
@@ -85,7 +85,7 @@
         <line num="51" count="1" type="stmt"/>
         <line num="106" count="2" type="stmt"/>
       </file>
-      <file name="Home.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Home.jsx">
+      <file name="Home.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Home.jsx">
         <metrics statements="7" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="2"/>
         <line num="20" count="2" type="stmt"/>
         <line num="22" count="2" type="stmt"/>
@@ -95,7 +95,7 @@
         <line num="76" count="0" type="stmt"/>
         <line num="89" count="0" type="stmt"/>
       </file>
-      <file name="Internet.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Internet.jsx">
+      <file name="Internet.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Internet.jsx">
         <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="10" coveredmethods="10"/>
         <line num="16" count="1" type="stmt"/>
         <line num="17" count="15" type="stmt"/>
@@ -115,12 +115,12 @@
         <line num="69" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
       </file>
-      <file name="Loader.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Loader.jsx">
+      <file name="Loader.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Loader.jsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
       </file>
-      <file name="Login.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Login.jsx">
+      <file name="Login.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Login.jsx">
         <metrics statements="58" coveredstatements="50" conditionals="24" coveredconditionals="20" methods="13" coveredmethods="10"/>
         <line num="26" count="78" type="stmt"/>
         <line num="27" count="77" type="stmt"/>
@@ -181,7 +181,7 @@
         <line num="184" count="0" type="stmt"/>
         <line num="208" count="7" type="stmt"/>
       </file>
-      <file name="MusicGallery.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/MusicGallery.jsx">
+      <file name="MusicGallery.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/MusicGallery.jsx">
         <metrics statements="207" coveredstatements="82" conditionals="78" coveredconditionals="14" methods="52" coveredmethods="19"/>
         <line num="26" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
@@ -391,7 +391,7 @@
         <line num="576" count="0" type="stmt"/>
         <line num="659" count="0" type="stmt"/>
       </file>
-      <file name="PlaylistContent.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/PlaylistContent.jsx">
+      <file name="PlaylistContent.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/PlaylistContent.jsx">
         <metrics statements="69" coveredstatements="1" conditionals="54" coveredconditionals="0" methods="26" coveredmethods="0"/>
         <line num="21" count="1" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
@@ -463,7 +463,7 @@
         <line num="301" count="0" type="stmt"/>
         <line num="335" count="0" type="stmt"/>
       </file>
-      <file name="Register.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Register.jsx">
+      <file name="Register.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/Register.jsx">
         <metrics statements="65" coveredstatements="59" conditionals="32" coveredconditionals="27" methods="16" coveredmethods="13"/>
         <line num="24" count="70" type="stmt"/>
         <line num="25" count="69" type="stmt"/>
@@ -531,66 +531,66 @@
         <line num="190" count="8" type="stmt"/>
         <line num="206" count="5" type="stmt"/>
       </file>
-      <file name="SnakeGame.jsx" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/SnakeGame.jsx">
-        <metrics statements="56" coveredstatements="55" conditionals="31" coveredconditionals="25" methods="13" coveredmethods="13"/>
+      <file name="SnakeGame.jsx" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/SnakeGame.jsx">
+        <metrics statements="56" coveredstatements="55" conditionals="31" coveredconditionals="26" methods="13" coveredmethods="13"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="37" type="stmt"/>
-        <line num="6" count="37" type="stmt"/>
-        <line num="7" count="37" type="stmt"/>
-        <line num="9" count="37" type="stmt"/>
-        <line num="10" count="37" type="stmt"/>
-        <line num="12" count="39" type="stmt"/>
-        <line num="17" count="37" type="stmt"/>
-        <line num="18" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="23" count="37" type="stmt"/>
-        <line num="24" count="37" type="stmt"/>
-        <line num="25" count="37" type="stmt"/>
-        <line num="26" count="37" type="stmt"/>
-        <line num="27" count="37" type="stmt"/>
-        <line num="29" count="37" type="stmt"/>
-        <line num="30" count="9" type="stmt"/>
-        <line num="31" count="6" type="cond" truecount="4" falsecount="1"/>
+        <line num="5" count="36" type="stmt"/>
+        <line num="6" count="36" type="stmt"/>
+        <line num="7" count="36" type="stmt"/>
+        <line num="9" count="36" type="stmt"/>
+        <line num="10" count="36" type="stmt"/>
+        <line num="12" count="38" type="stmt"/>
+        <line num="17" count="36" type="stmt"/>
+        <line num="18" count="37" type="stmt"/>
+        <line num="19" count="37" type="stmt"/>
+        <line num="20" count="37" type="stmt"/>
+        <line num="23" count="36" type="stmt"/>
+        <line num="24" count="36" type="stmt"/>
+        <line num="25" count="36" type="stmt"/>
+        <line num="26" count="36" type="stmt"/>
+        <line num="27" count="36" type="stmt"/>
+        <line num="29" count="36" type="stmt"/>
+        <line num="30" count="11" type="stmt"/>
+        <line num="31" count="12" type="cond" truecount="4" falsecount="1"/>
         <line num="33" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="34" count="1" type="stmt"/>
-        <line num="36" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="39" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="40" count="3" type="stmt"/>
-        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="43" count="1" type="stmt"/>
+        <line num="36" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="39" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="6" type="stmt"/>
+        <line num="42" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="43" count="2" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
-        <line num="49" count="9" type="stmt"/>
-        <line num="50" count="9" type="stmt"/>
-        <line num="53" count="37" type="stmt"/>
-        <line num="54" count="13" type="cond" truecount="2" falsecount="0"/>
-        <line num="56" count="10" type="stmt"/>
-        <line num="57" count="61" type="stmt"/>
-        <line num="58" count="61" type="stmt"/>
-        <line num="59" count="61" type="stmt"/>
-        <line num="61" count="61" type="cond" truecount="4" falsecount="0"/>
+        <line num="49" count="11" type="stmt"/>
+        <line num="50" count="11" type="stmt"/>
+        <line num="53" count="36" type="stmt"/>
+        <line num="54" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="56" count="11" type="stmt"/>
+        <line num="57" count="58" type="stmt"/>
+        <line num="58" count="58" type="stmt"/>
+        <line num="59" count="58" type="stmt"/>
+        <line num="61" count="58" type="cond" truecount="4" falsecount="0"/>
         <line num="62" count="1" type="stmt"/>
         <line num="63" count="1" type="stmt"/>
-        <line num="65" count="60" type="stmt"/>
-        <line num="68" count="61" type="cond" truecount="2" falsecount="0"/>
-        <line num="73" count="7" type="cond" truecount="1" falsecount="2"/>
-        <line num="75" count="9" type="stmt"/>
-        <line num="76" count="9" type="stmt"/>
-        <line num="77" count="9" type="stmt"/>
-        <line num="80" count="52" type="stmt"/>
-        <line num="81" count="52" type="stmt"/>
-        <line num="85" count="10" type="stmt"/>
-        <line num="88" count="37" type="stmt"/>
+        <line num="65" count="57" type="stmt"/>
+        <line num="68" count="58" type="cond" truecount="2" falsecount="0"/>
+        <line num="73" count="1" type="cond" truecount="1" falsecount="2"/>
+        <line num="75" count="12" type="stmt"/>
+        <line num="76" count="12" type="stmt"/>
+        <line num="77" count="12" type="stmt"/>
+        <line num="80" count="46" type="stmt"/>
+        <line num="81" count="46" type="stmt"/>
+        <line num="85" count="11" type="stmt"/>
+        <line num="88" count="36" type="stmt"/>
         <line num="89" count="1" type="stmt"/>
         <line num="90" count="1" type="stmt"/>
         <line num="91" count="1" type="stmt"/>
         <line num="92" count="1" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
-        <line num="96" count="37" type="stmt"/>
-        <line num="100" count="46" type="stmt"/>
+        <line num="96" count="36" type="stmt"/>
+        <line num="100" count="40" type="stmt"/>
       </file>
-      <file name="truncateText.js" path="/Users/fundasebnemyesiltas/FinaleVersionTFM/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/truncateText.js">
+      <file name="truncateText.js" path="/Users/fundasebnemyesiltas/FinaleVersion/IPR-Projekt-SS24/TripleFMusic/Frontend/src/pages/MainArea/truncateText.js">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="5" type="cond" truecount="2" falsecount="0"/>
