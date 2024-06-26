@@ -734,19 +734,7 @@
 <a name='L669'></a><a href='#L669'>669</a>
 <a name='L670'></a><a href='#L670'>670</a>
 <a name='L671'></a><a href='#L671'>671</a>
-<a name='L672'></a><a href='#L672'>672</a>
-<a name='L673'></a><a href='#L673'>673</a>
-<a name='L674'></a><a href='#L674'>674</a>
-<a name='L675'></a><a href='#L675'>675</a>
-<a name='L676'></a><a href='#L676'>676</a>
-<a name='L677'></a><a href='#L677'>677</a>
-<a name='L678'></a><a href='#L678'>678</a>
-<a name='L679'></a><a href='#L679'>679</a>
-<a name='L680'></a><a href='#L680'>680</a>
-<a name='L681'></a><a href='#L681'>681</a>
-<a name='L682'></a><a href='#L682'>682</a>
-<a name='L683'></a><a href='#L683'>683</a>
-<a name='L684'></a><a href='#L684'>684</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L672'></a><a href='#L672'>672</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1283,11 +1271,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1313,10 +1298,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1410,13 +1392,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1919,8 +1895,8 @@ function MusicGallery() {
                   &lt;Frame
                     variant="field"
                     style={{
-                      width: "30%",
-                      height: "417px",
+                      width: "20%",
+                      height: "476px",
                       backgroundColor: "#ffffff",
                       borderLeft: "3px solid #333333",
                       borderTop: "3px solid #333333",
@@ -1948,36 +1924,32 @@ function MusicGallery() {
                       /&gt;
                     &lt;/div&gt;
                     &lt;Separator style={{ margin: "10px 0" }} /&gt;
-                    &lt;ScrollView style={{ height: 230, padding: 0 }}&gt;
+                    &lt;ScrollView style={{ height: 275 }}&gt;
                       &lt;div
                         className="playlist-menu"
                         data-testid="playlist-menu"
                       &gt;
                         {filteredPlaylists.map((playlist) =&gt; (
                           &lt;div
-                            key={playlist.id}
-                            className={`playlist-item ${
-                              selectedPlaylists.includes(playlist)
-                                ? <span class="branch-0 cbranch-no" title="branch not covered" >"selected"</span>
-                                : ""
-                            }`}
-                            data-testid={`playlist-item-${playlist.id}`}
+                          key={playlist.id}
+                          className={`playlist-item ${
+                            selectedPlaylists.includes(playlist) ? <span class="branch-0 cbranch-no" title="branch not covered" >"selected" </span>: ""
+                          }`}
+                          data-testid={`playlist-item-${playlist.id}`}
+                        &gt;
+                          &lt;a
+                            className="playlist-link"
+                            href="#"
+                            data-testid={`playlist-link-${playlist.id}`}
+                            onClick={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
+<span class="cstat-no" title="statement not covered" >                              e.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >                              selectPlaylist(playlist, e);</span>
+                            }}
+                            onContextMenu={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handleRightClick(e, playlist)}</span>
                           &gt;
-                            &lt;a
-                              className="playlist-link"
-                              href="#"
-                              data-testid={`playlist-link-${playlist.id}`}
-                              onClick={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
-<span class="cstat-no" title="statement not covered" >                                e.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >                                selectPlaylist(playlist, e);</span>
-                              }}
-                              onContextMenu={<span class="fstat-no" title="function not covered" >(e</span>) =&gt;
-<span class="cstat-no" title="statement not covered" >                                handleRightClick(e, playlist)</span>
-                              }
-                            &gt;
-                              {playlist.name}
-                            &lt;/a&gt;
-                          &lt;/div&gt;
+                            {playlist.name}
+                          &lt;/a&gt;
+                        &lt;/div&gt;
                         ))}
                       &lt;/div&gt;
                     &lt;/ScrollView&gt;
@@ -1997,9 +1969,7 @@ function MusicGallery() {
                         &lt;div className="search-bar"&gt;
                           &lt;TextInput
                             value={songSearchQuery}
-                            onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt;
-<span class="cstat-no" title="statement not covered" >                              setSongSearchQuery(e.target.value)</span>
-                            }
+                            onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >setSongSearchQuery(e.target.value)}</span>
                             placeholder="Search Songs..."
                             style={{ marginBottom: "10px" }}
                           /&gt;
@@ -2076,12 +2046,7 @@ function MusicGallery() {
                       /&gt;
                     &lt;/div&gt;
                     &lt;div className="add-playlist-modal-buttons"&gt;
-                      &lt;Button
-                        data-testid="add-playlist-button"
-                        onClick={addNewPlaylist}
-                      &gt;
-                        Add
-                      &lt;/Button&gt;
+                      &lt;Button data-testid="add-playlist-button" onClick={addNewPlaylist}&gt;Add&lt;/Button&gt;
                       &lt;Button onClick={closeModal}&gt;Cancel&lt;/Button&gt;
                     &lt;/div&gt;
                   &lt;/WindowContent&gt;
@@ -2111,15 +2076,14 @@ function MusicGallery() {
   );
 }
 &nbsp;
-export default MusicGallery;
-&nbsp;</pre></td></tr></table></pre>
+export default MusicGallery;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T17:17:40.306Z
+                at 2024-06-26T20:09:26.144Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
