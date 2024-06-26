@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text jest",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test:backend": "jest --config ./jest.config.js --coverage"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "bcrpyt": "^2.0.0",
-    "bcrypt": "^5.1.1",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -40,9 +40,17 @@
     "testEnvironment": "node"
   },
   "nyc": {
-    "reporter": ["text", "html"],
+    "reporter": [
+      "text",
+      "html"
+    ],
     "all": true,
-    "include": ["src//*.js"],
-    "exclude": ["/node_modules/", "/tests/**"]
+    "include": [
+      "src//*.js"
+    ],
+    "exclude": [
+      "/node_modules/",
+      "/tests/**"
+    ]
   }
 }
