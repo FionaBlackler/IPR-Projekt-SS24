@@ -517,7 +517,7 @@ function MusicGallery() {
                       />
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
-                    <ScrollView style={{ height: 287 }}>
+                    <ScrollView style={{ height: 275 }}>
                       <div
                         className="playlist-menu"
                         data-testid="playlist-menu"
