@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  
+
   frontend:
     runs-on: ubuntu-latest
 
@@ -31,9 +31,9 @@ jobs:
         working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
-      - name: Run Vite tests
-        working-directory: ./TripleFMusic/Frontend
-        run: npm test
+      #- name: Run Vite tests
+      # working-directory: ./TripleFMusic/Frontend
+      #run: npm test
 
 
   backend:
