@@ -38,3 +38,6 @@ Songs müssen...
 ...ein Cover haben
 ...einen einzigartigen Namen haben (damit nach Songs gesucht werden kann, um sie in Playlists einzufügen
 ...
+
+
+hier ist eine änderung 
