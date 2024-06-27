@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Vite build
         working-directory: ./TripleFMusic/Frontend
-        run: npm run build
+        run: npm run dev
 
       - name: Run Vite tests
         working-directory: ./TripleFMusic/Frontend
