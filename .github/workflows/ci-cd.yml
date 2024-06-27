@@ -30,24 +30,46 @@ jobs:
         working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
-      #- name: Run Vite tests
-      #  working-directory: ./TripleFMusic/Frontend
-      #  run: npm test
+      - name: Run Vite tests
+        working-directory: ./TripleFMusic/Frontend
+        run: npm test
 
   backend:
     runs-on: ubuntu-latest
+
     services:
       mysql:
-        image: mysql:latest
-        ports:
-          - 3306:3306
+        image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: fifafu455..
-          MYSQL_DATABASE: musicdb
+          MYSQL_DATABASE: musicdb_test
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Wait for MySQL to be healthy
+        run: |
+          for i in {30..0}; do
+            if docker exec $(docker ps -q -f name=mysql) mysqladmin ping --silent &> /dev/null; then
+              break
+            fi
+            echo "Waiting for MySQL..."
+            sleep 1
+          done
+          if [ "$i" = 0 ]; then
+            echo "MySQL did not start in time."
+            exit 1
+          fi
+
+      - name: Create database
+        run: |
+          docker exec $(docker ps -q -f name=mysql) mysql -u root -pfifafu455.. -e "CREATE DATABASE IF NOT EXISTS musicdb_test;"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -62,17 +84,15 @@ jobs:
         run: |
           echo "DB_USERNAME=root" >> $GITHUB_ENV
           echo "DB_PASSWORD=fifafu455.." >> $GITHUB_ENV
-          echo "DB_NAME=musicdb" >> $GITHUB_ENV
-          echo "DB_HOST=127.0.0.1:3306" >> $GITHUB_ENV
+          echo "DB_NAME=musicdb_test" >> $GITHUB_ENV
+          echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      - name: Wait for MySQL to be ready
-        run: |
-          while ! mysqladmin ping -h 127.0.0.1:3306 --silent; do
-            echo "Waiting for MySQL..."
-            sleep 5
-          done
+      # Uncomment the following lines to run backend tests if needed
+      # - name: Run tests
+      #   working-directory: ./TripleFMusic/Backend
+      #   run: npm test
 
-      - name: Start backend
+      - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
         run: npm start
         env:
@@ -90,22 +110,8 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Save Version
-        id: version
-        run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
-
-      - name: Increase version
-        working-directory: ./TripleFMusic/Frontend
-        run: npm version patch
-
-      - name: Push new version
-        run: git push
-
-      - name: Login to DockerHub Registry
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag fionablackler/tut:${{steps.version.outputs.tag}}
+        run: docker build -t triplefmusic:latest .
 
-      - name: Push to DockerHub
-        run: docker push triplef/tut:${{steps.version.outputs.tag}}
+      - name: Run Docker container
+        run: docker run -d -p 80:80 triplefmusic:latest
