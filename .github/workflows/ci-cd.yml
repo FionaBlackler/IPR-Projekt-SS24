@@ -95,12 +95,6 @@ jobs:
         working-directory: ./TripleFMusic/Backend
         run: npm run test:backend
 
-      - name: Start backend (optional, if needed for integration tests)
-        working-directory: ./TripleFMusic/Backend
-        run: nodemon server.js
-        env:
-          NODE_ENV: test
-
   docker:
     runs-on: ubuntu-latest
 
