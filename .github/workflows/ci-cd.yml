@@ -25,6 +25,7 @@ jobs:
       - name: Install dependencies
         working-directory: ./TripleFMusic/Frontend
         run: npm install
+             npm install @testing-library/dom --save-dev
 
       - name: Build frontend
         working-directory: ./TripleFMusic/Frontend
