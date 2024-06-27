@@ -62,10 +62,9 @@ jobs:
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      # Uncomment the following lines to run backend tests if needed
-      # - name: Run tests
-      #   working-directory: ./TripleFMusic/Backend
-      #   run: npm test
+      - name: Run tests
+        working-directory: ./TripleFMusic/Backend
+        run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
@@ -85,8 +84,21 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Build Docker image
-        run: docker build -t triplefmusic:latest .
+      - name: Save Version
+        id: version
+        run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
 
-      - name: Run Docker container
-        run: docker run -d -p 80:80 triplefmusic:latest
+      - name: Increase version
+        run: npm version patch
+
+      - name: Push new version
+        run: git push
+
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag fionablackler/tut:${{steps.version.outputs.tag}}
+
+      - name: Push to DockerHub
+        run: docker push triplef/tut:${{steps.version.outputs.tag}}
