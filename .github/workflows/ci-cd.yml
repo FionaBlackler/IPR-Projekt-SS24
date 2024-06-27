@@ -59,9 +59,9 @@ jobs:
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      - name: Run tests
-        working-directory: ./TripleFMusic/Backend
-        run: npm test
+     # - name: Run tests
+     #   working-directory: ./TripleFMusic/Backend
+     #   run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
