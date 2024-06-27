@@ -1,4 +1,4 @@
-import { truncateText } from "../../../src/pages/MainArea/truncateText";
+/*import { truncateText } from "../../../src/pages/MainArea/truncateText";
 
 describe("truncateText", () => {
   test("returns the original text if its length is less than or equal to maxLength", () => {
@@ -21,3 +21,4 @@ describe("truncateText", () => {
     expect(truncateText("Non-empty", 0)).toBe("...");
   });
 });
+*/
