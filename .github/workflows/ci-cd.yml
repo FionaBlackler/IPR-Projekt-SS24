@@ -22,22 +22,21 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Setup git config
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-
       - name: Install dependencies
         working-directory: ./TripleFMusic/Frontend
         run: npm install
 
-      - name: Run Vite build
+      - name: Build frontend
         working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
       - name: Run Vite tests
         working-directory: ./TripleFMusic/Frontend
         run: npm test
+
+      - name: Start frontend
+        working-directory: ./TripleFMusic/Frontend
+        run: npm start
 
   backend:
     runs-on: ubuntu-latest
@@ -62,7 +61,7 @@ jobs:
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      # Uncomment the following lines if you want to run backend tests
+      # Uncomment the following lines to run backend tests if needed
       # - name: Run tests
       #   working-directory: ./TripleFMusic/Backend
       #   run: npm test
@@ -85,25 +84,8 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Save Version
-        id: version
-        run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
-
-      - name: Increase version
-        working-directory: ./TripleFMusic/Frontend
-        run: npm version patch
-
-      - name: Push new version
-        run: |
-          git add package.json
-          git commit -m "ci: bump version"
-          git push
-
-      - name: Login to DockerHub Registry
-        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag triplef/tut:${{ steps.version.outputs.tag }}
+        run: docker build -t triplefmusic:latest .
 
-      - name: Push to DockerHub
-        run: docker push triplef/tut:${{ steps.version.outputs.tag }}
+      - name: Run Docker container
+        run: docker run -d -p 80:80 triplefmusic:latest
