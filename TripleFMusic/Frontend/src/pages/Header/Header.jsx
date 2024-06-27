@@ -111,7 +111,7 @@ function Header() {
       window.alert('Please confirm that you want to delete your profile');
       return;
     }
-
+  
     try {
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       const response = await axios.delete('http://localhost:8080/api/delete_profile', {
@@ -119,7 +119,8 @@ function Header() {
           'Authorization': `Bearer ${token}`,
         },
       });
-
+  
+      setMessage('Profile deleted successfully!');
       window.alert(response.data.message);
       logout();
       navigate("/");
@@ -128,6 +129,7 @@ function Header() {
       window.alert('Error deleting profile');
     }
   };
+  
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
