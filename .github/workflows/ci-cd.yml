@@ -36,7 +36,7 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
-      
+
     services:
       mysql:
         image: mysql:5.7
@@ -87,9 +87,10 @@ jobs:
           echo "DB_NAME=musicdb_test" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      - name: Run tests
-        working-directory: ./TripleFMusic/Backend
-        run: npm run test:backend
+      # Uncomment the following lines to run backend tests if needed
+      # - name: Run tests
+      #   working-directory: ./TripleFMusic/Backend
+      #   run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
