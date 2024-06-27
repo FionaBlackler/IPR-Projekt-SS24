@@ -517,32 +517,36 @@ function MusicGallery() {
                       />
                     </div>
                     <Separator style={{ margin: "10px 0" }} />
-                    <ScrollView style={{ height: 275 }}>
+                    <ScrollView style={{ height: 280 }}>
                       <div
                         className="playlist-menu"
                         data-testid="playlist-menu"
                       >
                         {filteredPlaylists.map((playlist) => (
                           <div
-                          key={playlist.id}
-                          className={`playlist-item ${
-                            selectedPlaylists.includes(playlist) ? "selected" : ""
-                          }`}
-                          data-testid={`playlist-item-${playlist.id}`}
-                        >
-                          <a
-                            className="playlist-link"
-                            href="#"
-                            data-testid={`playlist-link-${playlist.id}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              selectPlaylist(playlist, e);
-                            }}
-                            onContextMenu={(e) => handleRightClick(e, playlist)}
+                            key={playlist.id}
+                            className={`playlist-item ${
+                              selectedPlaylists.includes(playlist)
+                                ? "selected"
+                                : ""
+                            }`}
+                            data-testid={`playlist-item-${playlist.id}`}
                           >
-                            {playlist.name}
-                          </a>
-                        </div>
+                            <a
+                              className="playlist-link"
+                              href="#"
+                              data-testid={`playlist-link-${playlist.id}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                selectPlaylist(playlist, e);
+                              }}
+                              onContextMenu={(e) =>
+                                handleRightClick(e, playlist)
+                              }
+                            >
+                              {playlist.name}
+                            </a>
+                          </div>
                         ))}
                       </div>
                     </ScrollView>
@@ -639,7 +643,12 @@ function MusicGallery() {
                       />
                     </div>
                     <div className="add-playlist-modal-buttons">
-                      <Button data-testid="add-playlist-button" onClick={addNewPlaylist}>Add</Button>
+                      <Button
+                        data-testid="add-playlist-button"
+                        onClick={addNewPlaylist}
+                      >
+                        Add
+                      </Button>
                       <Button onClick={closeModal}>Cancel</Button>
                     </div>
                   </WindowContent>
