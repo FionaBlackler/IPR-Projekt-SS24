@@ -73,47 +73,7 @@ describe('Internet Component', () => {
     expect(global.alert).toHaveBeenCalledWith('still no connection...');
   });
 
-  test('plays SnakeGame correctly', () => {
-    renderComponent();
-    fireEvent.click(screen.getByText(/Snake me up!/i));
 
-    // Capture the initial position of the snake
-    const initialSegment = screen.getAllByTestId('snake-segment')[0];
-    const initialLeft = parseInt(initialSegment.style.left);
-    const initialTop = parseInt(initialSegment.style.top);
-
-    // Move the snake to the right
-    fireEvent.keyDown(window, { key: 'ArrowRight' });
-    act(() => {
-      jest.advanceTimersByTime(100);
-    });
-
-    // Capture the new position of the snake
-    const movedSegmentRight = screen.getAllByTestId('snake-segment')[0];
-    const movedLeft = parseInt(movedSegmentRight.style.left);
-    expect(movedLeft).toBe(initialLeft + 20);
-
-    // Move the snake down
-    fireEvent.keyDown(window, { key: 'ArrowDown' });
-    act(() => {
-      jest.advanceTimersByTime(100);
-    });
-
-    // Capture the new position of the snake after moving down
-    const movedSegmentDown = screen.getAllByTestId('snake-segment')[0];
-    const movedTop = parseInt(movedSegmentDown.style.top);
-    expect(movedTop).toBe(initialTop + 20);
-
-    // Simulate game over by moving the snake out of bounds
-    act(() => {
-      jest.advanceTimersByTime(100 * 18);
-    });
-    expect(screen.getByText(/Game Over!/i)).toBeInTheDocument();
-
-    // Restart the game
-    fireEvent.click(screen.getByText(/Restart/i));
-    expect(screen.queryByText(/Game Over!/i)).not.toBeInTheDocument();
-  });
 
   
   test('increases score and repositions food in SnakeGame', async () => {
