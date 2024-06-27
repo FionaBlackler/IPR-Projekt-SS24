@@ -10,22 +10,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  
   frontend:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: "14"
-
-      - name: setup git config
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          node-version: '14'  # oder deine spezifische Node-Version
 
       - name: Install dependencies
         working-directory: ./TripleFMusic/Frontend
@@ -38,6 +34,7 @@ jobs:
       - name: Run Vite tests
         working-directory: ./TripleFMusic/Frontend
         run: npm test
+
 
   backend:
     runs-on: ubuntu-latest
