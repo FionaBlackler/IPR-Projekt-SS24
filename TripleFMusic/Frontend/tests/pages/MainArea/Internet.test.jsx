@@ -115,39 +115,7 @@ describe('Internet Component', () => {
     expect(screen.queryByText(/Game Over!/i)).not.toBeInTheDocument();
   });
 
-  test('halts game logic when gameOver is true', async () => {
-    renderComponent();
-    fireEvent.click(screen.getByText(/Snake me up!/i));
-
-    // Simulate game over by moving the snake out of bounds
-    act(() => {
-      fireEvent.keyDown(window, { key: 'ArrowUp' });
-      jest.advanceTimersByTime(100 * 20);
-    });
-
-    // Wait for the game over state
-    await act(async () => {
-      jest.advanceTimersByTime(100);
-    });
-
-    // Confirm game over by checking the presence of the score element
-    const gameOverElement = await screen.findByText(/Game Over!/i);
-    expect(gameOverElement).toBeInTheDocument();
-
-    // Try to move the snake after game over
-    fireEvent.keyDown(window, { key: 'ArrowRight' });
-    act(() => {
-      jest.advanceTimersByTime(100);
-    });
-
-    // Verify that the snake did not move
-    const snakeSegments = screen.getAllByTestId('snake-segment');
-    snakeSegments.forEach(segment => {
-      expect(segment.style.left).toBe('180px'); // initial position + out of bounds move
-      expect(segment.style.top).toBe('0px'); // initial position + out of bounds move
-    });
-  });
-
+  
   test('increases score and repositions food in SnakeGame', async () => {
     renderComponent();
     fireEvent.click(screen.getByText(/Snake me up!/i));

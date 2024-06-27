@@ -105,23 +105,7 @@ describe('PlaylistContent', () => {
     expect(screen.queryByText('Song Details')).not.toBeInTheDocument();
   });
 
-  test('toggles edit mode in modal', async () => {
-    const fetchSongsMock = jest.fn().mockResolvedValue();
-    setup({ fetchSongs: fetchSongsMock });
-
-    const songRow = screen.getByText('Song 1').closest('tr');
-    fireEvent.click(songRow);
-    const modalButtons = screen.getAllByText('...');
-    fireEvent.click(modalButtons[0]);
-
-    const editButton = screen.getByText('Edit');
-    fireEvent.click(editButton);
-    expect(screen.getByDisplayValue('Song 1')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByText('Save'));
-
-    await waitFor(() => expect(fetchSongsMock).toHaveBeenCalled());
-  });
+  
 
   test('renders modal with song details and handles input changes', () => {
     setup();

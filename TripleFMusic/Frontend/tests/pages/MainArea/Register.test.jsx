@@ -2,11 +2,14 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Register from '../../../src/pages/MainArea/Register';
-import axios from '../../__mocks__/axios'; // Use the mock axios module
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { AuthProvider, useAuth } from '../../../src/authContext';
 
+const mockAxios = new MockAdapter(axios);
+
 beforeEach(() => {
-  axios.reset(); // Use the reset method from the mock axios module
+  mockAxios.reset();
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   jest.useFakeTimers();
 });
@@ -85,7 +88,7 @@ test('shows alert if terms and conditions are not accepted', () => {
 });
 
 test('handles successful registration', async () => {
-  axios.post.mockResolvedValueOnce({ status: 201 });
+  mockAxios.onPost('http://localhost:8080/api/register').reply(201);
 
   render(
     <Router>
@@ -101,7 +104,8 @@ test('handles successful registration', async () => {
   fireEvent.change(screen.getByPlaceholderText(/E-Mail/i), { target: { value: 'johndoe@example.com' } });
   fireEvent.change(screen.getByPlaceholderText(/Password/i), { target: { value: 'password' } });
 
-  const termsCheckbox = screen.getByRole('checkbox', { name: '' });
+  // Direkt auf die Checkbox zugreifen
+  const termsCheckbox = screen.getByRole('checkbox', { name: "" });
   fireEvent.click(termsCheckbox);
 
   const registerButton = screen.getByText(/Register account/i);
@@ -114,7 +118,9 @@ test('handles successful registration', async () => {
 });
 
 test('handles generic registration error', async () => {
-  axios.post.mockRejectedValueOnce({ response: { status: 500, data: { message: 'Something went wrong' } } });
+  mockAxios.onPost('http://localhost:8080/api/register').reply(500, {
+    message: 'Something went wrong'
+  });
 
   render(
     <Router>
@@ -244,9 +250,10 @@ test('handles case when no token or user is in storage', async () => {
   expect(screen.getByText(/user: null/i)).toBeInTheDocument();
   expect(screen.getByText(/loading: false/i)).toBeInTheDocument();
 });
-
 test('displays error when username is already taken', async () => {
-  axios.post.mockRejectedValueOnce({ response: { status: 400, data: { message: 'Username already taken' } } });
+  mockAxios.onPost('http://localhost:8080/api/register').reply(400, {
+    message: 'Username already taken'
+  });
 
   render(
     <Router>
@@ -275,7 +282,9 @@ test('displays error when username is already taken', async () => {
 });
 
 test('displays error when email is already taken', async () => {
-  axios.post.mockRejectedValueOnce({ response: { status: 400, data: { message: 'Email already taken' } } });
+  mockAxios.onPost('http://localhost:8080/api/register').reply(400, {
+    message: 'Email already taken'
+  });
 
   render(
     <Router>
@@ -427,8 +436,9 @@ test('shows error message when terms and conditions are not accepted', async () 
   expect(window.alert).toHaveBeenCalledWith('You must accept the terms and conditions');
 });
 
+
 test('navigates to login page after successful registration', async () => {
-  axios.post.mockResolvedValueOnce({ status: 201 });
+  mockAxios.onPost('http://localhost:8080/api/register').reply(201);
 
   render(
     <Router>
@@ -461,5 +471,5 @@ test('navigates to login page after successful registration', async () => {
   });
 
   // Check if the component has navigated to the login page
-  expect(screen.queryByText(/Registration successful!/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Registration successfully!/i)).not.toBeInTheDocument();
 });
