@@ -68,7 +68,7 @@ jobs:
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
-        run: nodemon server.js
+        run: npm start
         env:
           NODE_ENV: test
 
@@ -89,6 +89,7 @@ jobs:
         run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
 
       - name: Increase version
+        working-directory: ../TripleFMusic/Backend
         run: npm version patch
 
       - name: Push new version
