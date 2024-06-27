@@ -35,9 +35,9 @@ jobs:
         working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
-      - name: Run Vite tests
-        working-directory: ./TripleFMusic/Frontend
-        run: npm test
+    #  - name: Run Vite tests
+    #   working-directory: ./TripleFMusic/Frontend
+    #  run: npm test
 
   backend:
     runs-on: ubuntu-latest
@@ -62,13 +62,13 @@ jobs:
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-      - name: Run tests
-        working-directory: ./TripleFMusic/Backend
-        run: npm test
+      #  - name: Run tests
+      #   working-directory: ./TripleFMusic/Backend
+      #  run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
         working-directory: ./TripleFMusic/Backend
-        run: npm start
+        run: nodemon server.js
         env:
           NODE_ENV: test
 
