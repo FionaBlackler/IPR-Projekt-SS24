@@ -28,15 +28,15 @@ jobs:
           git config user.email "<>"
 
       - name: Install dependencies
-        working-directory: ../../TripleFMusic/Frontend
+        working-directory: ./TripleFMusic/Frontend
         run: npm install
 
       - name: Run Vite build
-        working-directory: ../../TripleFMusic/Frontend
+        working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
       - name: Run Vite tests
-        working-directory: ../../TripleFMusic/Frontend
+        working-directory: ./TripleFMusic/Frontend
         run: npm test
 
   backend:
@@ -52,7 +52,7 @@ jobs:
           node-version: "14"
 
       - name: Install dependencies
-        working-directory: ../../TripleFMusic/Backend
+        working-directory: ./TripleFMusic/Backend
         run: npm install
 
       - name: Set up environment variables
@@ -63,11 +63,11 @@ jobs:
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
       - name: Run tests
-        working-directory: ../../TripleFMusic/Backend
+        working-directory: ./TripleFMusic/Backend
         run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
-        working-directory: ../../TripleFMusic/Backend
+        working-directory: ./TripleFMusic/Backend
         run: npm start
         env:
           NODE_ENV: test
