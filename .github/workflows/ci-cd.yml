@@ -52,7 +52,7 @@ jobs:
           node-version: "14"
 
       - name: Install dependencies
-        working-directory: ./TripleFMusic/Backend
+        working-directory: ../../TripleFMusic/Backend
         run: npm install
 
       - name: Set up environment variables
@@ -67,7 +67,7 @@ jobs:
       #   run: npm test
 
       - name: Start backend (optional, if needed for integration tests)
-        working-directory: ./TripleFMusic/Backend
+        working-directory: ../../TripleFMusic/Backend
         run: npm start
         env:
           NODE_ENV: test
