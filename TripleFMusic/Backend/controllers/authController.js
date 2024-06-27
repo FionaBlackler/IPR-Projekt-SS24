@@ -1,173 +1,92 @@
-const request = require('supertest');
-const express = require('express');
-const bodyParser = require('body-parser');
-const { User, Playlist, PasswordResetToken } = require('../models');
-const router = require('../api'); // Ensure this path is correct
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+const { User, PasswordResetToken } = require('../models');
 const { sendPasswordResetEmail } = require('../services/emailService');
 
-jest.mock('bcrypt');
-jest.mock('jsonwebtoken');
-jest.mock('nodemailer');
-jest.mock('../models'); // Mock the models
-jest.mock('../services/emailService'); // Mock the email service
+// Funktion zum Generieren eines Reset-Tokens
+function generateResetToken() {
+  return crypto.randomBytes(20).toString('hex'); // Beispiel: Zufälliger Token
+}
 
-const app = express();
-app.use(bodyParser.json());
-app.use('/', router);
+// Controller für das Anfordern eines Passwort-Resets
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
 
-describe('API Tests', () => {
-  let sendMailMock;
+    if (!user) {
+      return res.status(404).json({ userExists: false, message: 'User not found' });
+    }
 
-  beforeEach(() => {
-    jest.clearAllMocks();
+    // Token generieren und speichern
+    const token = generateResetToken();
+    await PasswordResetToken.create({ token, email });
 
-    // Explicitly mock nodemailer.createTransport
-    sendMailMock = jest.fn().mockResolvedValue({});
-    nodemailer.createTransport.mockReturnValue({
-      sendMail: sendMailMock,
+    // E-Mail mit Reset-Link senden
+    const resetLink = `http://localhost:5173/reset_password?token=${token}&email=${email}`;
+
+    // Name des Benutzers und E-Mail an die Funktion übergeben
+    await sendPasswordResetEmail(user.email, user.firstname, resetLink);
+
+    res.status(200).json({ userExists: true, message: 'Reset token generated and sent successfully' });
+
+  } catch (error) {
+    console.error('Error in forgotPassword:', error);
+    res.status(500).json({ message: 'Error requesting password reset' });
+  }
+};
+
+// Controller für das Zurücksetzen des Passworts
+exports.resetPassword = async (req, res) => {
+  const { token, email, newPassword } = req.body;
+  try {
+    const resetToken = await PasswordResetToken.findOne({ where: { token, email } });
+
+    if (!resetToken) {
+      return res.status(400).json({ message: 'Invalid or expired token' });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await User.update({ password: hashedPassword }, { where: { email } });
+
+    await PasswordResetToken.destroy({ where: { email } });
+
+    res.status(200).json({ message: 'Password has been reset successfully' });
+  } catch (error) {
+    console.error('Error in resetPassword:', error);
+    res.status(500).json({ message: 'Error resetting password' });
+  }
+};
+
+// Registrierung
+exports.register = async (req, res) => {
+  const { firstname, lastname, email, password, username } = req.body;
+  console.error('authController.register called with:', req.body); // Use console.error for logging
+  try {
+    console.error('Hashing password...'); // Use console.error
+    const hashedPassword = await bcrypt.hash(password, 10); // Passwort hashen
+    console.error('Password hashed:', hashedPassword); // Use console.error
+
+    // Logging before creation
+    console.error('Creating new user with hashed password...'); // Use console.error
+    const newUser = await User.create({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword, // Gespeichertes, gehashtes Passwort
+      username,
     });
 
-    // Mock sendPasswordResetEmail
-    sendPasswordResetEmail.mockResolvedValue({});
-  });
-
-  it('should register a new user', async () => {
-    bcrypt.hash.mockResolvedValue('hashedPassword');
-    User.create.mockResolvedValue({ id: 1, username: 'testuser', email: 'test@example.com', password: 'hashedPassword' });
-
-    const response = await request(app)
-      .post('/register')
-      .send({ username: 'testuser', password: 'password', email: 'test@example.com' });
-
-    expect(response.status).toBe(201);
-    expect(response.body.message).toBe('User created successfully');
-    expect(response.body.user).toHaveProperty('id');
-  });
-
-  it('should login a user', async () => {
-    bcrypt.compare.mockResolvedValue(true);
-    User.findOne.mockResolvedValue({ id: 1, username: 'testuser', password: 'hashedPassword' });
-    jwt.sign.mockReturnValue('token');
-
-    const response = await request(app)
-      .post('/login')
-      .send({ username: 'testuser', password: 'password' });
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Login successful');
-    expect(response.body).toHaveProperty('token');
-  });
-
-  it('should return 404 for login with non-existent user', async () => {
-    User.findOne.mockResolvedValue(null);
-
-    const response = await request(app)
-      .post('/login')
-      .send({ username: 'nonexistent', password: 'password' });
-
-    expect(response.status).toBe(404);
-    expect(response.body.message).toBe('User not found');
-  });
-
-  it('should return 401 for login with invalid password', async () => {
-    bcrypt.compare.mockResolvedValue(false);
-    User.findOne.mockResolvedValue({ id: 1, username: 'testuser', password: 'hashedPassword' });
-
-    const response = await request(app)
-      .post('/login')
-      .send({ username: 'testuser', password: 'wrongpassword' });
-
-    expect(response.status).toBe(401);
-    expect(response.body.message).toBe('Invalid password');
-  });
-
-  it('should send a password reset email', async () => {
-    User.findOne.mockResolvedValue({ id: 1, firstname: 'Test', email: 'test@example.com', save: jest.fn() });
-    PasswordResetToken.create.mockResolvedValue({ token: 'reset-token', email: 'test@example.com' });
-
-    const response = await request(app)
-      .post('/forgot_password')
-      .send({ email: 'test@example.com' });
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Reset token generated and sent successfully');
-    expect(sendPasswordResetEmail).toHaveBeenCalledWith(
-      'test@example.com',
-      'Test', // Mocked name parameter
-      expect.any(String)  // Mocked reset link parameter
-    );
-  });
-
-  it('should return 404 for forgot password with non-existent email', async () => {
-    User.findOne.mockResolvedValue(null);
-
-    const response = await request(app)
-      .post('/forgot_password')
-      .send({ email: 'nonexistent@example.com' });
-
-    expect(response.status).toBe(404);
-    expect(response.body.message).toBe('User not found');
-  });
-
-  it('should reset password with valid token', async () => {
-    bcrypt.hash.mockResolvedValue('newHashedPassword');
-    User.findOne.mockResolvedValue({ id: 1, resetToken: 'validtoken', resetTokenExpiry: Date.now() + 3600000, save: jest.fn() });
-
-    const response = await request(app)
-      .post('/reset_password')
-      .send({ resetToken: 'validtoken', newPassword: 'newpassword' });
-
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe('Password has been reset successfully');
-  });
-
-  it('should return 400 for reset password with invalid or expired token', async () => {
-    User.findOne.mockResolvedValue(null);
-
-    const response = await request(app)
-      .post('/reset_password')
-      .send({ resetToken: 'invalidtoken', newPassword: 'newpassword' });
-
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid or expired token');
-  });
-
-  it('should create a new playlist', async () => {
-    Playlist.create.mockResolvedValue({ id: 1, name: 'Test Playlist' });
-
-    const response = await request(app)
-      .post('/playlists')
-      .send({ name: 'Test Playlist' });
-
-    expect(response.status).toBe(201);
-    expect(response.body.name).toBe('Test Playlist');
-  });
-
-  it('should fetch all playlists', async () => {
-    Playlist.findAll.mockResolvedValue([{ id: 1, name: 'Test Playlist' }]);
-
-    const response = await request(app).get('/playlists');
-
-    expect(response.status).toBe(200);
-    expect(response.body.length).toBeGreaterThan(0);
-  });
-
-  it('should delete a playlist', async () => {
-    Playlist.findByPk.mockResolvedValue({ id: 1, name: 'Test Playlist', destroy: jest.fn().mockResolvedValue() });
-
-    const response = await request(app).delete('/playlists/1');
-
-    expect(response.status).toBe(204);
-  });
-
-  it('should return 400 for creating a playlist without a name', async () => {
-    const response = await request(app).post('/playlists').send({});
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Playlist name is required');
-  });
-
-  // Add more tests for other routes and edge cases
-});
+    // Logging after creation
+    console.error('User created:', newUser); // Use console.error
+    res.status(201).json({ message: 'User created successfully', user: newUser });
+  } catch (error) {
+    console.error('Error in authController.register:', error);
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      res.status(400).json({ message: 'Username or email already exists' });
+    } else {
+      res.status(500).json({ message: 'Error registering user', error });
+    }
+  }
+};
