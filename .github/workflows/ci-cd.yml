@@ -81,6 +81,9 @@ jobs:
         working-directory: ./TripleFMusic/Backend
         run: npm install
 
+      - name: Install nodemon globally
+        run: npm install -g nodemon
+
       - name: Set up environment variables
         run: |
           echo "DB_USERNAME=root" >> $GITHUB_ENV
