@@ -92,7 +92,7 @@ Music Gallery:<br>
 ✔ Song/-s löschen (single --> right-click auf Song)<br>
 ✔ Mehrere Playlists gleichzeitig löschen (multiple --> mit strg+click auswählen und löschen über right-click)<br>
 ✔ Mehrere Songs gleichzeitig löschen (multiple --> mit strg+click auswählen und löschen über right-click)<br>
-✔ Songdetails anzeigen (**Auf die drei Punkte hinter einem Song anklicken, dann öffnet sich das Fenter!!**) <br>
+✔ Songdetails anzeigen (**Auf die drei Punkte hinter einem Song anklicken, dann öffnet sich das Fenster!!**) <br>
 ✔ Songdetails bearbeiten<br>
 ✔ Songdetails anzeigen und bearbeiten ist das selbe Fenster mit eigenem toggle-handling<br>
 ✔ Nach Playlist suchen<br>
