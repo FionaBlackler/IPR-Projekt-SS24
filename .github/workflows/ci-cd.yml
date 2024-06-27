@@ -10,18 +10,17 @@ on:
   workflow_dispatch:
 
 jobs:
-
   frontend:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'  # oder deine spezifische Node-Version
+          node-version: "14"
 
       - name: Install dependencies
         working-directory: ./TripleFMusic/Frontend
@@ -32,12 +31,19 @@ jobs:
         run: npm run build
 
       #- name: Run Vite tests
-      # working-directory: ./TripleFMusic/Frontend
-      #run: npm test
-
+      #  working-directory: ./TripleFMusic/Frontend
+      #  run: npm test
 
   backend:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:latest
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: fifafu455..
+          MYSQL_DATABASE: musicdb
 
     steps:
       - name: Checkout repository
@@ -59,11 +65,14 @@ jobs:
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
           echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
 
-     # - name: Run tests
-     #   working-directory: ./TripleFMusic/Backend
-     #   run: npm test
+      - name: Wait for MySQL to be ready
+        run: |
+          while ! mysqladmin ping -h 127.0.0.1 --silent; do
+            echo "Waiting for MySQL..."
+            sleep 5
+          done
 
-      - name: Start backend (optional, if needed for integration tests)
+      - name: Start backend
         working-directory: ./TripleFMusic/Backend
         run: npm start
         env:
@@ -86,6 +95,7 @@ jobs:
         run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
 
       - name: Increase version
+        working-directory: ./TripleFMusic/Frontend
         run: npm version patch
 
       - name: Push new version
