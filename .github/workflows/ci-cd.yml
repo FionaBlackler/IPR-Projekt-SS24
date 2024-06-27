@@ -89,7 +89,7 @@ jobs:
         run: echo ::set-output name=tag::$(echo $(node -p -e "require('./package.json').version"))
 
       - name: Increase version
-        working-directory: ../TripleFMusic/Backend
+        working-directory: ./TripleFMusic # Specify the correct working directory containing package.json
         run: npm version patch
 
       - name: Push new version
