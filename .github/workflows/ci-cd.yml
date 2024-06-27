@@ -63,11 +63,11 @@ jobs:
           echo "DB_USERNAME=root" >> $GITHUB_ENV
           echo "DB_PASSWORD=fifafu455.." >> $GITHUB_ENV
           echo "DB_NAME=musicdb" >> $GITHUB_ENV
-          echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
+          echo "DB_HOST=127.0.0.1:3306" >> $GITHUB_ENV
 
       - name: Wait for MySQL to be ready
         run: |
-          while ! mysqladmin ping -h 127.0.0.1 --silent; do
+          while ! mysqladmin ping -h 127.0.0.1:3306 --silent; do
             echo "Waiting for MySQL..."
             sleep 5
           done
