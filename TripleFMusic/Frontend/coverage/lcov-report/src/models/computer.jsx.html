@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/13</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -120,23 +120,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">79x</span>
-<span class="cline-any cline-yes">79x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-yes">78x</span>
-<span class="cline-any cline-yes">78x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">79x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,23 +171,23 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import Loader from "../pages/MainArea/Loader";
 import "./Computer.css";
 &nbsp;
-const Computer = () =&gt; {
-  const { scene } = useGLTF("./computer3/scene.gltf");
-  const computerScene = useMemo(() =&gt; {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (scene) {
-      scene.position.set(0, -1, 0); // Adjust position as needed
-      scene.scale.set(5, 5, 5);
-      return scene;
+const Computer = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+  const { scene } = <span class="cstat-no" title="statement not covered" >useGLTF("./computer3/scene.gltf");</span>
+  const computerScene = <span class="cstat-no" title="statement not covered" >useMemo(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (scene) {</span>
+<span class="cstat-no" title="statement not covered" >      scene.position.set(0, -1, 0); </span>// Adjust position as needed
+<span class="cstat-no" title="statement not covered" >      scene.scale.set(5, 5, 5);</span>
+<span class="cstat-no" title="statement not covered" >      return scene;</span>
     }
   }, [scene]);
 &nbsp;
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!computerScene) <span class="cstat-no" title="statement not covered" >return null; </span>// Render nothing if the scene is not yet loaded
-  scene.rotation.set(0, Math.PI / 6, 0);
-  return &lt;primitive object={computerScene} /&gt;;
+<span class="cstat-no" title="statement not covered" >  if (!computerScene) <span class="cstat-no" title="statement not covered" >return null; </span></span>// Render nothing if the scene is not yet loaded
+<span class="cstat-no" title="statement not covered" >  scene.rotation.set(0, Math.PI / 6, 0);</span>
+<span class="cstat-no" title="statement not covered" >  return &lt;primitive object={computerScene} /&gt;;</span>
 };
 &nbsp;
-const ComputerCanvas = () =&gt; {
-  return (
+const ComputerCanvas = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;Canvas
       frameloop="demand"
       shadows
@@ -223,7 +223,7 @@ export default ComputerCanvas;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-26T23:40:52.929Z
+                at 2024-06-26T23:51:34.155Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
