@@ -42,7 +42,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: fifafu455..
-          MYSQL_DATABASE: musicdb_test
+          MYSQL_DATABASE: musicdb
 
         options: >-
           --health-cmd="mysqladmin ping --silent"
