@@ -6,20 +6,15 @@
 **Semester:** Sommersemester 2024;<br>
 **Gruppenmitglieder:** Funda Şebnem Yeşiltaş, Fatima Alaa-Elleh Smati, Fiona Blackler<br>
 <br>
-Bei diesem Projekt handelt es sich um eine Full-Stack-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem alten Windows 95-Design.<br>
+Bei diesem Projekt handelt es sich um eine Full-Stack-React-Webanwendung mit dem Schwerpunkt auf der Verwaltung von MP3-Dateien und der Bereitstellung von Funktionen zum Hinzufügen, Organisieren und Abspielen der MP3-Dateien. Das Gesamtbild der Webanwendung basiert auf dem Windows 95-Design und wurde mit Komponenten aus [React95.io](https://react95.io/#) umgesetzt.<br>
 <br>
 
 ## Projekt Informationen
 **Verwendete Sprachen:**
 
-- JavaScript
 - HTML
+- JavaScript
 - CSS
-
-**Verwendete Bibliotheken:**
-
-- React JS
-- React95 component library
 
 ## Vor dem Clonen des Repos
 ### Node.js
@@ -108,8 +103,6 @@ Music Gallery:<br>
 ✔ Song erneut abspielen/Song skippen<br>
 ✔ Playlist von oben der Reihe nach abspielen<br>
 ✔ Playlist geshuffelt abspielen <br>
-- Songs in Playlist sortieren (?)
-
 
 Add Song:<br>
 <br>
@@ -119,4 +112,38 @@ Add Song:<br>
 
 Sonstiges:<br>
 <br>
-✔ Easter Egg -> Snake im „Browser“ abspielen, da kein Internet
+✔ Easter Egg -> Snake im „Browser“ abspielen, da simuliert "keine Internet-Connetion" besteht.<br>
+
+## Testing
+
+Es wird mit jest im Frontend und Backend getestet mit --coverage flag, damit man die coverage direkt im Terminal einsehen kann.<br>
+*Frontend und Server im Backend müssen laufen (siehe oben zum starten), damit die Tests durchlaufen!!*
+
+#### Frontend
+~~~
+cd TripleFMusic/Frontend
+npm test 
+~~~
+
+#### Backend
+~~~
+cd TripleFMusic/Backend
+npm run test:backend
+~~~
+
+#### Test-Datenbank im Backend erstellen
+Im Backend-Ordner Pfad <rootDir>/TripleFMusic/Backend folgende Befehle laufen lassen.<br>
+*Die Migration-Files zum erstellen der Test-Datenbank musicdb_test existieren bereits im Projekt!!*
+<br>
+<br>
+Windows
+~~~
+npx sequelize-cli db:create --env testv
+npx sequelize-cli db:migrate --env test
+~~~
+
+Linus/Mac
+~~~
+sudo npx sequelize-cli db:create --env testv
+sudo npx sequelize-cli db:migrate --env test
+~~~
