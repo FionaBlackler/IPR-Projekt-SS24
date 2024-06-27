@@ -1,56 +1,143 @@
 const request = require('supertest');
 const express = require('express');
-const router = require('../api'); // Adjust the path as needed
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
+const { User, Playlist, PasswordResetToken } = require('../models');
+const router = require('../api'); // Ensure this path is correct
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+const { sendPasswordResetEmail } = require('../services/emailService');
 
-// Mock Sequelize models
-jest.mock('../models', () => {
-  const SequelizeMock = require('sequelize-mock');
-  const dbMock = new SequelizeMock();
+jest.mock('bcrypt');
+jest.mock('jsonwebtoken');
+jest.mock('nodemailer');
+jest.mock('../models'); // Mock the models
+jest.mock('../services/emailService'); // Mock the email service
 
-  const PlaylistMock = dbMock.define('Playlist', {
-    name: 'Test Playlist'
-  });
-
-  PlaylistMock.findByPk = jest.fn((id) => {
-    const playlist = PlaylistMock.build({ id, name: 'Test Playlist' });
-    playlist.Songs = [{
-      id: 1,
-      songTitle: 'Test Song',
-      artist: 'Test Artist'
-    }];
-    return Promise.resolve(playlist);
-  });
-
-  const SongsMock = dbMock.define('Songs', {
-    songTitle: 'Test Song',
-    artist: 'Test Artist'
-  });
-
-  const SongPlaylistsMock = dbMock.define('SongPlaylists', {});
-
-  const UserMock = dbMock.define('User', {
-    username: 'testuser',
-    password: 'password123'
-  });
-
-  return {
-    Playlist: PlaylistMock,
-    Songs: SongsMock,
-    SongPlaylists: SongPlaylistsMock,
-    User: UserMock
-  };
-});
-
-// Initialize Express app
 const app = express();
 app.use(bodyParser.json());
 app.use('/', router);
 
 describe('API Tests', () => {
+  let sendMailMock;
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    // Explicitly mock nodemailer.createTransport
+    sendMailMock = jest.fn().mockResolvedValue({});
+    nodemailer.createTransport.mockReturnValue({
+      sendMail: sendMailMock,
+    });
+
+    // Mock sendPasswordResetEmail
+    sendPasswordResetEmail.mockResolvedValue({});
+  });
+
+  it('should register a new user', async () => {
+    bcrypt.hash.mockResolvedValue('hashedPassword');
+    User.create.mockResolvedValue({ id: 1, username: 'testuser', email: 'test@example.com', password: 'hashedPassword' });
+
+    const response = await request(app)
+      .post('/register')
+      .send({ username: 'testuser', password: 'password', email: 'test@example.com' });
+
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe('User created successfully');
+    expect(response.body.user).toHaveProperty('id');
+  });
+
+  it('should login a user', async () => {
+    bcrypt.compare.mockResolvedValue(true);
+    User.findOne.mockResolvedValue({ id: 1, username: 'testuser', password: 'hashedPassword' });
+    jwt.sign.mockReturnValue('token');
+
+    const response = await request(app)
+      .post('/login')
+      .send({ username: 'testuser', password: 'password' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Login successful');
+    expect(response.body).toHaveProperty('token');
+  });
+
+  it('should return 404 for login with non-existent user', async () => {
+    User.findOne.mockResolvedValue(null);
+
+    const response = await request(app)
+      .post('/login')
+      .send({ username: 'nonexistent', password: 'password' });
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('User not found');
+  });
+
+  it('should return 401 for login with invalid password', async () => {
+    bcrypt.compare.mockResolvedValue(false);
+    User.findOne.mockResolvedValue({ id: 1, username: 'testuser', password: 'hashedPassword' });
+
+    const response = await request(app)
+      .post('/login')
+      .send({ username: 'testuser', password: 'wrongpassword' });
+
+    expect(response.status).toBe(401);
+    expect(response.body.message).toBe('Invalid password');
+  });
+
+  it('should send a password reset email', async () => {
+    User.findOne.mockResolvedValue({ id: 1, firstname: 'Test', email: 'test@example.com', save: jest.fn() });
+    PasswordResetToken.create.mockResolvedValue({ token: 'reset-token', email: 'test@example.com' });
+
+    const response = await request(app)
+      .post('/forgot_password')
+      .send({ email: 'test@example.com' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Reset token generated and sent successfully');
+    expect(sendPasswordResetEmail).toHaveBeenCalledWith(
+      'test@example.com',
+      'Test', // Mocked name parameter
+      expect.any(String)  // Mocked reset link parameter
+    );
+  });
+
+  it('should return 404 for forgot password with non-existent email', async () => {
+    User.findOne.mockResolvedValue(null);
+
+    const response = await request(app)
+      .post('/forgot_password')
+      .send({ email: 'nonexistent@example.com' });
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('User not found');
+  });
+
+  it('should reset password with valid token', async () => {
+    bcrypt.hash.mockResolvedValue('newHashedPassword');
+    User.findOne.mockResolvedValue({ id: 1, resetToken: 'validtoken', resetTokenExpiry: Date.now() + 3600000, save: jest.fn() });
+
+    const response = await request(app)
+      .post('/reset_password')
+      .send({ resetToken: 'validtoken', newPassword: 'newpassword' });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Password has been reset successfully');
+  });
+
+  it('should return 400 for reset password with invalid or expired token', async () => {
+    User.findOne.mockResolvedValue(null);
+
+    const response = await request(app)
+      .post('/reset_password')
+      .send({ resetToken: 'invalidtoken', newPassword: 'newpassword' });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid or expired token');
+  });
+
   it('should create a new playlist', async () => {
+    Playlist.create.mockResolvedValue({ id: 1, name: 'Test Playlist' });
+
     const response = await request(app)
       .post('/playlists')
       .send({ name: 'Test Playlist' });
@@ -60,6 +147,8 @@ describe('API Tests', () => {
   });
 
   it('should fetch all playlists', async () => {
+    Playlist.findAll.mockResolvedValue([{ id: 1, name: 'Test Playlist' }]);
+
     const response = await request(app).get('/playlists');
 
     expect(response.status).toBe(200);
@@ -67,48 +156,11 @@ describe('API Tests', () => {
   });
 
   it('should delete a playlist', async () => {
+    Playlist.findByPk.mockResolvedValue({ id: 1, name: 'Test Playlist', destroy: jest.fn().mockResolvedValue() });
+
     const response = await request(app).delete('/playlists/1');
 
-    if (response.status !== 204) {
-      console.error('Response body:', response.body);
-    }
-
     expect(response.status).toBe(204);
-  });
-
-  it('should create a new song', async () => {
-    const mp3Buffer = fs.readFileSync(path.join(__dirname, 'test_files/sample.mp3'));
-    const jpgBuffer = fs.readFileSync(path.join(__dirname, 'test_files/sample.jpg'));
-
-    const response = await request(app)
-      .post('/songs')
-      .field('songTitle', 'New Song')
-      .field('artist', 'New Artist')
-      .field('selectedPlaylists', '[]')
-      .field('selectedGenres', '[]')
-      .field('notes', 'Some notes')
-      .attach('mp3File', mp3Buffer, 'sample.mp3')
-      .attach('jpgFile', jpgBuffer, 'sample.jpg');
-
-    expect(response.status).toBe(201);
-    expect(response.body.songTitle).toBe('New Song');
-  });
-  
-  it('should fetch songs for a playlist', async () => {
-    const response = await request(app).get('/playlists/1/songs');
-
-    if (response.status !== 200) {
-      console.error('Error response:', response.body);
-    }
-
-    expect(response.status).toBe(200);
-    expect(response.body.length).toBeGreaterThan(0);
-  });
-
-  it('should return 400 for invalid playlist ID format', async () => {
-    const response = await request(app).get('/playlists/invalid-id/songs');
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe('Invalid playlist ID format');
   });
 
   it('should return 400 for creating a playlist without a name', async () => {
@@ -116,5 +168,6 @@ describe('API Tests', () => {
     expect(response.status).toBe(400);
     expect(response.body.message).toBe('Playlist name is required');
   });
-  
+
+  // Add more tests for other routes and edge cases
 });

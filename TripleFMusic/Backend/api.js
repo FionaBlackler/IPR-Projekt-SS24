@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
 router.post(
   "/songs",
   upload.fields([
@@ -70,21 +69,25 @@ router.post(
       res.status(201).json(newSong);
     } catch (error) {
       console.error("Error saving song:", error);
-      res
-        .status(500)
-        .json({ error: "An error occurred while saving the song." });
+      res.status(500).json({ error: "An error occurred while saving the song." });
     }
   }
 );
 
 // Route to create a new playlist
 router.post("/playlists", async (req, res) => {
+  const { name } = req.body;
+
+  // Add validation for playlist name
+  if (!name) {
+    return res.status(400).json({ message: "Playlist name is required" });
+  }
+
   try {
     console.log(
       `[${new Date().toISOString()}] POST /playlists called with body:`,
       req.body
     );
-    const { name } = req.body;
     const newPlaylist = await Playlist.create({ name });
     res.status(201).json(newPlaylist);
   } catch (error) {
@@ -205,9 +208,7 @@ router.delete("/playlists/:playlistId/songs/:songId", async (req, res) => {
     res.status(204).end();
   } catch (error) {
     console.error("Error deleting song from playlist:", error);
-    res
-      .status(500)
-      .json({ message: "Error deleting song from playlist", error });
+    res.status(500).json({ message: "Error deleting song from playlist", error });
   }
 });
 
