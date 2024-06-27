@@ -42,7 +42,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: fifafu455..
-          MYSQL_DATABASE: musicdb
+          MYSQL_DATABASE: musicdb_test
 
         options: >-
           --health-cmd="mysqladmin ping --silent"
@@ -80,9 +80,6 @@ jobs:
       - name: Install dependencies
         working-directory: ./TripleFMusic/Backend
         run: npm install
-
-      - name: Install nodemon globally
-        run: npm install -g nodemon
 
       - name: Set up environment variables
         run: |
