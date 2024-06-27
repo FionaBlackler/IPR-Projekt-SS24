@@ -22,22 +22,22 @@ jobs:
         with:
           node-version: "14"
 
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
       - name: Install dependencies
         working-directory: ./TripleFMusic/Frontend
         run: npm install
-             npm install @testing-library/dom --save-dev
 
-      - name: Build frontend
+      - name: Run Vite build
         working-directory: ./TripleFMusic/Frontend
         run: npm run build
 
       - name: Run Vite tests
         working-directory: ./TripleFMusic/Frontend
         run: npm test
-
-      - name: Start frontend
-        working-directory: ./TripleFMusic/Frontend
-        run: npm start
 
   backend:
     runs-on: ubuntu-latest
